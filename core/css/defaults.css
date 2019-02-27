@@ -727,6 +727,9 @@ tr[data-fan="tool"] > td:first-child > button {
 	cursor: pointer;
 }
 
+.extrusion-factor-value {
+	cursor: pointer;
+}
 /* Print status page */
 
 #img_webcam {

@@ -972,6 +972,17 @@ $(".btn-workpiece-probe").click(function(e) {
 	e.preventDefault();
 });
 
+$("#panel_extrusion_factors table td.extrusion-factor-value").click(function(e) {
+	var $_this = $(this);
+	var drive = $_this.data("drive");
+	var currentVal = $("#slider_extr_" + drive).slider("getValue");
+	showTextInput(T("Set extruder {0} extrusion factor", drive), T("Please enter a new extrusion factor for extruder {0}:", drive), function(value) {
+		if (!isNaN(value)) {
+			sendGCode("M221 D" + drive + " S" + parseInt(value));
+		}
+	}, currentVal);
+});
+
 $("#table_workspace_coordinates td span.wcs-cell").click(function(e) {
 	var $_this = $(this);
 	var axis = $_this.data("axis");

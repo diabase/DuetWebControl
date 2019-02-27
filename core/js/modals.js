@@ -518,7 +518,7 @@ $("#a_probe_cylinder").click(function(e) {
 });
 
 $("#modal_cylinder form").submit(function(e) {
-	sendGCode("G28 Z\nG92 Z" + ($("#input_cylinder_diameter").val() / 2));
+	sendGCode("G28 Z\nG0 Z0\nG92 Z" + ($("#input_cylinder_diameter").val() / 2));
 	$("#modal_cylinder").modal("hide");
 	e.preventDefault();
 });
