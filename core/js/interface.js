@@ -885,7 +885,13 @@ $("#table_tools").on("click", "tr > th:first-child > a", function(e) {
 	} else {
 		// Either activate or deactivate tool
 		if (tool == currentTool) {
-			changeTool(-1);
+			if (isProcessing && vendor == "diabase") {
+				showConfirmationDialog("Deactivate Current Tool", "Do you really want to deactivate the current tool while a job is in progress?", function() {
+					changeTool(-1);
+				});
+			} else {
+				changeTool(-1);
+			}
 		} else {
 			changeTool(tool);
 		}
@@ -2297,6 +2303,9 @@ function setMachineName(name) {
 }
 
 function showPage(name) {
+	if (isProcessing && vendor == "diabase" && name == "control") {
+		showMessageBox("Using this page while a job is in progress can cause serious issues. Please use with caution.", "Job In Progress", 1);
+	}
 	$("#layer_tooltip").hide();
 
 	$("#div_static_sidebar a, #section_navigation a, .page").removeClass("active");
