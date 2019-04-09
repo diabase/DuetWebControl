@@ -885,13 +885,7 @@ $("#table_tools").on("click", "tr > th:first-child > a", function(e) {
 	} else {
 		// Either activate or deactivate tool
 		if (tool == currentTool) {
-			if (isProcessing && vendor == "diabase") {
-				showConfirmationDialog("Deactivate Current Tool", "Do you really want to deactivate the current tool while a job is in progress?", function() {
-					changeTool(-1);
-				});
-			} else {
-				changeTool(-1);
-			}
+			changeTool(-1);
 		} else {
 			changeTool(tool);
 		}
@@ -1893,7 +1887,21 @@ function addHeadTemperature(temperature, type) {
 	$("#ul_" + type + "_temps").append(item);
 }
 
-function changeTool(tool) {
+function changeTool(tool, confirmed) {
+	if (confirmed !== true) {
+		if (isProcessing && vendor == "diabase") {
+			if (tool == -1) {
+				showConfirmationDialog(T("Deactivate Current Tool"), T("Do you really want to deactivate the current tool while a job is in progress?"), function() {
+					changeTool(tool, true);
+				});
+			} else {
+				showConfirmationDialog(T("Change Tool"), T("Do you really want to change the tool manually while a job is in progress?"), function() {
+					changeTool(tool, true);
+				});
+			}
+			return;
+		}
+	}
 	// Check if any tool change macros can be skipped
 	var param = 7;
 	if (!settings.doTfree) { param &= ~1; }
