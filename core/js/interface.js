@@ -322,6 +322,18 @@ function updateGui() {
 		$("#table_heaters tr[data-heater='" + i + "']").toggleClass("hidden", hideHeater);
 	}
 
+	// Disable tool box items while a job is processed (and not paused)
+	if (vendor == "diabase") {
+		$("#table_tools").find("a").addClass("disable-active-processing");
+		$("#table_tools").find("input").addClass("disable-active-processing");
+		$("#table_tools").find(".btn-active-temp").addClass("disable-active-processing");
+		$("#table_tools").find(".btn-standby-temp").addClass("disable-active-processing");
+		$("#table_heaters").find("a").addClass("disable-active-processing");
+		$("#table_heaters").find("input").addClass("disable-active-processing");
+		$("#table_heaters").find(".btn-active-temp").addClass("disable-active-processing");
+		$("#table_heaters").find(".btn-standby-temp").addClass("disable-active-processing");
+	}
+
 	// Update movement steps
 	applyMovementSteps();
 
@@ -830,6 +842,9 @@ $("#table_tools").on("keydown", "tr > td > div > input", function(e) {
 });
 
 $("#table_tools").on("click", "tr > th:first-child > a", function(e) {
+	if ($(this).hasClass("disabled")) {
+		return;
+	}
 	// Ignore bed and chamber heaters. They're handled by a static event callback
 	var heater = $(this).closest("tr").data("heater");
 	if (heater == "bed" || heater == "chamber" || heater == "cabinet") {
@@ -1888,20 +1903,6 @@ function addHeadTemperature(temperature, type) {
 }
 
 function changeTool(tool, confirmed) {
-	if (confirmed !== true) {
-		if (isProcessing && vendor == "diabase") {
-			if (tool == -1) {
-				showConfirmationDialog(T("Deactivate Current Tool"), T("Do you really want to deactivate the current tool while a job is in progress?"), function() {
-					changeTool(tool, true);
-				});
-			} else {
-				showConfirmationDialog(T("Change Tool"), T("Do you really want to change the tool manually while a job is in progress?"), function() {
-					changeTool(tool, true);
-				});
-			}
-			return;
-		}
-	}
 	// Check if any tool change macros can be skipped
 	var param = 7;
 	if (!settings.doTfree) { param &= ~1; }
@@ -2111,6 +2112,10 @@ function setPauseStatus(paused) {
 			$("#btn_pause").removeClass("disabled");
 		}
 	}
+	if (isProcessing) {
+		$(".disable-active-processing").toggleClass("disabled", !paused);
+		$("input.disable-active-processing").prop("disabled", !paused);
+	}
 	isPaused = paused;
 }
 
@@ -2192,6 +2197,8 @@ function setJobStatus(processing) {
 
 	isProcessing = processing;
 	$(".disable-processing").toggleClass("disabled", processing);
+	$(".disable-active-processing").toggleClass("disabled", processing);
+	$("input.disable-active-processing").prop("disabled", processing);
 
 	if (waitingForJobStart && processing) {
 		$("#modal_upload").modal("hide");
@@ -2311,9 +2318,6 @@ function setMachineName(name) {
 }
 
 function showPage(name) {
-	if (isProcessing && vendor == "diabase" && name == "control") {
-		showMessageBox("Using this page while a job is in progress can cause serious issues. Please use with caution.", "Job In Progress", 1);
-	}
 	$("#layer_tooltip").hide();
 
 	$("#div_static_sidebar a, #section_navigation a, .page").removeClass("active");

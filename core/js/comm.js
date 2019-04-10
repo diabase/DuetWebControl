@@ -1497,6 +1497,14 @@ function setOem(oem) {
 
 		$("#img_crosshair").prop("src", "img/crosshair.png");
 		$("#img_calibration_diagram").prop("src", "img/diabase_calibration_diagram.png");
+
+		// Disable following elements while processing
+		$("#page_control").find(".btn-home").addClass("disable-active-processing");
+		$("#page_control").find(".btn-move").addClass("disable-active-processing");
+		$("#page_control").find(".btn-extrude").addClass("disable-active-processing");
+		$("#page_control").find(".btn-retract").addClass("disable-active-processing");
+		$("#btn_bed_compensation").addClass("disable-active-processing");
+		$("#btn_bed_dropdown").addClass("disable-active-processing");
 	}
 
 	// Update GUI just in case the response was received after the first status response
