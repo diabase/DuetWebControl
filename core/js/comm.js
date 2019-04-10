@@ -1,7 +1,7 @@
 /* Communication routines between RepRapFirmware and Duet Web Control
- * 
+ *
  * written by Christian Hammacher (c) 2016-2018
- * 
+ *
  * licensed under the terms of the GPL v3
  * see http://www.gnu.org/licenses/gpl-3.0.html
  */

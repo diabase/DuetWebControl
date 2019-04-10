@@ -632,7 +632,7 @@ $("#modal_bed").on("shown.bs.modal", function () {
 	scene = new THREE.Scene();
 
 	camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-	camera.position.set(1.5, 1.5, 1.5);
+	camera.position.set(0, -2, 1.5);
 	camera.up = new THREE.Vector3(0, 0, 1);
 
 	renderer = new THREE.WebGLRenderer();
