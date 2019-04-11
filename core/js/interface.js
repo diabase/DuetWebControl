@@ -1664,13 +1664,21 @@ $(".navlink").click(function(e) {
 	e.preventDefault();
 });
 
-$("#panel_control_misc label.btn").click(function() {
+$("#panel_control_misc .atx-control label.btn").click(function() {
 	if ($(this).find("input").val() == 1) {		// ATX on
 		sendGCode("M80");
 	} else {									// ATX off
 		showConfirmationDialog(T("ATX Power"), T("Do you really want to turn off ATX power?<br/><br/>This will turn off all drives, heaters and fans."), function() {
 			sendGCode("M81");
 		});
+	}
+});
+
+$("#panel_control_misc .turret-control label.btn").click(function() {
+	if ($(this).find("input").val() == 1) {		// Lock turret
+		sendGCode("M98 Plock_turret.g");
+	} else {									// Unlock turret
+		sendGCode("M98 Punlock_turret.g");
 	}
 });
 
