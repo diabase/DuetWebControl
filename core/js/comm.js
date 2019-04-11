@@ -1505,6 +1505,12 @@ function setOem(oem) {
 		$("#page_control").find(".btn-retract").addClass("disable-active-processing");
 		$("#btn_bed_compensation").addClass("disable-active-processing");
 		$("#btn_bed_dropdown").addClass("disable-active-processing");
+		var toolsHeatersTable = $("#div_tools_heaters");
+		toolsHeatersTable.find(".btn-bed-temp").addClass("disable-active-processing");
+		toolsHeatersTable.find(".btn-cabinet-temp").addClass("disable-active-processing");
+
+		// Re-apply settings
+		applySettings();
 	}
 
 	// Update GUI just in case the response was received after the first status response

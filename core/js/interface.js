@@ -324,14 +324,15 @@ function updateGui() {
 
 	// Disable tool box items while a job is processed (and not paused)
 	if (vendor == "diabase") {
-		$("#table_tools").find("a").addClass("disable-active-processing");
-		$("#table_tools").find("input").addClass("disable-active-processing");
-		$("#table_tools").find(".btn-active-temp").addClass("disable-active-processing");
-		$("#table_tools").find(".btn-standby-temp").addClass("disable-active-processing");
-		$("#table_heaters").find("a").addClass("disable-active-processing");
-		$("#table_heaters").find("input").addClass("disable-active-processing");
-		$("#table_heaters").find(".btn-active-temp").addClass("disable-active-processing");
-		$("#table_heaters").find(".btn-standby-temp").addClass("disable-active-processing");
+		var toolsHeatersTable = $("#div_tools_heaters");
+		toolsHeatersTable.find("a").addClass("disable-active-processing");
+		toolsHeatersTable.find("input").addClass("disable-active-processing");
+		toolsHeatersTable.find(".btn-active-temp").addClass("disable-active-processing");
+		toolsHeatersTable.find(".btn-standby-temp").addClass("disable-active-processing");
+
+		// We need to do this here again because of various orders these commands could happen
+		$(".disable-active-processing").toggleClass("disabled", isProcessing);
+		$("input.disable-active-processing").prop("disabled", isProcessing);
 	}
 
 	// Update movement steps
@@ -1890,6 +1891,16 @@ function addBedTemperature(temperature) {
 	$("#ul_bed_temps").append(item);
 }
 
+function addCabinetTemperature(temperature) {
+	// Drop-Down item
+	var unit = "°C";
+	if (vendor == "diabase") {
+		unit = "%RH";
+	}
+	$(".ul-cabinet-temp").append('<li><a href="#" class="bed-temp" data-temp="' + temperature + '">' + T("{0} " + unit, temperature) + '</a></li>');
+	$(".btn-cabinet-temp").removeClass("disabled");
+}
+
 function addHeadTemperature(temperature, type) {
 	// Drop-Down item
 	$(".ul-" + type + "-temp").append('<li><a href="#" class="heater-temp" data-temp="' + temperature + '">' + T("{0} °C", temperature) + '</a></li>');
@@ -1920,6 +1931,11 @@ function changeTool(tool, confirmed) {
 function clearBedTemperatures() {
 	$(".ul-bed-temp, #ul_bed_temps").html("");
 	$(".btn-bed-temp").addClass("disabled");
+}
+
+function clearCabinetTemperatures() {
+	$(".ul-cabinet-temp, #ul_cabinet_temps").html("");
+	$(".btn-cabinet-temp").addClass("disabled");
 }
 
 function clearHeadTemperatures() {

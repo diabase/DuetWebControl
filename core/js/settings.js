@@ -70,7 +70,8 @@ var settings = {
 
 	defaultActiveTemps: [0, 180, 190, 200, 210, 220, 235],
 	defaultStandbyTemps: [0, 95, 120, 140, 155, 170],
-	defaultBedTemps: [0, 55, 60, 65, 90, 110, 120]
+	defaultBedTemps: [0, 55, 60, 65, 90, 110, 120],
+	defaultCabinetTemps: [0, 5, 10, 15, 20, 25, 30, 35, 40]
 };
 var needsInitialSettingsUpload = false;
 
@@ -314,6 +315,18 @@ function applySettings() {
 	settings.defaultBedTemps.forEach(function(temp) {
 		addBedTemperature(temp);
 	});
+
+	// Default cabinet temperatures
+	clearCabinetTemperatures();
+	if (vendor == "diabase") {
+		settings.defaultCabinetTemps.forEach(function(temp) {
+			addCabinetTemperature(temp);
+		});
+	} else {
+		settings.defaultBedTemps.forEach(function(temp) {
+			addCabinetTemperature(temp);
+		});
+	}
 
 	// Force GUI update to apply half Z movements in the axes
 	updateGui();

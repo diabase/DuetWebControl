@@ -262,12 +262,14 @@ button.btn-connect,
 }
 
 .ul-bed-temp a,
+.ul-cabinet-temp a,
 .ul-active-temp a,
 .ul-standby-temp a {
 	text-align: right;
 }
 
 .ul-bed-temp,
+.ul-cabinet-temp,
 .ul-active-temp,
 .ul-standby-temp {
 	min-width: initial;
