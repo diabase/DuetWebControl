@@ -1099,7 +1099,8 @@ function updateWCSTable() {
 				"wcs8": [],
 				"wcs9": [],
 			};
-			var re = new RegExp('G10 L2 P([0-9]) X([0-9.]*) Y([0-9.]*) Z([0-9.]*)');
+			var numberMatch = '[+-]?\\d+(?:\\.\\d+)?';
+			var re = new RegExp('G10 L2 P([0-9]) X(' + numberMatch + ') Y(' + numberMatch + ') Z(' + numberMatch + ')');
 			$.each(tableCells, function() {
 				var $_this = $(this);
 				var wcs = $_this.parents("tr").data("wcs");
