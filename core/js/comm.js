@@ -1499,15 +1499,13 @@ function setOem(oem) {
 		$("#img_calibration_diagram").prop("src", "img/diabase_calibration_diagram.png");
 
 		// Disable following elements while processing
-		$("#page_control").find(".btn-home").addClass("disable-active-processing");
-		$("#page_control").find(".btn-move").addClass("disable-active-processing");
-		$("#page_control").find(".btn-extrude").addClass("disable-active-processing");
-		$("#page_control").find(".btn-retract").addClass("disable-active-processing");
+		var $pc = $('#page_control');
+		$pc.find(".btn-home").addClass("disable-active-processing");
+		$pc.find(".btn-move").addClass("disable-active-processing");
+		$pc.find(".btn-extrude").addClass("disable-active-processing");
+		$pc.find(".btn-retract").addClass("disable-active-processing");
 		$("#btn_bed_compensation").addClass("disable-active-processing");
 		$("#btn_bed_dropdown").addClass("disable-active-processing");
-		var toolsHeatersTable = $("#div_tools_heaters");
-		toolsHeatersTable.find(".btn-bed-temp").addClass("disable-active-processing");
-		toolsHeatersTable.find(".btn-cabinet-temp").addClass("disable-active-processing");
 
 		// Re-apply settings
 		applySettings();

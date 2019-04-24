@@ -326,13 +326,9 @@ function updateGui() {
 	if (vendor == "diabase") {
 		var toolsHeatersTable = $("#div_tools_heaters");
 		toolsHeatersTable.find("a").addClass("disable-active-processing");
-		toolsHeatersTable.find("input").addClass("disable-active-processing");
-		toolsHeatersTable.find(".btn-active-temp").addClass("disable-active-processing");
-		toolsHeatersTable.find(".btn-standby-temp").addClass("disable-active-processing");
 
 		// We need to do this here again because of various orders these commands could happen
 		$(".disable-active-processing").toggleClass("disabled", isProcessing);
-		$("input.disable-active-processing").prop("disabled", isProcessing);
 	}
 
 	// Update movement steps
@@ -1356,6 +1352,9 @@ $('input[name="feedrate"]').parent().contextmenu(function(e) {
 });
 
 $("#btn_extrude").click(function(e) {
+	if($(this).hasClass("disabled")) {
+		return;
+	}
 	var feedrate = $("#panel_extrude input[name=feedrate]:checked").val() * 60;
 	var amount = $("#panel_extrude input[name=feed]:checked").val();
 	var drive = $("#panel_extrude input[name='extruder']:checked").val();
@@ -1377,6 +1376,9 @@ $("#btn_extrude").click(function(e) {
 });
 
 $("#btn_retract").click(function(e) {
+	if($(this).hasClass("disabled")) {
+		return;
+	}
 	var feedrate = $("#panel_extrude input[name=feedrate]:checked").val() * 60;
 	var amount = -$("#panel_extrude input[name=feed]:checked").val();
 	var drive = $('input[name="extruder"]:checked').val();
@@ -1431,11 +1433,13 @@ $("#btn_homeall").resize(function() {
 });
 
 $(".btn-home").click(function(e) {
-	if ($(this).data("axis") == "all") {
-		sendGCode("G28");
-	} else {
-		var axisNumber = parseInt($(this).data("axis"));
-		sendGCode("G28 " + axisNames[axisNumber]);
+	if (!$(this).hasClass("disabled")) {
+		if ($(this).data("axis") == "all") {
+			sendGCode("G28");
+		} else {
+			var axisNumber = parseInt($(this).data("axis"));
+			sendGCode("G28 " + axisNames[axisNumber]);
+		}
 	}
 	e.preventDefault();
 });
@@ -2139,7 +2143,6 @@ function setPauseStatus(paused) {
 	}
 	if (isProcessing) {
 		$(".disable-active-processing").toggleClass("disabled", !paused);
-		$("input.disable-active-processing").prop("disabled", !paused);
 	}
 	isPaused = paused;
 }
@@ -2223,7 +2226,6 @@ function setJobStatus(processing) {
 	isProcessing = processing;
 	$(".disable-processing").toggleClass("disabled", processing);
 	$(".disable-active-processing").toggleClass("disabled", processing);
-	$("input.disable-active-processing").prop("disabled", processing);
 
 	if (waitingForJobStart && processing) {
 		$("#modal_upload").modal("hide");
