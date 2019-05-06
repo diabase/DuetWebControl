@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!--	Duet Web Control v1.22.8-RC1-diabase
+<!--	Duet Web Control v1.22.8-RC3-diabase
 
 	written by Christian Hammacher
 
@@ -2381,7 +2381,7 @@
 														</tr>
 														<tr>
 															<th>Web Interface Version:</th>
-															<td id="dwc_version">1.22.8-RC1-diabase</td>
+															<td id="dwc_version">1.22.8-RC3-diabase</td>
 														</tr>
 													</table>
 													<span id="span_copyright">Web Interface by Christian Hammacher<br/>Licensed under the terms of the <a href="https://www.gnu.org/licenses/gpl-3.0" target="blank">GPL v3</a></span>
@@ -2856,11 +2856,30 @@
 
 									<!-- System Editor -->
 									<div class="tab-pane" id="page_sysedit">
-										<ol id="ol_sys_directory" class="breadcrumb breadcrumb-directory">
-											<li class="active"><span class="glyphicon glyphicon-folder-open"></span> System Directory</li>
-											<li class="pull-right hidden online-control"><a href="#" id="a_refresh_sys"><span class="glyphicon glyphicon-refresh"></span> Refresh</a></li>
-											<li class="pull-right hidden online-control"><a href="#" id="a_new_sys_file"><span class="glyphicon glyphicon-file"></span> New File</a></li>
-										</ol>
+										<table class="table-file-navigation">
+											<tr>
+												<td>
+													<ol class="breadcrumb breadcrumb-directory" id="ol_sys_directory">
+														<li class="active"><span class="glyphicon glyphicon-folder-open"></span> System Directory</li>
+														<li class="pull-right"><span class="glyphicon glyphicon-level-up"></span> Go Up</li>
+													</ol>
+												</td>
+												<td class="hidden-xs hidden-sm hidden online-control">
+													<button id="a_refresh_sys" class="btn btn-primary btn-refresh online-control" title="Reload files in current directory" data-style="btn-primary"><span class="glyphicon glyphicon-refresh"></span> Refresh</button>
+												</td>
+												<td class="hidden online-control">
+													<div class="btn-group">
+														<button type="button" class="btn btn-info dropdown-toggle online-control hidden" data-toggle="dropdown">
+															<span class="glyphicon glyphicon-plus"></span> Make new... <span class="caret"></span>
+														</button>
+														<ul class="dropdown-menu dropdown-menu-right">
+															<li><a href="#" id="a_new_sys_directory" title="Create a new directory"><span class="glyphicon glyphicon-folder-open"></span> Directory</a></li>
+															<li><a href="#" id="a_new_sys_file" title="Create a new system file"><span class="glyphicon glyphicon-file"></span> File</a></li>
+														</ul>
+													</div>
+												</td>
+											</tr>
+										</table>
 
 										<h1 class="text-center text-muted">Connect to your Duet to display System files</h1>
 

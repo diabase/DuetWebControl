@@ -1452,7 +1452,7 @@ function loadThemes() {
 // For OEM functionality
 function getOemFeatures() {
 	if (location.host == "") {
-		return;
+		// return;
 	}
 
 	$.ajax(ajaxPrefix + "rr_download?name=0:/sys/oem.json", {

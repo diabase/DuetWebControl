@@ -18,6 +18,7 @@ var cachedFileInfo;
 var currentMacroDirectory, macroLastDirectoryRow, macroLastDirectoryItem, macrosLoaded;
 var filamentsLoaded, filamentsExist;
 var sysLoaded, displayLoaded;
+var currentSysDirectory, sysLastDirectory;
 
 var multiFileOperations, doingFileTask;
 var downloadNotification, zipFile;
@@ -1205,13 +1206,33 @@ $('a[href="#page_sysedit"]').on('shown.bs.tab', function() {
 $("#a_new_sys_file").click(function() {
 	showTextInput(T("New File"), T("Please enter a filename:"), function(file) {
 		if (filenameValid(file)) {
-			showEditDialog("0:/sys/" + file, "", function(value) {
-				uploadTextFile("0:/sys/" + file, value, updateSysFiles);
+			showEditDialog(currentSysDirectory + "/" + file, "", function(value) {
+				uploadTextFile(currentSysDirectory + "/" + file, value, updateSysFiles);
 			});
 		} else {
 			showMessage("danger", T("Error"), T("The specified filename is invalid. It may not contain quotes, colons or (back)slashes."));
 		}
 	});
+});
+
+$("#a_new_sys_directory").click(function(e) {
+	showTextInput(T("New directory"), T("Please enter a name:"), function(value) {
+		if (filenameValid(value)) {
+			$.ajax(ajaxPrefix + "rr_mkdir?dir=" + currentSysDirectory + "/" + value, {
+				dataType: "json",
+				success: function(response) {
+					if (response.err == 0) {
+						updateSysFiles();
+					} else {
+						showMessage("warning", T("Error"), T("Could not create this directory!"));
+					}
+				}
+			});
+		} else {
+			showMessage("danger", T("Error"), T("The specified filename is invalid. It may not contain quotes, colons or (back)slashes."));
+		}
+	});
+	e.preventDefault();
 });
 
 $("#a_refresh_sys").click(function(e) {
@@ -1226,15 +1247,60 @@ function addSysFile(filename, size, lastModified) {
 	var lastModifiedValue = (lastModified == undefined) ? 0 : lastModified.getTime();
 	var row =	'<tr data-file="' + filename + '" data-size="' + size + '" data-last-modified="' + lastModifiedValue + '">';
 	row +=		'<td><input type="checkbox"></td>';
-	row +=		'<td><a href="#"><span class="glyphicon glyphicon-file"></span> ' + filename + '</a></td>';
+	row +=		'<td><a href="#" class="a-sys-file"><span class="glyphicon glyphicon-file"></span> ' + filename + '</a></td>';
 	row +=		'<td class="size">' + formatSize(size) + '</td>';
 	row +=		'<td>' + ((lastModified == undefined) ? T("unknown") : lastModified.toLocaleString()) + '</td>';
 	row +=		'</tr>';
-	$("#table_sys_files > tbody").append(row);
+
+	var rowElem = $(row);
+	rowElem[0].addEventListener("dragstart", fileDragStart, false);
+	rowElem[0].addEventListener("dragend", fileDragEnd, false);
+	$("#table_sys_files > tbody").append(rowElem);
+}
+
+function clearSysFiles() {
+	sysLastDirectory = undefined;
+
+	$("#table_sys_files > thead input[type='checkbox']:first-child").prop("checked", false);
+	$("#table_sys_files > tbody").children().remove();
+	$("#table_sys_files").addClass("hidden");
+	$("#page_files h1").removeClass("hidden");
+	if (isConnected) {
+		$("#page_sysfiles h1").text(T("loading"));
+	} else {
+		$("#page_sysfiles h1").text(T("Connect to your Duet to display System files"));
+	}
+}
+
+function addSysDirectory(name) {
+	$("#page_sysedit h1").addClass("hidden");
+	$("#table_sys_files").removeClass("hidden");
+
+	var row =	'<tr draggable="true" data-directory="' + name + '">';
+	row +=		'<td><input type="checkbox"></td>';
+	row +=		'<td colspan="7"><a href="#" class="a-sys-directory"><span class="glyphicon glyphicon-folder-open"></span> ' + name + '</a></td>';
+	row +=		'</tr>';
+
+	var rowElem = $(row);
+	rowElem[0].addEventListener("dragstart", fileDragStart, false);
+	rowElem[0].addEventListener("dragend", fileDragEnd, false);
+
+	if (sysLastDirectory == undefined) {
+		var firstRow = $("#table_sys_files > tbody > tr:first-child");
+		if (firstRow.length == 0) {
+			$("#table_sys_files > tbody").append(rowElem);
+		} else {
+			rowElem.insertBefore(firstRow);
+		}
+	} else {
+		rowElem.insertAfter(sysLastDirectory);
+	}
+	sysLastDirectory = rowElem;
 }
 
 function updateSysFiles() {
 	// Clear the file list
+	clearSysFiles();
 	sysLoaded = false;
 	$("#table_sys_files > tbody").children().remove();
 	$("#table_sys_files").addClass("hidden");
@@ -1259,8 +1325,29 @@ function updateSysFiles() {
 	getSysFiles(0);
 }
 
+function setSysDirectory(directory) {
+	currentSysDirectory = directory;
+
+	var $ol_sys_directory = $("#ol_sys_directory");
+	$ol_sys_directory.children(":not(:last-child)").remove();
+	if (directory == "0:/sys") {
+		$ol_sys_directory.prepend('<li class="active"><span class="glyphicon glyphicon-folder-open"></span> ' + T("System Directory") + '</li>');
+		$ol_sys_directory.find("li:last-child").html('<span class="glyphicon glyphicon-level-up"></span> ' + T("Go Up"));
+	} else {
+		var listContent = '<li><a href="#" data-directory="0:/sys"><span class="glyphicon glyphicon-folder-open"></span> ' + T("System Directory") + '</a></li>';
+		var directoryItems = directory.split("/"), directoryPath = "0:/sys";
+		for(var i = 2; i < directoryItems.length - 1; i++) {
+			directoryPath += "/" + directoryItems[i];
+			listContent += '<li class="active"><a href="#" data-directory="' + directoryPath + '">' + directoryItems[i] + '</a></li>';
+		}
+		listContent += '<li class="active">' + directoryItems[directoryItems.length -1] + '</li>';
+		$ol_sys_directory.prepend(listContent);
+		$ol_sys_directory.find("li:last-child").html('<a href="#" data-directory="' + directoryPath + '"><span class="glyphicon glyphicon-level-up"></span> ' + T("Go Up") + '</a>');
+	}
+}
+
 function getSysFiles(first) {
-	$.ajax(ajaxPrefix + "rr_filelist?dir=0:/sys&first=" + first, {
+	$.ajax(ajaxPrefix + "rr_filelist?dir=" + encodeURIComponent(currentSysDirectory) + "&first=" + first, {
 		dataType: "json",
 		success: function(response) {
 			if (isConnected) {
@@ -1276,6 +1363,8 @@ function getSysFiles(first) {
 							var lastModified = files[i].hasOwnProperty("date") ? strToTime(files[i].date) : undefined;
 							addSysFile(files[i].name, files[i].size, lastModified);
 							filesAdded++;
+						} else {
+							addSysDirectory(files[i].name);
 						}
 					}
 
@@ -1299,7 +1388,19 @@ function getSysFiles(first) {
 	});
 }
 
-$("#table_sys_files").on("click", "tbody a", function(e) {
+$("body").on("click", ".a-sys-directory", function(e) {
+	setSysDirectory(currentSysDirectory + "/" + $(this).closest("tr").data("directory"));
+	updateSysFiles();
+	e.preventDefault();
+});
+
+$("body").on("click", "#ol_sys_directory a", function(e) {
+	setSysDirectory($(this).data("directory"));
+	updateSysFiles();
+	e.preventDefault();
+});
+
+$("body").on("click", ".a-sys-file", function(e) {
 	var row = $(this).closest("tr");
 	var file = row.data("file");
 	if (file.match("\.g$") != null || file.match("\.txt$") != null || file.match("\.json$") != null) {
@@ -1529,9 +1630,12 @@ $(".table-files").on("drop", "tr", function(e) {
 
 			clearFileCache(sourcePath);
 			clearFileCache(targetPath);
-		} else {
+		} else if (currentPage == "macros") {
 			targetPath = currentMacroDirectory + "/" + directory + "/" + sourcePath;
 			sourcePath = currentMacroDirectory + "/" + sourcePath;
+		} else if (currentPage == "settings") {
+			targetPath = currentSysDirectory + "/" + directory + "/" + sourcePath;
+			sourcePath = currentSysDirectory + "/" + sourcePath;
 		}
 
 		moveFile(sourcePath, targetPath, undefined, undefined, draggingObjects.eq(i));
@@ -1541,14 +1645,14 @@ $(".table-files").on("drop", "tr", function(e) {
 	e.preventDefault();
 });
 
-$("#ol_gcode_directory, #ol_macro_directory").on("dragover", "a", function(e) {
+$("#ol_gcode_directory, #ol_macro_directory, #ol_sys_directory").on("dragover", "a", function(e) {
 	if (draggingObjects != undefined) {
 		e.stopPropagation();
 		e.preventDefault();
 	}
 });
 
-$("#ol_gcode_directory, #ol_macro_directory").on("drop", "a", function(e) {
+$("#ol_gcode_directory, #ol_macro_directory, #ol_sys_directory").on("drop", "a", function(e) {
 	if (draggingObjects == undefined) {
 		return;
 	}
@@ -1567,9 +1671,12 @@ $("#ol_gcode_directory, #ol_macro_directory").on("drop", "a", function(e) {
 
 			clearFileCache(sourcePath);
 			clearFileCache(targetPath);
-		} else {
+		} else if (currentPage == "macros") {
 			targetPath = directory + "/" + sourcePath;
 			sourcePath = currentMacroDirectory + "/" + sourcePath;
+		} else if (currentPage == "settings") {
+			targetPath = directory + "/" + sourcePath;
+			sourcePath = currentSysDirectory + "/" + sourcePath;
 		}
 
 		moveFile(sourcePath, targetPath, undefined, undefined, draggingObjects.eq(i));
@@ -2249,7 +2356,7 @@ function getFilePath() {
 	}
 
 	if ($("#page_sysedit").hasClass("active")) {
-		return "0:/sys";
+		return currentSysDirectory;
 	}
 
 	return "0:/menu";
@@ -2282,6 +2389,8 @@ function resetFiles() {
 
 	currentMacroDirectory = "0:/macros";
 	//updateMacroFiles();
+
+	currentSysDirectory = "0:/sys";
 
 	//updateFilaments();
 
