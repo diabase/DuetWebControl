@@ -920,7 +920,7 @@ $("#panel_offset label.btn").click(function() {
 
 $("#th-axis-positions").on("click", function() {
 	showMachineCoords = !showMachineCoords;
-	$(this).text(showMachineCoords ? T("Machine Coords") : T("Axis Positions"));
+	$(this).text(showMachineCoords ? T("Absolute Coordinates") : T("WCS Positions"));
 	updateStatus();
 })
 

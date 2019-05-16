@@ -389,6 +389,13 @@ button.btn-connect,
 	width: 100px;
 }
 
+.th-axis-positions {
+	cursor: pointer;
+}
+.th-axis-positions:hover {
+	text-decoration: underline;
+}
+
 .heater-0 {
 	color: #0000FF !important;
 }
