@@ -24,6 +24,7 @@ var heaterNames, bedHeater = 0, chamberHeater = -1, cabinetHeater = -1, numTempS
 var fanNames, controllableFans;
 var coldExtrudeTemp, coldRetractTemp, tempLimit;
 var wcsNames;
+var showMachineCoords = false;
 
 var toolMapping = undefined;
 var spindleTools, spindleCurrents, spindleActives;
@@ -916,6 +917,12 @@ $("#panel_offset label.btn").click(function() {
 	$(this).parent().find("label.btn").removeClass("btn-primary").addClass("btn-default");
 	$(this).removeClass("btn-default").addClass("btn-primary");
 });
+
+$("#th-axis-positions").on("click", function() {
+	showMachineCoords = !showMachineCoords;
+	$(this).text(showMachineCoords ? T("Machine Coords") : T("Axis Positions"));
+	updateStatus();
+})
 
 $("#table_calibration_tools").on("click", ".tool-offset-up", function(e) {
 	var axis = $(this).data("axis");

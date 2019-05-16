@@ -601,8 +601,10 @@ function updateStatus() {
 				needGuiUpdate = true;
 			}
 
+
 			for(var i = 0; i < status.coords.xyz.length; i++) {
-				$("td[data-axis='" + i + "']").html(status.coords.xyz[i].toFixed(2));
+				var currentCoords = showMachineCoords !== true ? status.coords.xyz : status.coords.machine;
+				$("td[data-axis='" + i + "']").html(currentCoords[i].toFixed(2));
 			}
 
 			if (geometry == "delta" && axisNames.indexOf("X") != -1 && !status.coords.axesHomed[axisNames.indexOf("X")]) {
