@@ -1014,7 +1014,14 @@ $("#table_workspace_coordinates td span.wcs-cell").click(function(e) {
 			setTimeout(updateWCSTable, 750);
 		}
 	}, $_this.text());
+	e.preventDefault();
 });
+
+$("#table_workspace_coordinates button").click(function(e) {
+	var wcsNo = $(this).data("wcs");
+	sendGCode(wcsNames[wcsNo]);
+	e.preventDefault();
+})
 
 $("#a_refresh_tool_offsets").click(function(e) {
 	$(this).addClass("hidden");

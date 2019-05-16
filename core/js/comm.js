@@ -630,6 +630,21 @@ function updateStatus() {
 				$(".msgbox-a").text("A=" + a);
 			}
 
+			// Current WCS
+			$(".current-wcs").toggleClass("hidden", !status.coords.hasOwnProperty("wpl"));
+			if (status.coords.hasOwnProperty("wpl")) {
+				$(".current-wcs-check").remove();
+				$("#td_current_wcs").text(wcsNames[status.coords.wpl]);
+
+				var $table_workspace_coordinates = $("#table_workspace_coordinates");
+				var checkmark = ' <span class="glyphicon glyphicon-check current-wcs-check"></span>';
+				var $tr = $table_workspace_coordinates.find("tr[data-wcs=" + status.coords.wpl + "]")[0];
+				$($tr.children[0]).append(checkmark);
+
+				$table_workspace_coordinates.find("button").removeClass("disabled");
+				$table_workspace_coordinates.find("button[data-wcs=" + status.coords.wpl + "]").addClass("disabled");
+			}
+
 			// Current Tool
 			if (lastStatusResponse != undefined && lastStatusResponse.currentTool != status.currentTool) {
 				setCurrentTool(status.currentTool);
