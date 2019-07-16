@@ -431,6 +431,7 @@ function updateGui() {
 
 	// Tool list on Calibration page (OEM)
 	if (vendor == "diabase") {
+		$('.tool-calibrate').text(T('Find Center'));
 		fillToolOffsetTable();
 		updateWCSTable();
 	}
@@ -953,10 +954,9 @@ $("#table_calibration_tools").on("click", ".tool-offset-down", function(e) {
 
 $("#table_calibration_tools").on("click", ".tool-calibrate", function(e) {
 	if (!$(this).hasClass("disabled")) {
-		var toolNumber = $(this).parents("tr").data("tool");
 		showConfirmationDialog(T("Calibrate Tool"), T("Before you proceed please make sure that the calibration tool is installed. Continue?"),
 			function() {
-				sendGCode('M98 P"tcalibrate' + toolNumber + '.g"');
+				sendGCode('M98 P"tcalibrate.g"');
 			}
 		);
 	}
@@ -1056,8 +1056,6 @@ function fillToolOffsetTable() {
 		row += '<button class="btn btn-default tool-offset-up" data-axis="Z"><span class="glyphicon glyphicon-arrow-down"></span> Down</button>';
 		row += '<span data-axis="Z" class="tool-offset-value">' + T("{0} mm", tool.offsets[2].toFixed(2)) + '</span>';
 		row += '<button class="btn btn-default tool-offset-down" data-axis="Z"><span class="glyphicon glyphicon-arrow-up"></span> Up</button>';
-		row += '</td><td>';
-		row += '<button class="btn btn-success tool-calibrate"><span class="glyphicon glyphicon-screenshot"></span> ' + T("Find Center") + '</button>';
 		row += '</td><td>';
 		row += '<button class="btn btn-info tool-set-offset"><span class="glyphicon glyphicon-ok"></span> ' + T("Set Offset") + '</button>';
 		row += '</td></tr>';
