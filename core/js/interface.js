@@ -991,6 +991,18 @@ $(".btn-workpiece-probe").click(function(e) {
 	e.preventDefault();
 });
 
+$(".btn-touchoff-plate").click(function(e) {
+	// Get the axis to move
+	var axis = $(this).data("axis-letter");
+	if (axis == undefined) {
+		return;
+	}
+	var direction = $(this).data("dir");
+	var code = "M98 Ptouchoff_" + axis + direction + ".g";
+	sendGCode(code);
+	e.preventDefault();
+});
+
 $("#panel_extrusion_factors table td.extrusion-factor-value").click(function(e) {
 	var $_this = $(this);
 	var drive = $_this.data("drive");
