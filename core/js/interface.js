@@ -431,7 +431,7 @@ function updateGui() {
 
 	// Tool list on Calibration page (OEM)
 	if (vendor == "diabase") {
-		$('.tool-calibrate').text(T('Find Center'));
+		$('#tool-calibrate span:last').text(T('Find center of cavity'));
 		fillToolOffsetTable();
 		updateWCSTable();
 	}
@@ -909,6 +909,11 @@ $("#table_tools").on("click", "tr > th:first-child > a", function(e) {
 	e.preventDefault();
 });
 
+$('.btn-jog-dialog').click(function(e) {
+	sendGCode('M291 P"" S2 X1 Y1 Z1 U1 V1 W1 A1 B1 C1');
+	e.preventDefault();
+});
+
 $('input[name="offset"]').parent().contextmenu(function(e) {
 	showStepDialog("offset", $(this).index(), Math.abs($(this).children("input").prop("value")));
 	e.preventDefault();
@@ -952,7 +957,7 @@ $("#table_calibration_tools").on("click", ".tool-offset-down", function(e) {
 });
 
 
-$("#table_calibration_tools").on("click", ".tool-calibrate", function(e) {
+$("#tool-calibrate").click(function(e) {
 	if (!$(this).hasClass("disabled")) {
 		showConfirmationDialog(T("Calibrate Tool"), T("Before you proceed please make sure that the calibration tool is installed. Continue?"),
 			function() {
@@ -1069,7 +1074,7 @@ function fillToolOffsetTable() {
 		row += '<span data-axis="Z" class="tool-offset-value">' + T("{0} mm", tool.offsets[2].toFixed(2)) + '</span>';
 		row += '<button class="btn btn-default tool-offset-down" data-axis="Z"><span class="glyphicon glyphicon-arrow-up"></span> Up</button>';
 		row += '</td><td>';
-		row += '<button class="btn btn-info tool-set-offset"><span class="glyphicon glyphicon-ok"></span> ' + T("Set Offset") + '</button>';
+		row += '<button class="btn btn-info tool-set-offset"><span class="glyphicon glyphicon-ok"></span> ' + T("Set X-Y") + '</button>';
 		row += '</td></tr>';
 
 		$("#table_calibration_tools > tbody").append(row);
@@ -1120,12 +1125,24 @@ function updateWCSTable() {
 				"wcs9": [],
 			};
 			var numberMatch = '[+-]?\\d+(?:\\.\\d+)?';
-			var re = new RegExp('G10 L2 P([0-9]) X(' + numberMatch + ') Y(' + numberMatch + ') Z(' + numberMatch + ')');
+			var re = new RegExp(
+				'G10 L2 P([0-9])'
+				+ ' X(' + numberMatch + ')'
+				+ ' Y(' + numberMatch + ')'
+				+ ' Z(' + numberMatch + ')'
+				+ '(?: A(' + numberMatch +'))?'
+				+ '(?: C(' + numberMatch +'))?'
+			);
 			$.each(tableCells, function() {
 				var $_this = $(this);
 				var wcs = $_this.parents("tr").data("wcs");
 				var axis = $_this.data("axis");
-				var axisIndex = (axis == "X") ? 0 : (axis == "Y") ? 1 : 2;
+				var axisIndex =
+					(axis == "X") ? 0
+					: (axis == "Y") ? 1
+					: (axis == "Z") ? 2
+					: (axis == "A") ? 3
+					: (axis == "C") ? 4 : -1;
 				wcsCells["wcs" + wcs][axisIndex] = $_this;
 			});
 			$.each(lines, function() {
@@ -1137,6 +1154,12 @@ function updateWCSTable() {
 				wcsCells["wcs" + wcs][0].text(match[2]);
 				wcsCells["wcs" + wcs][1].text(match[3]);
 				wcsCells["wcs" + wcs][2].text(match[4]);
+				if (match.length > 5) {
+					wcsCells["wcs" + wcs][3].text(match[5]);
+					if (match.length > 6) {
+						wcsCells["wcs" + wcs][4].text(match[6]);
+					}
+				}
 			});
 			$("#a_refresh_wcs").removeClass("hidden");
 		},

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!--	Duet Web Control v1.22.8-RC4+2-diabase
+<!--	Duet Web Control v1.22.8-RC4+3-diabase
 
 	written by Christian Hammacher
 
@@ -98,6 +98,8 @@
 								<span class="glyphicon glyphicon-dashboard"></span>
 							</button>
 						</div>
+
+						<button type="button" class="btn btn-info btn-jog-dialog navbar-btn navbar-left hidden diabase"><span class="glyphicon glyphicon-move"></span> <span>Show Jog Buttons</span></button>
 
 						<button type="button" class="btn btn-info btn-connect navbar-btn navbar-left hidden"><span class="glyphicon glyphicon-log-in"></span> <span>Connect</span></button>
 
@@ -2173,7 +2175,7 @@
 													<th>X</th>
 													<th>Y</th>
 													<th>Z</th>
-													<th><button class="btn btn-success tool-calibrate" title="Find Center with the current tool"><span class="glyphicon glyphicon-screenshot"></span>Find Center</button></th>
+													<th></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -2238,6 +2240,14 @@
 													</div>
 												</div>
 											</div>
+											<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" id="div_find_center">
+												<label>&nbsp;</label>
+												<div class="btn-group btn-group-justified" data-toggle="buttons">
+													<div class="btn-group">
+														<button class="btn btn-success" id="tool-calibrate" title="Find center of cavity with the current tool"><span class="glyphicon glyphicon-screenshot"></span> <span>Find center of cavity</span></button>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 
@@ -2261,7 +2271,7 @@
 														<button type="button" class="btn btn-default btn-touchoff-plate" data-axis-letter="Y" data-dir="min" title="Probe towards Y min"><span>Y</span> (<span class="glyphicon glyphicon-arrow-down"></span>)</button>
 													</div>
 													<div class="btn-group">
-														<button type="button" class="btn btn-default btn-touchoff-plate" data-axis-letter="Z" data-dir="" title="Probe Z"><span>Z</span> (<span class="glyphicon glyphicon-arrow-down">)</span></button>
+														<button type="button" class="btn btn-default btn-touchoff-plate" data-axis-letter="Z" data-dir="" title="Touchoff Z">Touchoff Z</button>
 													</div>
 												</div>
 											</div>
@@ -2280,6 +2290,8 @@
 													<th>X</th>
 													<th>Y</th>
 													<th>Z</th>
+													<th>A</th>
+													<th>C</th>
 													<th>Change to</th>
 												</tr>
 											</thead>
@@ -2289,6 +2301,8 @@
 													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
 													<td><button class="btn btn-sm" data-wcs="1"><span class="glyphicon glyphicon-retweet"></span></button></td>
 												</tr>
 												<tr data-wcs="2">
@@ -2296,6 +2310,8 @@
 													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
 													<td><button class="btn btn-sm" data-wcs="2"><span class="glyphicon glyphicon-retweet"></span></button></td>
 												</tr>
 												<tr data-wcs="3">
@@ -2303,6 +2319,8 @@
 													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
 													<td><button class="btn btn-sm" data-wcs="3"><span class="glyphicon glyphicon-retweet"></span></button></td>
 												</tr>
 												<tr data-wcs="4">
@@ -2310,6 +2328,8 @@
 													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
 													<td><button class="btn btn-sm" data-wcs="4"><span class="glyphicon glyphicon-retweet"></span></button></td>
 												</tr>
 												<tr data-wcs="5">
@@ -2317,6 +2337,8 @@
 													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
 													<td><button class="btn btn-sm" data-wcs="5"><span class="glyphicon glyphicon-retweet"></span></button></td>
 												</tr>
 												<tr data-wcs="6">
@@ -2324,6 +2346,8 @@
 													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
 													<td><button class="btn btn-sm" data-wcs="6"><span class="glyphicon glyphicon-retweet"></span></button></td>
 												</tr>
 												<tr data-wcs="7">
@@ -2331,6 +2355,8 @@
 													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
 													<td><button class="btn btn-sm" data-wcs="7"><span class="glyphicon glyphicon-retweet"></span></button></td>
 												</tr>
 												<tr data-wcs="8">
@@ -2338,6 +2364,8 @@
 													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
 													<td><button class="btn btn-sm" data-wcs="8"><span class="glyphicon glyphicon-retweet"></span></button></td>
 												</tr>
 												<tr data-wcs="9">
@@ -2345,6 +2373,8 @@
 													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
 													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
+													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
 													<td><button class="btn btn-sm" data-wcs="9"><span class="glyphicon glyphicon-retweet"></span></button></td>
 												</tr>
 											</tbody>
@@ -2424,7 +2454,7 @@
 														</tr>
 														<tr>
 															<th>Web Interface Version:</th>
-															<td id="dwc_version">1.22.8-RC4+2-diabase</td>
+															<td id="dwc_version">1.22.8-RC4+3-diabase</td>
 														</tr>
 													</table>
 													<span id="span_copyright">Web Interface by Christian Hammacher<br/>Licensed under the terms of the <a href="https://www.gnu.org/licenses/gpl-3.0" target="blank">GPL v3</a></span>
