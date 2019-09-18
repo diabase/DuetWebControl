@@ -1,7 +1,7 @@
 /* Main interface logic for Duet Web Control
- * 
+ *
  * written by Christian Hammacher (c) 2016-2018
- * 
+ *
  * licensed under the terms of the GPL v3
  * see http://www.gnu.org/licenses/gpl-3.0.html
  */
@@ -534,7 +534,7 @@ function resetGui() {
 		setFanVisibility(i, controllableFans & (1 << i));
 	}
 	$('#slider_fan_job_tool').slider("setValue", 35);
-	
+
 	$('#slider_speed').slider("setValue", 100);
 	for(var extr = 1; extr <= maxExtruders; extr++) {
 		$("#slider_extr_" + extr).slider("setValue", 100);
@@ -984,14 +984,7 @@ $(".btn-workpiece-probe").click(function(e) {
 		return;
 	}
 	var direction = $(this).data("dir");
-
-	// Send a G-code
-	var moveString = "M585 T1 E1000 F500 " + axis + " ";
-	if (direction === "max") {
-		moveString += "R30";
-	} else if (direction === "min") {
-		moveString += "R-30";
-	}
+	var code = 'M98 P"workpieceprobe_' + axis + direction + '.g"';
 	sendGCode(moveString);
 	e.preventDefault();
 });
@@ -1003,7 +996,7 @@ $(".btn-touchoff-plate").click(function(e) {
 		return;
 	}
 	var direction = $(this).data("dir");
-	var code = "M98 Ptouchoff_" + axis + direction + ".g";
+	var code = 'M98 P"touchoff_' + axis + direction + '.g"';
 	sendGCode(code);
 	e.preventDefault();
 });
@@ -1056,6 +1049,9 @@ function fillToolOffsetTable() {
 	$("#table_calibration_tools > tbody").children().remove();
 	for(var i = 0 ; i < toolMapping.length; i++) {
 		var tool = toolMapping[i];
+		if (tool.number === 10) {
+			continue;
+		}
 		if (!tool.hasOwnProperty("offsets")) {
 			tool.offsets = [ 0.0, 0.0, 0.0 ];
 		}
@@ -1651,7 +1647,7 @@ $("#table_heaters > tbody > tr > td > div > input," +
 });
 
 $(".table-axis-positions td").click(function() {
-	if (isConnected) {
+	if (isConnected && vendor != "diabase") {
 		var axis = axisNames[$(this).data("axis")];
 		showTextInput(T("Set {0} position", axis), T("Please enter a new position for the {0} axis:", axis), function(value) {
 			if (!isNaN(value)) {
