@@ -985,7 +985,7 @@ $(".btn-workpiece-probe").click(function(e) {
 	}
 	var direction = $(this).data("dir");
 	var code = 'M98 P"workpieceprobe_' + axis + direction + '.g"';
-	sendGCode(moveString);
+	sendGCode(code);
 	e.preventDefault();
 });
 
