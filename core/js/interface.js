@@ -1126,7 +1126,11 @@ function updateWCSTable() {
 				+ ' X(' + numberMatch + ')'
 				+ ' Y(' + numberMatch + ')'
 				+ ' Z(' + numberMatch + ')'
+				+ '(?: U(' + numberMatch +'))?'
+				+ '(?: V(' + numberMatch +'))?'
+				+ '(?: W(' + numberMatch +'))?'
 				+ '(?: A(' + numberMatch +'))?'
+				+ '(?: B(' + numberMatch +'))?'
 				+ '(?: C(' + numberMatch +'))?'
 			);
 			$.each(tableCells, function() {
@@ -1150,12 +1154,8 @@ function updateWCSTable() {
 				wcsCells["wcs" + wcs][0].text(match[2]);
 				wcsCells["wcs" + wcs][1].text(match[3]);
 				wcsCells["wcs" + wcs][2].text(match[4]);
-				if (match.length > 5) {
-					wcsCells["wcs" + wcs][3].text(match[5]);
-					if (match.length > 6) {
-						wcsCells["wcs" + wcs][4].text(match[6]);
-					}
-				}
+				wcsCells["wcs" + wcs][3].text(match[8]);
+				wcsCells["wcs" + wcs][4].text(match[10]);
 			});
 			$("#a_refresh_wcs").removeClass("hidden");
 		},
