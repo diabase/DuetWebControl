@@ -1524,6 +1524,8 @@ function setOem(oem) {
 		$("#btn_bed_compensation").addClass("disable-active-processing");
 		$("#btn_bed_dropdown").addClass("disable-active-processing");
 
+		$('#slider_speed').slider({min: 1});
+
 		// Re-apply settings
 		applySettings();
 	}
