@@ -1014,8 +1014,11 @@ $("#panel_extrusion_factors table td.extrusion-factor-value").click(function(e) 
 
 $("#table_workspace_coordinates td span.wcs-cell").click(function(e) {
 	var $_this = $(this);
-	var axis = $_this.data("axis");
 	var wcs = parseInt($_this.parents("tr").data("wcs"));
+	if (wcs === 1) {
+		return;
+	}
+	var axis = $_this.data("axis");
 	var wcsName = wcsNames[wcs];
 	showTextInput(T("Set {0} offset", wcsName), T("Please enter a new {0} offset for {1}:", axis, wcsName), function(value) {
 		if (!isNaN(value)) {
