@@ -2150,7 +2150,7 @@
 						<!-- Calibration -->
 						<div id="page_calibration" class="page">
 							<div class="row">
-								<div class="col-md-8">
+								<div class="col-md-12">
 									<div id="div_webcam_calibration" class="panel panel-default hidden">
 										<div class="panel-heading">Live Stream</div>
 										<div class="panel-body">
@@ -2175,7 +2175,6 @@
 													<th>X</th>
 													<th>Y</th>
 													<th>Z</th>
-													<th></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -2224,27 +2223,27 @@
 												<label>Start probing from (and move)</label>
 												<div class="btn-group btn-group-justified" data-toggle="buttons">
 													<div class="btn-group">
-														<button type="button" class="btn btn-default btn-workpiece-probe" data-axis-letter="X" data-dir="max" title="Probe towards X max"><span>-X</span> (<span class="glyphicon glyphicon-arrow-right"></span>)</button>
+														<button type="button" class="btn btn-default btn-workpiece-probe btn-move-machine" data-axis-letter="X" data-dir="max" title="Probe towards X max"><span>-X</span> (<span class="glyphicon glyphicon-arrow-right"></span>)</button>
 													</div>
 													<div class="btn-group">
-														<button type="button" class="btn btn-default btn-workpiece-probe" data-axis-letter="X" data-dir="min" title="Probe towards X min"><span>X</span> (<span class="glyphicon glyphicon-arrow-left"></span>)</button>
+														<button type="button" class="btn btn-default btn-workpiece-probe btn-move-machine" data-axis-letter="X" data-dir="min" title="Probe towards X min"><span>X</span> (<span class="glyphicon glyphicon-arrow-left"></span>)</button>
 													</div>
 													<div class="btn-group">
-														<button type="button" class="btn btn-default btn-workpiece-probe" data-axis-letter="Y" data-dir="max" title="Probe towards Y max"><span>-Y</span> (<span class="glyphicon glyphicon-arrow-up"></span>)</button>
+														<button type="button" class="btn btn-default btn-workpiece-probe btn-move-machine" data-axis-letter="Y" data-dir="max" title="Probe towards Y max"><span>-Y</span> (<span class="glyphicon glyphicon-arrow-up"></span>)</button>
 													</div>
 													<div class="btn-group">
-														<button type="button" class="btn btn-default btn-workpiece-probe" data-axis-letter="Y" data-dir="min" title="Probe towards Y min"><span>Y</span> (<span class="glyphicon glyphicon-arrow-down"></span>)</button>
+														<button type="button" class="btn btn-default btn-workpiece-probe btn-move-machine" data-axis-letter="Y" data-dir="min" title="Probe towards Y min"><span>Y</span> (<span class="glyphicon glyphicon-arrow-down"></span>)</button>
 													</div>
 													<div class="btn-group">
-														<button type="button" class="btn btn-default btn-workpiece-probe" data-axis-letter="Z" data-dir="min" title="Probe towards Z min"><span>Z</span> (<span class="glyphicon glyphicon-arrow-down">)</span></button>
+														<button type="button" class="btn btn-default btn-workpiece-probe btn-move-machine" data-axis-letter="Z" data-dir="min" title="Probe towards Z min"><span>Z</span> (<span class="glyphicon glyphicon-arrow-down">)</span></button>
 													</div>
 												</div>
 											</div>
-											<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" id="div_find_center">
+											<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="div_find_center">
 												<label>&nbsp;</label>
 												<div class="btn-group btn-group-justified" data-toggle="buttons">
 													<div class="btn-group">
-														<button class="btn btn-success" id="tool-calibrate" title="Find center of cavity with the current tool"><span class="glyphicon glyphicon-screenshot"></span> <span>Find center of cavity</span></button>
+														<button class="btn btn-default btn-move-machine" id="tool-calibrate" title="Find center of cavity with the current tool"><span class="glyphicon glyphicon-screenshot"></span> <span>Find center of cavity</span></button>
 													</div>
 												</div>
 											</div>
@@ -2256,22 +2255,22 @@
 											<span>Touch-off Plate</span>
 										</div>
 										<div class="panel-body">
-											<div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 no-horizontal-padding" id="div_touchoff_plate">
+											<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 no-horizontal-padding" id="div_touchoff_plate">
 												<div class="btn-group btn-group-justified" data-toggle="buttons">
 													<div class="btn-group hidden">
-														<button type="button" class="btn btn-default btn-touchoff-plate" data-axis-letter="X" data-dir="max" title="Probe towards X max"><span>-X</span> (<span class="glyphicon glyphicon-arrow-right"></span>)</button>
+														<button type="button" class="btn btn-default btn-touchoff-plate" btn-move-machine data-axis-letter="X" data-dir="max" title="Probe towards X max"><span>-X</span> (<span class="glyphicon glyphicon-arrow-right"></span>)</button>
 													</div>
 													<div class="btn-group hidden">
-														<button type="button" class="btn btn-default btn-touchoff-plate" data-axis-letter="X" data-dir="min" title="Probe towards X min"><span>X</span> (<span class="glyphicon glyphicon-arrow-left"></span>)</button>
+														<button type="button" class="btn btn-default btn-touchoff-plate" btn-move-machine data-axis-letter="X" data-dir="min" title="Probe towards X min"><span>X</span> (<span class="glyphicon glyphicon-arrow-left"></span>)</button>
 													</div>
 													<div class="btn-group hidden">
-														<button type="button" class="btn btn-default btn-touchoff-plate" data-axis-letter="Y" data-dir="max" title="Probe towards Y max"><span>-Y</span> (<span class="glyphicon glyphicon-arrow-up"></span>)</button>
+														<button type="button" class="btn btn-default btn-touchoff-plate" btn-move-machine data-axis-letter="Y" data-dir="max" title="Probe towards Y max"><span>-Y</span> (<span class="glyphicon glyphicon-arrow-up"></span>)</button>
 													</div>
 													<div class="btn-group hidden">
-														<button type="button" class="btn btn-default btn-touchoff-plate" data-axis-letter="Y" data-dir="min" title="Probe towards Y min"><span>Y</span> (<span class="glyphicon glyphicon-arrow-down"></span>)</button>
+														<button type="button" class="btn btn-default btn-touchoff-plate" btn-move-machine data-axis-letter="Y" data-dir="min" title="Probe towards Y min"><span>Y</span> (<span class="glyphicon glyphicon-arrow-down"></span>)</button>
 													</div>
 													<div class="btn-group">
-														<button type="button" class="btn btn-default btn-touchoff-plate" data-axis-letter="Z" data-dir="" title="Touchoff Z">Touchoff Z</button>
+														<button type="button" class="btn btn-default btn-touchoff-plate btn-move-machine" data-axis-letter="Z" data-dir="" title="Touchoff Z">Touchoff Z</button>
 													</div>
 												</div>
 											</div>
@@ -2280,117 +2279,235 @@
 
 									<div class="panel panel-default" id="panel_workspace_coordinates">
 										<div class="panel-heading">
-											<span>Workpiece Coordinate Offsets (click to edit)</span>
+											<span>Workspace Coordinate Offsets (click to edit)</span>
 											<span class="pull-right"><a href="#" id="a_refresh_wcs"><span class="glyphicon glyphicon-refresh"></span> Refresh</a></span>
 										</div>
 										<table id="table_workspace_coordinates" class="table table-striped">
 											<thead>
 												<tr>
 													<th>Workpiece</th>
+													<th>Change to</th>
 													<th>X</th>
 													<th>Y</th>
 													<th>Z</th>
 													<th>A</th>
 													<th>C</th>
-													<th>Change to</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr data-wcs="1">
-													<td>G54</td>
-													<td><span data-axis="X" class="wcs-cell" style="cursor: auto;">0.00</span> mm</td>
-													<td><span data-axis="Y" class="wcs-cell" style="cursor: auto;">0.00</span> mm</td>
-													<td><span data-axis="Z" class="wcs-cell" style="cursor: auto;">0.00</span> mm</td>
-													<td><span data-axis="A" class="wcs-cell" style="cursor: auto;">0.00</span> mm</td>
-													<td><span data-axis="C" class="wcs-cell" style="cursor: auto;">0.00</span> mm</td>
-													<td><button class="btn btn-sm" data-wcs="1"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>1 (G54)</td>
+													<td><button class="btn btn-sm btn-activate-wcs" data-wcs="1"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>
+														<span data-axis="X" class="wcs-cell" style="cursor: auto;">0.00</span> mm&nbsp;
+													</td>
+													<td>
+														<span data-axis="Y" class="wcs-cell" style="cursor: auto;">0.00</span> mm&nbsp;
+													</td>
+													<td>
+														<span data-axis="Z" class="wcs-cell" style="cursor: auto;">0.00</span> mm&nbsp;
+													</td>
+													<td>
+														<span data-axis="A" class="wcs-cell" style="cursor: auto;">0.00</span> mm&nbsp;
+													</td>
+													<td>
+														<span data-axis="C" class="wcs-cell" style="cursor: auto;">0.00</span> mm&nbsp;
+													</td>
 												</tr>
 												<tr data-wcs="2">
-													<td>G55</td>
-													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
-													<td><button class="btn btn-sm" data-wcs="2"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>2 (G55)</td>
+													<td><button class="btn btn-sm btn-activate-wcs" data-wcs="2"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="X" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="X" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Y" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Y" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Z" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Z" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="A" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="A" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="C" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="C" class="wcs-cell">0.00</span> mm
+													</td>
 												</tr>
 												<tr data-wcs="3">
-													<td>G56</td>
-													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
-													<td><button class="btn btn-sm" data-wcs="3"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>3 (G56)</td>
+													<td><button class="btn btn-sm btn-activate-wcs" data-wcs="3"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="X" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="X" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Y" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Y" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Z" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Z" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="A" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="A" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="C" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="C" class="wcs-cell">0.00</span> mm
+													</td>
 												</tr>
 												<tr data-wcs="4">
-													<td>G57</td>
-													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
-													<td><button class="btn btn-sm" data-wcs="4"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>4 (G57)</td>
+													<td><button class="btn btn-sm btn-activate-wcs" data-wcs="4"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="X" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="X" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Y" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Y" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Z" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Z" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="A" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="A" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="C" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="C" class="wcs-cell">0.00</span> mm
+													</td>
 												</tr>
 												<tr data-wcs="5">
-													<td>G58</td>
-													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
-													<td><button class="btn btn-sm" data-wcs="5"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>5 (G58)</td>
+													<td><button class="btn btn-sm btn-activate-wcs" data-wcs="5"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="X" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="X" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Y" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Y" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Z" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Z" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="A" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="A" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="C" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="C" class="wcs-cell">0.00</span> mm
+													</td>
 												</tr>
 												<tr data-wcs="6">
-													<td>G59</td>
-													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
-													<td><button class="btn btn-sm" data-wcs="6"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>6 (G59)</td>
+													<td><button class="btn btn-sm btn-activate-wcs" data-wcs="6"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="X" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="X" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Y" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Y" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Z" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Z" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="A" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="A" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="C" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="C" class="wcs-cell">0.00</span> mm
+													</td>
 												</tr>
 												<tr data-wcs="7">
-													<td>G59.1</td>
-													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
-													<td><button class="btn btn-sm" data-wcs="7"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>7 (G59.1)</td>
+													<td><button class="btn btn-sm btn-activate-wcs" data-wcs="7"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="X" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="X" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Y" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Y" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Z" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Z" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="A" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="A" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="C" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="C" class="wcs-cell">0.00</span> mm
+													</td>
 												</tr>
 												<tr data-wcs="8">
-													<td>G59.2</td>
-													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
-													<td><button class="btn btn-sm" data-wcs="8"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>8 (G59.2)</td>
+													<td><button class="btn btn-sm btn-activate-wcs" data-wcs="8"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="X" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="X" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Y" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Y" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Z" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Z" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="A" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="A" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="C" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="C" class="wcs-cell">0.00</span> mm
+													</td>
 												</tr>
 												<tr data-wcs="9">
-													<td>G59.3</td>
-													<td><span data-axis="X" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Y" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="Z" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="A" class="wcs-cell">0.00</span> mm</td>
-													<td><span data-axis="C" class="wcs-cell">0.00</span> mm</td>
-													<td><button class="btn btn-sm" data-wcs="9"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>9 (G59.3)</td>
+													<td><button class="btn btn-sm btn-activate-wcs" data-wcs="9"><span class="glyphicon glyphicon-retweet"></span></button></td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="X" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="X" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Y" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Y" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="Z" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="Z" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="A" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="A" class="wcs-cell">0.00</span> mm
+													</td>
+													<td>
+														<button class="btn btn-default wcs-offset-set" data-axis="C" title="Set to current value"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;
+														<span data-axis="C" class="wcs-cell">0.00</span> mm
+													</td>
 												</tr>
 											</tbody>
 										</table>
-									</div>
-								</div>
-
-								<div class="col-md-4">
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<span>Axis Orientation</span>
-										</div>
-
-										<div class="panel-body">
-											<img id="img_calibration_diagram" src="about:blank" alt="(calibration diagram)" class="img-responsive">
-										</div>
 									</div>
 								</div>
 							</div>

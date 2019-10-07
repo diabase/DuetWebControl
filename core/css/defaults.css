@@ -11,6 +11,10 @@ body {
 	padding-right: 0px !important;
 }
 
+.btn-move-machine {
+	color: red;
+}
+
 dl {
 	margin-bottom: 0px !important;
 }
