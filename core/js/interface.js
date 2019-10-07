@@ -972,11 +972,15 @@ $("#table_calibration_tools").on("click", ".tool-offset-set", function(e) {
 		var toolNumber = $(this).parents("tr").data("tool");
 		var axis = $(this).data("axis");
 		var axisIndex = ((axis == "X") ? 0 : ((axis == "Y") ? 1 : 2));
-		sendGCode("G10 L1 O1 P" + toolNumber + " " + axis + lastStatusResponse.coords.xyz[axisIndex] + "\nM500");
+		var axisOffset = lastStatusResponse.coords.xyz[axisIndex] * -1;
+		var tool = getTool(toolNumber);
+		tool.offsets[axisIndex] = axisOffset;
 
-		$(this).closest("tr").find("td:nth-child(2) > span").text(T("{0} mm", lastStatusResponse.coords.xyz[0].toFixed(2)));
-		$(this).closest("tr").find("td:nth-child(3) > span").text(T("{0} mm", lastStatusResponse.coords.xyz[1].toFixed(2)));
-		$(this).closest("tr").find("td:nth-child(4) > span").text(T("{0} mm", lastStatusResponse.coords.xyz[2].toFixed(2)));
+		sendGCode("G10 L1 O1 P" + toolNumber + " " + axis + axisOffset + "\nM500");
+
+		$(this).closest("tr").find("td:nth-child(2) > span").text(T("{0} mm", tool.offsets[0].toFixed(2)));
+		$(this).closest("tr").find("td:nth-child(3) > span").text(T("{0} mm", tool.offsets[1].toFixed(2)));
+		$(this).closest("tr").find("td:nth-child(4) > span").text(T("{0} mm", tool.offsets[2].toFixed(2)));
 	}
 });
 
@@ -1086,7 +1090,7 @@ function fillToolOffsetTable() {
 		row += '<span data-axis="Y" class="tool-offset-value">' + T("{0} mm", tool.offsets[1].toFixed(2)) + '</span>';
 		row += '<button class="btn btn-default tool-offset-down" data-axis="Y"><span class="glyphicon glyphicon-arrow-up"></span> Back</button>';
 		row += '</td><td>';
-		row += '<button class="btn btn-default tool-offset-set" data-axis="Y" title="' + T("Set to current value") + '"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;'
+		row += '<button class="btn btn-default tool-offset-set" data-axis="Z" title="' + T("Set to current value") + '"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;'
 		row += '<button class="btn btn-default tool-offset-up" data-axis="Z"><span class="glyphicon glyphicon-arrow-down"></span> Down</button>';
 		row += '<span data-axis="Z" class="tool-offset-value">' + T("{0} mm", tool.offsets[2].toFixed(2)) + '</span>';
 		row += '<button class="btn btn-default tool-offset-down" data-axis="Z"><span class="glyphicon glyphicon-arrow-up"></span> Up</button>';
