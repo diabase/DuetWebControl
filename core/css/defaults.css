@@ -12,7 +12,7 @@ body {
 }
 
 .btn-move-machine {
-	color: red;
+	color: red !important;
 }
 
 dl {

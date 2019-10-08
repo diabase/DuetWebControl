@@ -1045,7 +1045,7 @@ $('#table_workspace_coordinates td .wcs-offset-set').click(function(e) {
 	}
 	var axis = $_this.data("axis");
 	sendGCode("G10 L20 P" + wcs + " " + axis + "0\nM500");
-	updateWCSTable();
+	setTimeout(updateWCSTable, 750);
 	e.preventDefault();
 });
 
