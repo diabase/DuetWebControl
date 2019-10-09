@@ -11,7 +11,7 @@ body {
 	padding-right: 0px !important;
 }
 
-.btn-move-machine {
+.btn-move-machine:hover {
 	color: red !important;
 }
 

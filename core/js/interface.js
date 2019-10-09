@@ -1080,17 +1080,17 @@ function fillToolOffsetTable() {
 
 		var row = '<tr data-tool="' + tool.number + '">';
 		row += '<td>' + ((tool.name == "") ? T("Tool {0}", tool.number) : tool.name) + '</td><td>';
-		row += '<button class="btn btn-default tool-offset-set" data-axis="X" title="' + T("Set to current value") + '"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;'
+		row += '<button class="btn btn-default tool-offset-set" data-axis="X" title="' + T("Set to current value") + '"><span class="glyphicon glyphicon-import"></span></button>&nbsp;'
 		row += '<button class="btn btn-default tool-offset-up" data-axis="X"><span class="glyphicon glyphicon-arrow-left"></span> Left</button>';
 		row += '<span data-axis="X" class="tool-offset-value">' + T("{0} mm", tool.offsets[0].toFixed(2)) + '</span>';
 		row += '<button class="btn btn-default tool-offset-down" data-axis="X"><span class="glyphicon glyphicon-arrow-right"></span> Right</button>';
 		row += '</td><td>';
-		row += '<button class="btn btn-default tool-offset-set" data-axis="Y" title="' + T("Set to current value") + '"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;'
+		row += '<button class="btn btn-default tool-offset-set" data-axis="Y" title="' + T("Set to current value") + '"><span class="glyphicon glyphicon-import"></span></button>&nbsp;'
 		row += '<button class="btn btn-default tool-offset-up" data-axis="Y"><span class="glyphicon glyphicon-arrow-down"></span> Front</button>';
 		row += '<span data-axis="Y" class="tool-offset-value">' + T("{0} mm", tool.offsets[1].toFixed(2)) + '</span>';
 		row += '<button class="btn btn-default tool-offset-down" data-axis="Y"><span class="glyphicon glyphicon-arrow-up"></span> Back</button>';
 		row += '</td><td>';
-		row += '<button class="btn btn-default tool-offset-set" data-axis="Z" title="' + T("Set to current value") + '"><span class="glyphicon glyphicon-import flip-x"></span></button>&nbsp;'
+		row += '<button class="btn btn-default tool-offset-set" data-axis="Z" title="' + T("Set to current value") + '"><span class="glyphicon glyphicon-import"></span></button>&nbsp;'
 		row += '<button class="btn btn-default tool-offset-up" data-axis="Z"><span class="glyphicon glyphicon-arrow-down"></span> Down</button>';
 		row += '<span data-axis="Z" class="tool-offset-value">' + T("{0} mm", tool.offsets[2].toFixed(2)) + '</span>';
 		row += '<button class="btn btn-default tool-offset-down" data-axis="Z"><span class="glyphicon glyphicon-arrow-up"></span> Up</button>';
