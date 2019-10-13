@@ -972,7 +972,7 @@ $("#table_calibration_tools").on("click", ".tool-offset-set", function(e) {
 		var toolNumber = $(this).parents("tr").data("tool");
 		var axis = $(this).data("axis");
 		var axisIndex = ((axis == "X") ? 0 : ((axis == "Y") ? 1 : 2));
-		var axisOffset = lastStatusResponse.coords.xyz[axisIndex] * -1;
+		var axisOffset = lastStatusResponse.coords.xyz[axisIndex] * (axis == "Z" ? -1 : 1);
 		var tool = getTool(toolNumber);
 		tool.offsets[axisIndex] = axisOffset;
 
