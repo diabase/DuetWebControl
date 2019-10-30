@@ -938,7 +938,7 @@ $("#table_calibration_tools").on("click", ".tool-offset-up", function(e) {
 	if (tool.hasOwnProperty("offsets")) {
 		var axisIndex = ((axis == "X") ? 0 : ((axis == "Y") ? 1 : 2));
 		tool.offsets[axisIndex] = Math.round((tool.offsets[axisIndex] + amount) * 100) / 100;
-		sendGCode("G10 L1 O1 P" + toolNumber + " " + axis + tool.offsets[axisIndex] + "\nM500");
+		sendGCode("G10 L1 O1 P" + toolNumber + " " + axis + tool.offsets[axisIndex] + "\nM500 P10");
 		$(this).parents("td").children("span").text(T("{0} mm", tool.offsets[axisIndex].toFixed(2)));
 	}
 });
@@ -951,7 +951,7 @@ $("#table_calibration_tools").on("click", ".tool-offset-down", function(e) {
 	if (tool.hasOwnProperty("offsets")) {
 		var axisIndex = ((axis == "X") ? 0 : ((axis == "Y") ? 1 : 2));
 		tool.offsets[axisIndex] = Math.round((tool.offsets[axisIndex] - amount) * 100) / 100;
-		sendGCode("G10 L1 O1 P" + toolNumber + " " + axis + tool.offsets[axisIndex] + "\nM500");
+		sendGCode("G10 L1 O1 P" + toolNumber + " " + axis + tool.offsets[axisIndex] + "\nM500 P10");
 		$(this).parents("td").children("span").text(T("{0} mm", tool.offsets[axisIndex].toFixed(2)));
 	}
 });
@@ -972,7 +972,7 @@ $("#table_calibration_tools").on("click", ".tool-offset-set", function(e) {
 		var tool = getTool(toolNumber);
 		tool.offsets[axisIndex] = axisOffset;
 
-		sendGCode("G10 L1 O1 P" + toolNumber + " " + axis + axisOffset + "\nM500");
+		sendGCode("G10 L1 O1 P" + toolNumber + " " + axis + axisOffset + "\nM500 P10");
 
 		$(this).closest("tr").find("td:nth-child(2) > span").text(T("{0} mm", tool.offsets[0].toFixed(2)));
 		$(this).closest("tr").find("td:nth-child(3) > span").text(T("{0} mm", tool.offsets[1].toFixed(2)));
@@ -1104,7 +1104,7 @@ function fillToolOffsetTable() {
 			showTextInput(T("Set {0} position", axis), T("Please enter a new offset for the {0} axis:", axis), function(value) {
 				if (!isNaN(value)) {
 					tool.offsets[axisIndex] = parseFloat(value);
-					sendGCode("G10 L1 O1 P" + toolNumber + " " + axis + tool.offsets[axisIndex] + "\nM500");
+					sendGCode("G10 L1 O1 P" + toolNumber + " " + axis + tool.offsets[axisIndex] + "\nM500 P10");
 					span.text(T("{0} mm", tool.offsets[axisIndex].toFixed(2)));
 				}
 			}, tool.offsets[axisIndex]);
