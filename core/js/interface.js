@@ -959,11 +959,7 @@ $("#table_calibration_tools").on("click", ".tool-offset-down", function(e) {
 
 $("#tool-calibrate").click(function(e) {
 	if (!$(this).hasClass("disabled")) {
-		showConfirmationDialog(T("Calibrate Tool"), T("Before you proceed please make sure that the calibration tool is installed. Continue?"),
-			function() {
-				sendGCode('M98 P"tcalibrate.g"');
-			}
-		);
+		sendGCode('M98 P"tcalibrate.g"');
 	}
 });
 
