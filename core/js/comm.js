@@ -362,6 +362,10 @@ function updateStatus() {
 
 					$("#table_drives > tbody > tr").eq(i).children().eq(1).text(displayText);
 				}
+				if (vendor == "diabase") {
+					var touchplateInstalled = ((status.endstops & (1 << 7)) == 0);
+					$('#touchoffplateinstalled').toggleClass("hidden", !touchplateInstalled);
+				}
 			}
 
 			// Geometry
