@@ -335,7 +335,8 @@ export default class PollConnector extends BaseConnector {
 					drives: [response.coords.xyz.length + index],
 					factor: factor / 100
 				})),
-				speedFactor: response.params.speedFactor / 100
+				speedFactor: response.params.speedFactor / 100,
+				currentWorkplace: response.coords.wpl,
 			},
 			scanner: (response.scanner) ? {
 				progress: response.scanner.progress,
@@ -418,7 +419,7 @@ export default class PollConnector extends BaseConnector {
 					compensation: response.compensation,
 					geometry: {
 						type: response.geometry
-					}
+					},
 				},
 				network: {
 					name: response.name
@@ -627,6 +628,35 @@ export default class PollConnector extends BaseConnector {
 				}
 			});
 		}
+
+		const wcsResponse = await this.request('GET', 'rr_model', { "key": "move.axes[].workplaceOffsets" });
+		quickPatch(newData, {
+			move: {
+				axes: wcsResponse.result.map((workplaceOffsets) => ({
+					workplaceOffsets,
+				})),
+			},
+		})
+		const sensorsResponse = await this.request('GET', 'rr_model', { "key": "sensors.probes[]" });
+		quickPatch(newData, {
+			sensors: {
+				probes: sensorsResponse.result.map((probe) => ({
+					type: probe.type,
+					disablesBed: probe.disablesHeaters,
+					diveHeight: probe.diveHeight,
+					offsets: probe.offsets,
+					maxProbeCount: probe.maxProbeCount,
+					recoveryTime: probe.recoveryTime,
+					threshold: probe.threshold,
+					speed: probe.speed,
+					tolerance: probe.tolerance,
+					travelSpeed: probe.travelSpeed,
+					triggerHeight: probe.triggerHeight,
+					value: probe.value[0],
+					secondaryValues: probe.value.slice(1),
+				})),
+			},
+		})
 
 		// Update the data model
 		await this.dispatch('update', newData);

@@ -64,8 +64,17 @@ export default {
 		newFile: {
 			caption: 'New File'
 		},
+		probeWorkpiece: {
+			findCenterOfCavity: 'Find center of cavity',
+		},
 		refresh: {
 			caption: 'Refresh'
+		},
+		touchoff: {
+			touchoff: 'Touch-off {0}',
+		},
+		tooloffsets: {
+			setToCurrent: 'Set to current value',
 		},
 		upload: {
 			gcodes: {
@@ -100,7 +109,10 @@ export default {
 				caption: 'Upload Update',
 				title: 'Upload an update package (drag&drop is supported as well)'
 			}
-		}
+		},
+		wcs: {
+			setToCurrent: 'Set to current value',
+		},
 	},
 	chart: {
 		layer: {
@@ -156,6 +168,10 @@ export default {
 			title: 'Edit extrusion feedrate',
 			prompt: 'Please enter a new feedrate for the clicked button:'
 		},
+		editToolOffsetAmount: {
+			title: 'Edit tool offset movement amount',
+			prompt: 'Please enter a new amount for the clicked button:'
+		},
 		factoryReset: {
 			title: 'Perform factory reset?',
 			prompt: 'Are you sure you wish to perform a factory reset? All saved settings will be lost.'
@@ -200,9 +216,21 @@ export default {
 			prompt: 'A heater fault has occurred on heater {0}. It is strongly advised to turn off your machine now and to check your wiring before you continue. If you are absolutely sure that this is not a phsical problem, you can reset the heater fault ON YOUR OWN RISK. Be aware that this is NOT RECOMMENDED and can lead to further problems. How would you like to proceed?',
 			resetFault: 'Reset Fault'
 		},
+		resetWCS: {
+			title: 'Reset {0}',
+			prompt: 'Do you want to reset {0} to all 0?',
+		},
 		runMacro: {
 			title: 'Run {0}',
 			prompt: 'Do you want to run {0}?'
+		},
+		setToolOffset: {
+			title: 'Set {0} offset',
+			prompt: 'Please enter a new {0} offset for {1}:'
+		},
+		setWCSOffset: {
+			title: 'Set {0} offset',
+			prompt: 'Please enter a new {0} offset for {1}:'
 		},
 		startJob: {
 			title: 'Start {0}',
@@ -381,7 +409,8 @@ export default {
 			caption: 'Machine Control',
 			dashboard: 'Dashboard',
 			console: 'Console',
-			heightmap: 'Height Map'
+			heightmap: 'Height Map',
+			offsets: 'Offsets'
 		},
 		job: {
 			caption: 'Current Job',
@@ -574,6 +603,10 @@ export default {
 			axesNotHomed: 'The following axis is not homed:|The following axes are not homed:',
 			noAxes: 'No Axes'
 		},
+		probeworkpiece: {
+			caption: 'Probe Workpiece',
+			description: 'Start probing from (and move)',
+		},
 		settingsAbout: {
 			caption: 'About',
 			developedBy: 'Web Interface developed by',
@@ -673,6 +706,13 @@ export default {
 			probe: 'Z-Probe|Z-Probes',
 			noStatus: 'No Status'
 		},
+		tooloffsets: {
+			caption: 'Tool Offsets',
+			tableHeaders: {
+				name: 'Name',
+			},
+			amount: 'Offset amount in {0}:',
+		},
 		tools: {
 			caption: 'Tools',
 			controlAll: 'Control All',
@@ -698,9 +738,22 @@ export default {
 			},
 			noTools: 'No Tools'
 		},
+		touchoff: {
+			caption: 'Touch-off Plate',
+			plateInstalled: 'Touch-off Plate installed',
+			plateMissing: 'Touch-off Plate not installed',
+		},
 		webcam: {
 			caption: 'Webcam Surveillance',
 			alt: '(webcam image)'
+		},
+		wcs: {
+			caption: 'Workpiece Coordinate Offsets',
+			tableHeaders: {
+				wcs: 'Workpiece',
+				changeTo: 'Change to',
+				reset: 'Reset',
+			},
 		}
 	}
 }

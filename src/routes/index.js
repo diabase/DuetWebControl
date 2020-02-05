@@ -38,6 +38,13 @@ export const Routing = [
 				caption: 'menu.control.heightmap',
 				path: '/Heightmap',
 				component: Control.Heightmap
+			},
+			// Offsets (OEM)
+			{
+				icon: 'mdi-arrow-expand-all',
+				caption: 'menu.control.offsets',
+				path: '/Offsets',
+				component: Control.Offsets
 			}
 		]
 	},

@@ -321,7 +321,7 @@ export default class RestConnector extends BaseConnector {
 		formData.set('from', from);
 		formData.set('to', to);
 		formData.set('force', Boolean(force));
-		
+
 		try {
 			await this.request('POST', 'machine/file/move', null, '', formData, null, null, from);
 			await this.dispatch('onFileOrDirectoryMoved', { from, to, force });

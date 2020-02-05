@@ -17,6 +17,7 @@ export class Axis {
 	maxEndstop = null
 	maxProbed = false
 	visible = true
+	workplaceOffsets = [0, 0, 0, 0, 0, 0, 0, 0, 0]
 }
 
 export class BedOrChamber {

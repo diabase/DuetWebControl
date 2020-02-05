@@ -186,7 +186,7 @@ export default function(hostname, connector) {
 				// Merge updates into the object model
 				//console.log(JSON.stringify(payload));
 				commit('model/update', payload);
-				
+
 				// Is a beep requested?
 				if (state.model.state.beep.frequency != 0 && state.model.state.beep.duration != 0 &&
 					(state.model.state.beep.frequency != beepFrequency || state.model.state.beep.duration != beepDuration))
@@ -217,7 +217,7 @@ export default function(hostname, connector) {
 						log('success', i18n.t('events.reconnected'));
 						commit('setReconnecting', false);
 					}
-					
+
 					// Have we just finished a job? Send M1 if auto-sleep is enabled
 					if (wasPrinting && !getters['model/isPrinting'] && state.autoSleep) {
 						try {

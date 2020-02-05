@@ -14,6 +14,7 @@ import JobControlPanel from './JobControlPanel.vue'
 import JobDataPanel from './JobDataPanel.vue'
 import JobEstimationsPanel from './JobEstimationsPanel.vue'
 import JobInfoPanel from './JobInfoPanel.vue'
+import ProbeWorkpiecePanel from './ProbeWorkpiecePanel.vue'
 import SettingsAboutPanel from './SettingsAboutPanel.vue'
 import SettingsAppearancePanel from './SettingsAppearancePanel.vue'
 import SettingsCommunicationPanel from './SettingsCommunicationPanel.vue'
@@ -26,8 +27,11 @@ import SettingsNotificationsPanel from './SettingsNotificationsPanel.vue'
 import SettingsWebcamPanel from './SettingsWebcamPanel.vue'
 import SpeedFactorPanel from './SpeedFactorPanel.vue'
 import StatusPanel from './StatusPanel.vue'
+import ToolOffsetsPanel from './ToolOffsetsPanel.vue'
 import ToolsPanel from './ToolsPanel.vue'
+import TouchOffPlatePanel from './TouchOffPlatePanel.vue'
 import WebcamPanel from './WebcamPanel.vue'
+import WCSPanel from './WCSPanel.vue'
 
 Vue.component('atx-panel', ATXPanel)
 Vue.component('babystepping-panel', BabysteppingPanel)
@@ -41,6 +45,7 @@ Vue.component('job-data-panel', JobDataPanel)
 Vue.component('job-estimations-panel', JobEstimationsPanel)
 Vue.component('job-info-panel', JobInfoPanel)
 Vue.component('movement-panel', MovementPanel)
+Vue.component('probe-workpiece-panel', ProbeWorkpiecePanel)
 Vue.component('settings-about-panel', SettingsAboutPanel)
 Vue.component('settings-apperance-panel', SettingsAppearancePanel)
 Vue.component('settings-communication-panel', SettingsCommunicationPanel)
@@ -53,8 +58,11 @@ Vue.component('settings-notifications-panel', SettingsNotificationsPanel)
 Vue.component('settings-webcam-panel', SettingsWebcamPanel)
 Vue.component('status-panel', StatusPanel)
 Vue.component('speed-factor-panel', SpeedFactorPanel)
+Vue.component('tool-offsets-panel', ToolOffsetsPanel)
 Vue.component('tools-panel', ToolsPanel)
+Vue.component('touch-off-plate-panel', TouchOffPlatePanel)
 Vue.component('webcam-panel', WebcamPanel)
+Vue.component('wcs-panel', WCSPanel)
 
 export default {
 	ATXPanel,
@@ -69,6 +77,7 @@ export default {
 	JobEstimationsPanel,
 	JobInfoPanel,
 	MovementPanel,
+	ProbeWorkpiecePanel,
 	SettingsAboutPanel,
 	SettingsAppearancePanel,
 	SettingsCommunicationPanel,
@@ -81,6 +90,9 @@ export default {
 	SettingsWebcamPanel,
 	SpeedFactorPanel,
 	StatusPanel,
+	ToolOffsetsPanel,
 	ToolsPanel,
-	WebcamPanel
+	TouchOffPlatePanel,
+	WebcamPanel,
+	WCSPanel,
 }
