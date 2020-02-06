@@ -50,13 +50,6 @@
 							</code-btn>
 						</v-col>
 					</v-row>
-					<!-- <v-row v-for="axis in probingAxes" :key="axis.letter"> -->
-					<!-- 	<v-col v-for="fr in axis.from" :key="fr" :cols="4"> -->
-					<!-- 		<code-btn :code="`M98 P${doubleQuote}workpiece_${ axis.letter }${ fr }.g${doubleQuote}`" no-wait block tile class="move-btn"> -->
-					<!-- 			{{ (fr == "min" ? "-" : "+") + axis.letter }} (<v-icon>{{ getIcon(axis.letter, fr) }}</v-icon>) -->
-					<!-- 		</code-btn> -->
-					<!-- 	</v-col> -->
-					<!-- </v-row> -->
 				</v-col>
 				<v-col>
 					<v-row dense>
@@ -83,20 +76,6 @@ export default {
 	},
 	data() {
 		return {
-			//probingAxes: [
-				//{
-					//letter: "X",
-					//from: ["min", "max"]
-				//},
-				//{
-					//letter: "Y",
-					//from: ["min", "max"]
-				//},
-				//{
-					//letter: "Z",
-					//from: ["max"]
-				//}
-			//],
 			doubleQuote: '"',
 		}
 	},

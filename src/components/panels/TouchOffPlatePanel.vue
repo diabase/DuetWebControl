@@ -34,29 +34,36 @@
 <script>
 'use strict'
 
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
 		...mapState(['selectedMachine']),
-		...mapState('machine/model', ['sensors']),
-		installed() {
-			return this.sensors
-				&& this.sensors.probes
-				&& this.sensors.probes.length > this.touchplateProbeNumber
-				&& this.sensors.probes[this.touchplateProbeNumber].value < this.sensors.probes[this.touchplateProbeNumber].threshold;
-		},
+		...mapGetters('machine', ['connector']),
 	},
 	data() {
 		return {
 			axes: [ "X-Y", "Z" ],
 			doubleQuote: '"',
 			touchplateProbeNumber: 1,
+			installed: false,
+			updateInterval: 5000,
 		}
 	},
 	methods: {
-		...mapActions('machine', ['sendCode']),
+		async updateInstalled() {
+			if (!this.isConnected) {
+				setTimeout(this.updateInstalled, this.updateInterval);
+				return;
+			}
+			const response = await this.connector.request('GET', 'rr_model', { "key": `sensors.probes[${this.touchplateProbeNumber}]` });
+			this.installed = response.result != null && response.result.value < response.result.threshold;
+			setTimeout(this.updateInstalled, this.updateInterval);
+		},
+	},
+	mounted() {
+		this.updateInstalled();
 	},
 }
 </script>
