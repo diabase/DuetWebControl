@@ -10,19 +10,19 @@
 					<v-row>
 						<p class="mb-1">{{ $t('panel.probeworkpiece.description') }}</p>
 					</v-row>
-					<v-row>
+					<v-row align="center">
 						<v-spacer/>
 						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}workpiece_Ymax.g${doubleQuote}`" no-wait block tile class="move-btn">
+							<code-btn :code="`M98 P${doubleQuote}workpiece_Ymax.g${doubleQuote}`" no-wait block class="move-btn">
 								Y <v-icon>{{ getIcon("Y", "max") }}</v-icon>
 							</code-btn>
 						</v-col>
 						<v-spacer/>
 						<v-spacer/>
 					</v-row>
-					<v-row>
+					<v-row align="center">
 						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}workpiece_Xmin.g${doubleQuote}`" no-wait block tile class="move-btn">
+							<code-btn :code="`M98 P${doubleQuote}workpiece_Xmin.g${doubleQuote}`" no-wait block class="move-btn">
 								-X <v-icon>{{ getIcon("X", "min") }}</v-icon>
 							</code-btn>
 						</v-col>
@@ -30,31 +30,31 @@
 							<v-icon>mdi-cube-scan</v-icon>
 						</v-col>
 						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}workpiece_Xmax.g${doubleQuote}`" no-wait block tile class="move-btn">
+							<code-btn :code="`M98 P${doubleQuote}workpiece_Xmax.g${doubleQuote}`" no-wait block class="move-btn">
 								<v-icon>{{ getIcon("X", "max") }}</v-icon> X
 							</code-btn>
 						</v-col>
 						<v-spacer/>
 					</v-row>
-					<v-row>
+					<v-row align="center">
 						<v-spacer/>
 						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}workpiece_Ymin.g${doubleQuote}`" no-wait block tile class="move-btn">
+							<code-btn :code="`M98 P${doubleQuote}workpiece_Ymin.g${doubleQuote}`" no-wait block class="move-btn">
 								-Y <v-icon>{{ getIcon("Y", "min") }}</v-icon>
 							</code-btn>
 						</v-col>
 						<v-spacer/>
 						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}workpiece_Zmax.g${doubleQuote}`" no-wait block tile class="move-btn">
+							<code-btn :code="`M98 P${doubleQuote}workpiece_Zmax.g${doubleQuote}`" no-wait block class="move-btn">
 								Z <v-icon>{{ getIcon("Z", "max") }}</v-icon>
 							</code-btn>
 						</v-col>
 					</v-row>
 				</v-col>
-				<v-col>
+				<v-col class="flex-shrink-1">
 					<v-row dense>
 						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}tcalibrate.g${doubleQuote}`" no-wait block tile class="move-btn">
+							<code-btn :code="`M98 P${doubleQuote}tcalibrate.g${doubleQuote}`" no-wait block class="move-btn">
 								<v-icon>mdi-image-filter-center-focus</v-icon> {{ $t('button.probeWorkpiece.findCenterOfCavity') }}
 							</code-btn>
 						</v-col>

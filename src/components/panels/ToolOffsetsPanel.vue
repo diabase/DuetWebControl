@@ -17,14 +17,14 @@
 		</v-card-title>
 
 		<v-card-text>
-			<v-row>
-				<v-col class="align-center header">{{ $t('panel.tooloffsets.tableHeaders.name') }}</v-col>
-				<v-col v-for="axis in relevantAxes" :key="axis.name" class="align-center header">{{ axis.name }}</v-col>
+			<v-row align="center">
+				<v-col :cols="2" class="header">{{ $t('panel.tooloffsets.tableHeaders.name') }}</v-col>
+				<v-col v-for="axis in relevantAxes" :key="axis.name" class="header">{{ axis.name }}</v-col>
 			</v-row>
 			<v-row v-for="t in tools" :key="t.number">
-				<v-col class="header">{{ t.name || "Tool " + t.number }}</v-col>
-				<v-col v-for="(axis, index) in relevantAxes" :key="index">
-					<v-btn @click="toolOffsetSet(axis.name, index, t)" :title="`${ $t('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen">
+				<v-col :cols="2" class="header">{{ t.name || "Tool " + t.number }}</v-col>
+				<v-col align="center" v-for="(axis, index) in relevantAxes" :key="index">
+					<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, t)" :title="`${ $t('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen">
 						<v-icon small>mdi-home-import-outline</v-icon>
 					</v-btn>
 					<v-btn @click="toolOffsetAdjust(axis.name, index, t, -1)" no-wait lock small :disabled="uiFrozen">
@@ -36,7 +36,7 @@
 					</v-btn>
 				</v-col>
 			</v-row>
-			<v-row>
+			<v-row align="center" class="pb-1">
 				<v-col :cols="4">
 					<p class="mb-1">
 					{{ $t('panel.tooloffsets.amount', ['mm']) }}

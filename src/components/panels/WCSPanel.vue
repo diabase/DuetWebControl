@@ -17,26 +17,26 @@
 		</v-card-title>
 
 		<v-card-text>
-			<v-row>
-				<v-col class="align-center header">{{ $t('panel.wcs.tableHeaders.wcs') }}</v-col>
-				<v-col class="align-center header">{{ $t('panel.wcs.tableHeaders.changeTo') }}</v-col>
-				<v-col class="align-center header" v-for="axis in relevantAxes" :key="axis">{{ axis }}</v-col>
-				<v-col class="align-center header">{{ $t('panel.wcs.tableHeaders.reset') }}</v-col>
+			<v-row align="center">
+				<v-col :cols="1" class="header">{{ $t('panel.wcs.tableHeaders.wcs') }}</v-col>
+				<v-col :cols="1" class="header">{{ $t('panel.wcs.tableHeaders.changeTo') }}</v-col>
+				<v-col class="header" v-for="axis in relevantAxes" :key="axis">{{ axis }}</v-col>
+				<v-col :cols="1" class="header">{{ $t('panel.wcs.tableHeaders.reset') }}</v-col>
 			</v-row>
 			<v-row v-for="w in wcs" :key="w.number">
-				<v-col class="header">{{ w.number + ' (' + w.name + ')' }}<v-icon v-if="move.currentWorkplace == w.number" small class="mr-1">mdi-checkbox-marked-outline</v-icon></v-col>
-				<v-col class="align-center">
+				<v-col :cols="1" class="header">{{ w.number + ' (' + w.name + ')' }}<v-icon v-if="move.currentWorkplace == w.number" small class="mr-1">mdi-checkbox-marked-outline</v-icon></v-col>
+				<v-col :cols="1" align="center">
 					<code-btn :code="`${w.name}`" no-wait lock small v-if="move.currentWorkplace != w.number">
 						<v-icon small>mdi-marker-check</v-icon>
 					</code-btn>
 				</v-col>
-				<v-col v-for="axis in relevantAxes" :key="axis">
-					<code-btn :code="`G10 L20 P${w.number} ${axis}`" :title="`${ $t('button.wcs.setToCurrent') }`" no-wait lock small>
+				<v-col align="center" v-for="axis in relevantAxes" :key="axis">
+					<code-btn class="mr-1" :code="`G10 L20 P${w.number} ${axis}`" :title="`${ $t('button.wcs.setToCurrent') }`" no-wait lock small>
 						<v-icon small>mdi-home-import-outline</v-icon>
 					</code-btn>
-					<span class="wcs-value" @click="showSetWCSOffsetDialog(axis, w.number)"> {{ workplaceOffsets[axis][w.number-1].toFixed(2) }}mm</span>
+					<span align="right" class="wcs-value" @click="showSetWCSOffsetDialog(axis, w.number)"> {{ workplaceOffsets[axis][w.number-1].toFixed(2) }}mm</span>
 				</v-col>
-				<v-col class="align-center">
+				<v-col :cols="1" class="align-center">
 					<v-btn @click="resetClicked(w)" no-wait lock small :disabled="uiFrozen">
 						<v-icon small>mdi-home-floor-0</v-icon>
 					</v-btn>

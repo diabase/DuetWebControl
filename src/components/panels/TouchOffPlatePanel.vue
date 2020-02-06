@@ -15,7 +15,7 @@
 		<v-card-text>
 			<v-row dense>
 				<v-col v-for="axis in axes" :key="axis">
-					<code-btn :code="`M98 P${doubleQuote}touchoff_${ axis.letter }.g${doubleQuote}`" no-wait block tile class="move-btn">
+					<code-btn :code="`M98 P${doubleQuote}touchoff_${ axis.letter }.g${doubleQuote}`" no-wait block class="move-btn">
 						{{ $t('button.touchoff.touchoff', [axis]) }}
 					</code-btn>
 				</v-col>
