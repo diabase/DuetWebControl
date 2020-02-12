@@ -694,6 +694,7 @@ export default {
 			machinePosition: 'Machine Position',
 			extruders: 'Extruder Drives',
 			extruderDrive: 'Drive {0}',
+			speedFactor: 'Speed Factor',
 			speeds: 'Speeds',
 			requestedSpeed: 'Requested Speed',
 			topSpeed: 'Top Speed',
@@ -704,7 +705,9 @@ export default {
 			vInTitle: 'Minimum: {0}, Maximum {1}',
 			fanRPM: 'Fan RPM',
 			probe: 'Z-Probe|Z-Probes',
-			noStatus: 'No Status'
+			noStatus: 'No Status',
+			wcs: 'WCS',
+			compensation: 'Compensation in use',
 		},
 		tooloffsets: {
 			caption: 'Tool Offsets',
@@ -742,6 +745,11 @@ export default {
 			caption: 'Touch-off Plate',
 			plateInstalled: 'Touch-off Plate installed',
 			plateMissing: 'Touch-off Plate not installed',
+		},
+		turretLock: {
+			caption: 'Turret Lock',
+			on: 'Lock',
+			off: 'Unlock',
 		},
 		webcam: {
 			caption: 'Webcam Surveillance',

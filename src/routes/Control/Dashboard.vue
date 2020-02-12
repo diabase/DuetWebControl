@@ -8,8 +8,9 @@
 					<extrude-panel></extrude-panel>
 				</v-col>
 
-				<v-col v-if="state.atxPower !== null" class="hidden-sm-and-down" md="3" lg="3" xl="2" align-self="center">
-					<atx-panel></atx-panel>
+				<v-col class="hidden-sm-and-down" md="3" lg="3" xl="2" align-self="center">
+					<atx-panel v-if="state.atxPower !== null"></atx-panel>
+					<turret-lock-panel></turret-lock-panel>
 				</v-col>
 			</v-row>
 
@@ -20,6 +21,7 @@
 
 				<v-col v-if="state.atxPower !== null" :class="{ 'hidden-md-and-up': !state.mode || state.mode === 'FFF' }" cols="3">
 					<atx-panel></atx-panel>
+					<turret-lock-panel></turret-lock-panel>
 				</v-col>
 			</v-row>
 		</v-col>

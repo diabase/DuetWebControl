@@ -30,6 +30,7 @@ import StatusPanel from './StatusPanel.vue'
 import ToolOffsetsPanel from './ToolOffsetsPanel.vue'
 import ToolsPanel from './ToolsPanel.vue'
 import TouchOffPlatePanel from './TouchOffPlatePanel.vue'
+import TurretLockPanel from './TurretLockPanel.vue'
 import WebcamPanel from './WebcamPanel.vue'
 import WCSPanel from './WCSPanel.vue'
 
@@ -61,6 +62,7 @@ Vue.component('speed-factor-panel', SpeedFactorPanel)
 Vue.component('tool-offsets-panel', ToolOffsetsPanel)
 Vue.component('tools-panel', ToolsPanel)
 Vue.component('touch-off-plate-panel', TouchOffPlatePanel)
+Vue.component('turret-lock-panel', TurretLockPanel)
 Vue.component('webcam-panel', WebcamPanel)
 Vue.component('wcs-panel', WCSPanel)
 
@@ -93,6 +95,7 @@ export default {
 	ToolOffsetsPanel,
 	ToolsPanel,
 	TouchOffPlatePanel,
+	TurretLockPanel,
 	WebcamPanel,
 	WCSPanel,
 }

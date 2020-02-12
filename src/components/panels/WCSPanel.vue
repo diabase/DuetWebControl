@@ -18,25 +18,25 @@
 
 		<v-card-text>
 			<v-row align="center">
-				<v-col :cols="1" class="header">{{ $t('panel.wcs.tableHeaders.wcs') }}</v-col>
-				<v-col :cols="1" class="header">{{ $t('panel.wcs.tableHeaders.changeTo') }}</v-col>
+				<v-col cols="1" class="header">{{ $t('panel.wcs.tableHeaders.wcs') }}</v-col>
+				<v-col cols="1" class="header">{{ $t('panel.wcs.tableHeaders.changeTo') }}</v-col>
 				<v-col class="header" v-for="axis in relevantAxes" :key="axis">{{ axis }}</v-col>
-				<v-col :cols="1" class="header">{{ $t('panel.wcs.tableHeaders.reset') }}</v-col>
+				<v-col cols="1" class="header">{{ $t('panel.wcs.tableHeaders.reset') }}</v-col>
 			</v-row>
-			<v-row v-for="w in wcs" :key="w.number">
-				<v-col :cols="1" class="header">{{ w.number + ' (' + w.name + ')' }}<v-icon v-if="move.currentWorkplace == w.number" small class="mr-1">mdi-checkbox-marked-outline</v-icon></v-col>
-				<v-col :cols="1" align="center">
-					<code-btn :code="`${w.name}`" no-wait lock small v-if="move.currentWorkplace != w.number">
+			<v-row v-for="w in wcs" :key="w">
+				<v-col cols="1" class="header">{{ w + ' (' + wcsNames[w] + ')' }} <v-icon v-if="move.currentWorkplace == w" small class="mr-1">mdi-checkbox-marked-outline</v-icon></v-col>
+				<v-col cols="1" align="center">
+					<code-btn :code="`${wcsNames[w]}`" no-wait lock small v-if="move.currentWorkplace != w">
 						<v-icon small>mdi-marker-check</v-icon>
 					</code-btn>
 				</v-col>
 				<v-col align="center" v-for="axis in relevantAxes" :key="axis">
-					<code-btn class="mr-1" :code="`G10 L20 P${w.number} ${axis}`" :title="`${ $t('button.wcs.setToCurrent') }`" no-wait lock small>
+					<code-btn class="mr-1" :code="`G10 L20 P${w} ${axis}`" :title="`${ $t('button.wcs.setToCurrent') }`" no-wait lock small>
 						<v-icon small>mdi-home-import-outline</v-icon>
 					</code-btn>
-					<span align="right" class="wcs-value" @click="showSetWCSOffsetDialog(axis, w.number)"> {{ workplaceOffsets[axis][w.number-1].toFixed(2) }}mm</span>
+					<span align="right" class="wcs-value" @click="showSetWCSOffsetDialog(axis, w)"> {{ workplaceOffsets[axis][w-1].toFixed(2) }}mm</span>
 				</v-col>
-				<v-col :cols="1" class="align-center">
+				<v-col cols="1" class="align-center">
 					<v-btn @click="resetClicked(w)" no-wait lock small :disabled="uiFrozen">
 						<v-icon small>mdi-home-floor-0</v-icon>
 					</v-btn>
@@ -57,16 +57,17 @@ export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
 		...mapState('machine/model', ['move']),
+		...mapState('machine', ['wcsNames']),
 		workplaceOffsets() {
 			const zeroOffsets = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 			this.relevantAxes.filter(a => a == "X");
-			let xAxis = this.move.axes.filter(axis => axis.letter == "X"),
+			const xAxis = this.move.axes.filter(axis => axis.letter == "X"),
 				yAxis = this.move.axes.filter(axis => axis.letter == "Y"),
 				zAxis = this.move.axes.filter(axis => axis.letter == "Z"),
 				aAxis = this.move.axes.filter(axis => axis.letter == "A"),
 				cAxis = this.move.axes.filter(axis => axis.letter == "C");
 
-			let xOffsets = xAxis.length > 0 && xAxis[0].workplaceOffsets || zeroOffsets,
+			const xOffsets = xAxis.length > 0 && xAxis[0].workplaceOffsets || zeroOffsets,
 				yOffsets = yAxis.length > 0 && yAxis[0].workplaceOffsets || zeroOffsets,
 				zOffsets = zAxis.length > 0 && zAxis[0].workplaceOffsets || zeroOffsets,
 				aOffsets = aAxis.length > 0 && aAxis[0].workplaceOffsets || zeroOffsets,
@@ -82,44 +83,7 @@ export default {
 	},
 	data() {
 		return {
-			wcs: [
-				{
-					number: 1,
-					name: 'G54',
-				},
-				{
-					number: 2,
-					name: 'G55',
-				},
-				{
-					number: 3,
-					name: 'G56',
-				},
-				{
-					number: 4,
-					name: 'G57',
-				},
-				{
-					number: 5,
-					name: 'G58',
-				},
-				{
-					number: 6,
-					name: 'G59',
-				},
-				{
-					number: 7,
-					name: 'G59.1',
-				},
-				{
-					number: 8,
-					name: 'G59.2',
-				},
-				{
-					number: 9,
-					name: 'G59.3',
-				},
-			],
+			wcs: [1, 2, 3, 4, 5, 6, 7, 8, 9],
 			relevantAxes: ["X", "Y", "Z", "A", "C"],
 			setWCSOffsetDialog: {
 				shown: false,
@@ -143,7 +107,7 @@ export default {
 			if (this.uiFrozen) {
 				return;
 			}
-			let wcsName = this.wcs[wcsNumber-1].name;
+			const wcsName = this.wcsNames[wcsNumber];
 			this.setWCSOffsetDialog.title = this.$t('dialog.setWCSOffset.title', [ wcsName ]);
 			this.setWCSOffsetDialog.prompt = this.$t('dialog.setWCSOffset.prompt', [ axis, wcsName ]);
 			this.setWCSOffsetDialog.axis = axis;
@@ -160,14 +124,15 @@ export default {
 			}
 			this.busy = false;
 		},
-		resetClicked(wcs) {
-			this.resetDialog.question = this.$t('dialog.resetWCS.title', [wcs.name]);
-			this.resetDialog.prompt = this.$t('dialog.resetWCS.prompt', [wcs.name]);
-			this.resetDialog.wcsNumber = wcs.number;
+		resetClicked(wcsNumber) {
+			const wcsName = this.wcsNames[wcsNumber]
+			this.resetDialog.question = this.$t('dialog.resetWCS.title', [wcsName]);
+			this.resetDialog.prompt = this.$t('dialog.resetWCS.prompt', [wcsName]);
+			this.resetDialog.wcsNumber = wcsNumber;
 			this.resetDialog.shown = true;
 		},
 		async reset() {
-			let wcsNumber = this.resetDialog.wcsNumber;
+			const wcsNumber = this.resetDialog.wcsNumber;
 			if (wcsNumber == -1) {
 				return;
 			}

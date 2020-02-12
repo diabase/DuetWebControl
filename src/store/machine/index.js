@@ -40,7 +40,8 @@ export default function(hostname, connector) {
 		state: {
 			autoSleep: false,
 			events: [],								// provides machine events in the form of { date, type, title, message }
-			isReconnecting: false
+			isReconnecting: false,
+			wcsNames: ['n/a', 'G54', 'G55', 'G56', 'G57', 'G58', 'G59', 'G59.1', 'G59.2', 'G59.3'],
 		},
 		getters: {
 			connector: () => connector,

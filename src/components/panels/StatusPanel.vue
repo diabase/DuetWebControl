@@ -122,6 +122,69 @@ a:not(:hover) {
 				</v-row>
 			</template>
 
+			<!-- Speed Factor -->
+			<template v-show="move.speedFactor > 0">
+				<v-divider class="mr-2"></v-divider>
+
+				<v-row align-content="center" no-gutters class="flex-nowrap">
+					<v-col tag="strong" class="category-header">
+						{{ $t('panel.status.speedFactor') }}
+					</v-col>
+
+					<v-col>
+						<v-row align-content="center" no-gutters>
+					<v-col class="d-flex flex-column align-center">
+						<span>
+							{{ speedFactor }}
+						</span>
+					</v-col>
+						</v-row>
+					</v-col>
+				</v-row>
+			</template>
+
+			<!-- WCS -->
+			<template v-show="move.currentWorkplace > 0">
+				<v-divider class="mr-2"></v-divider>
+
+				<v-row align-content="center" no-gutters class="flex-nowrap">
+					<v-col tag="strong" class="category-header">
+						{{ $t('panel.status.wcs') }}
+					</v-col>
+
+					<v-col>
+						<v-row align-content="center" no-gutters>
+					<v-col class="d-flex flex-column align-center">
+						<span>
+							{{ wcsNames[move.currentWorkplace] }}
+						</span>
+					</v-col>
+						</v-row>
+					</v-col>
+				</v-row>
+			</template>
+
+			<!-- Compensation -->
+			<template>
+				<v-divider class="mr-2"></v-divider>
+
+				<v-row align-content="center" no-gutters class="flex-nowrap">
+					<v-col tag="strong" class="category-header">
+						{{ $t('panel.status.compensation') }}
+					</v-col>
+
+					<v-col>
+						<v-row align-content="center" no-gutters>
+					<v-col class="d-flex flex-column align-center">
+						<span>
+							{{ move.compensation }}
+						</span>
+					</v-col>
+						</v-row>
+					</v-col>
+				</v-row>
+			</template>
+
 			<!-- Sensors -->
 			<template v-show="sensorsPresent">
 				<v-divider v-show="move.axes.length || move.extruders.length || isNumber(move.currentMove.requestedSpeed) || isNumber(move.currentMove.topSpeed)" class="my-2"></v-divider>
@@ -204,13 +267,17 @@ import { mapState, mapGetters } from 'vuex'
 export default {
 	computed: {
 		...mapState('settings', ['darkTheme']),
+		...mapState('machine', ['wcsNames']),
 		...mapState('machine/model', ['electronics', 'fans', 'move', 'sensors', 'state']),
 		...mapGetters(['isConnected']),
 		...mapGetters('machine/model', ['isPrinting']),
 		fanRPM() { return this.fans.map(fan => fan.rpm).filter(rpm => rpm !== null); },
 		sensorsPresent() {
 			return (this.electronics.vIn.current !== null) || (this.electronics.mcuTemp.current !== null) || this.fanRPM.length || (this.sensors.probes.length);
-		}
+		},
+		speedFactor() {
+			return this.move.speedFactor ? Math.round(this.move.speedFactor * 100) : 100;
+		},
 	},
 	data() {
 		return {
