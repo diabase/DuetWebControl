@@ -5,6 +5,9 @@ table tbody td {
 table tbody tr:hover {
 	background: rgba(0, 0, 0, 0) !important;
 }
+.move-btn {
+	color: red;
+}
 </style>
 <template>
 	<v-card>

@@ -1,8 +1,6 @@
-<style>
+<style scoped>
 .move-btn {
-	padding-left: 0 !important;
-	padding-right: 0 !important;
-	min-width: 0;
+	color: red;
 }
 </style>
 
