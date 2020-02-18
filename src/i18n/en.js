@@ -232,6 +232,10 @@ export default {
 			title: 'Set {0} offset',
 			prompt: 'Please enter a new {0} offset for {1}:'
 		},
+		sliderEdit: {
+			title: 'Slider value',
+			prompt: 'Please enter a new value:',
+		},
 		startJob: {
 			title: 'Start {0}',
 			prompt: 'Do you want to start {0}?'

@@ -2,12 +2,6 @@
 .tooloffset-value {
 	cursor: pointer;
 }
-.align-center {
-	text-align: center;
-}
-.header {
-	font-weight: bold;
-}
 </style>
 
 <template>
@@ -17,23 +11,33 @@
 		</v-card-title>
 
 		<v-card-text>
-			<v-row align="center">
-				<v-col cols="2" class="header">{{ $t('panel.tooloffsets.tableHeaders.name') }}</v-col>
-				<v-col v-for="axis in relevantAxes" :key="axis.name" class="header">{{ axis.name }}</v-col>
-			</v-row>
-			<v-row v-for="t in tools" :key="t.number">
-				<v-col cols="2" class="header">{{ t.name || "Tool " + t.number }}</v-col>
-				<v-col align="center" v-for="(axis, index) in relevantAxes" :key="index">
-					<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, t)" :title="`${ $t('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen">
-						<v-icon small>mdi-home-import-outline</v-icon>
-					</v-btn>
-					<v-btn @click="toolOffsetAdjust(axis.name, index, t, -1)" no-wait lock small :disabled="uiFrozen">
-						<v-icon small>{{ axis.iconMinus }}</v-icon> {{ axis.textMinus }}
-					</v-btn>
-					<span class="tooloffset-value" @click="showSetToolOffsetDialog(axis.name, index, t)">{{ (t.offsets[index] && t.offsets[index].toFixed(2) || (0).toFixed(2)) }}mm</span>
-					<v-btn @click="toolOffsetAdjust(axis.name, index, t)" no-wait lock small :disabled="uiFrozen">
-						<v-icon small>{{ axis.iconPlus }}</v-icon> {{ axis.textPlus }}
-					</v-btn>
+			<v-row>
+				<v-col>
+					<v-simple-table fixed-header>
+						<thead>
+							<tr>
+								<th class="text-center">{{ $t('panel.tooloffsets.tableHeaders.name') }}</th>
+								<th class="text-center" v-for="axis in relevantAxes" :key="axis.name">{{ axis.name }}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="t in toolsWithoutProbe" :key="t.number">
+								<td class="text-center">{{ t.name || "Tool " + t.number }}</td>
+								<td class="text-center" v-for="(axis, index) in relevantAxes" :key="index">
+									<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, t)" :title="`${ $t('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen">
+										<v-icon small>mdi-home-import-outline</v-icon>
+									</v-btn>
+									<v-btn @click="toolOffsetAdjust(axis.name, index, t, -1)" no-wait lock small :disabled="uiFrozen">
+										<v-icon small>{{ axis.iconMinus }}</v-icon> {{ axis.textMinus }}
+									</v-btn>
+									<span class="mx-2 tooloffset-value text-right" @click="showSetToolOffsetDialog(axis.name, index, t)">{{ (t.offsets[index] && t.offsets[index].toFixed(2) || (0).toFixed(2)) }}mm</span>
+									<v-btn @click="toolOffsetAdjust(axis.name, index, t)" no-wait lock small :disabled="uiFrozen">
+										<v-icon small>{{ axis.iconPlus }}</v-icon> {{ axis.textPlus }}
+									</v-btn>
+								</td>
+							</tr>
+						</tbody>
+					</v-simple-table>
 				</v-col>
 			</v-row>
 			<v-row align="center" class="pb-1">
@@ -65,6 +69,9 @@ export default {
 		...mapGetters(['isConnected', 'uiFrozen']),
 		...mapState('machine/model', ['tools', 'move']),
 		...mapState('machine/settings', ['toolOffsetAmounts']),
+		toolsWithoutProbe() {
+			return this.tools.filter(t => t.number != 10);
+		}
 	},
 	data() {
 		return {

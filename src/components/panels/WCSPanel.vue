@@ -2,12 +2,6 @@
 .wcs-value {
 	cursor: pointer;
 }
-.align-center {
-	text-align: center;
-}
-.header {
-	font-weight: bold;
-}
 </style>
 
 <template>
@@ -17,31 +11,37 @@
 		</v-card-title>
 
 		<v-card-text>
-			<v-row align="center">
-				<v-col cols="1" class="header">{{ $t('panel.wcs.tableHeaders.wcs') }}</v-col>
-				<v-col cols="1" class="header">{{ $t('panel.wcs.tableHeaders.changeTo') }}</v-col>
-				<v-col class="header" v-for="axis in relevantAxes" :key="axis">{{ axis }}</v-col>
-				<v-col cols="1" class="header">{{ $t('panel.wcs.tableHeaders.reset') }}</v-col>
-			</v-row>
-			<v-row v-for="w in wcs" :key="w">
-				<v-col cols="1" class="header">{{ w + ' (' + wcsNames[w] + ')' }} <v-icon v-if="move.currentWorkplace == w" small class="mr-1">mdi-checkbox-marked-outline</v-icon></v-col>
-				<v-col cols="1" align="center">
-					<code-btn :code="`${wcsNames[w]}`" no-wait lock small v-if="move.currentWorkplace != w">
-						<v-icon small>mdi-marker-check</v-icon>
-					</code-btn>
-				</v-col>
-				<v-col align="center" v-for="axis in relevantAxes" :key="axis">
-					<code-btn class="mr-1" :code="`G10 L20 P${w} ${axis}`" :title="`${ $t('button.wcs.setToCurrent') }`" no-wait lock small>
-						<v-icon small>mdi-home-import-outline</v-icon>
-					</code-btn>
-					<span align="right" class="wcs-value" @click="showSetWCSOffsetDialog(axis, w)"> {{ workplaceOffsets[axis][w-1].toFixed(2) }}mm</span>
-				</v-col>
-				<v-col cols="1" class="align-center">
-					<v-btn @click="resetClicked(w)" no-wait lock small :disabled="uiFrozen">
-						<v-icon small>mdi-home-floor-0</v-icon>
-					</v-btn>
-				</v-col>
-			</v-row>
+			<v-simple-table fixed-header>
+				<thead>
+					<tr>
+						<th class="text-center">{{ $t('panel.wcs.tableHeaders.wcs') }}</th>
+						<th class="text-center">{{ $t('panel.wcs.tableHeaders.changeTo') }}</th>
+						<th class="text-center" v-for="axis in relevantAxes" :key="axis">{{ axis }}</th>
+						<th class="text-center">{{ $t('panel.wcs.tableHeaders.reset') }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="w in wcs" :key="w">
+						<td class="text-left">{{ w + ' (' + wcsNames[w] + ')' }} <v-icon v-if="move.currentWorkplace == w" small class="mr-1">mdi-checkbox-marked-outline</v-icon></td>
+						<td class="text-center">
+							<code-btn :code="`${wcsNames[w]}`" no-wait lock small v-if="move.currentWorkplace != w">
+								<v-icon small>mdi-marker-check</v-icon>
+							</code-btn>
+						</td>
+						<td class="text-right" v-for="axis in relevantAxes" :key="axis">
+							<code-btn class="mr-1" :code="`G10 L20 P${w} ${axis}`" :title="`${ $t('button.wcs.setToCurrent') }`" no-wait lock small>
+								<v-icon small>mdi-home-import-outline</v-icon>
+							</code-btn>
+							<span class="wcs-value" @click="showSetWCSOffsetDialog(axis, w)"> {{ workplaceOffsets[axis][w-1].toFixed(2) }}mm</span>
+						</td>
+						<td class="text-center">
+							<v-btn @click="resetClicked(w)" no-wait lock small :disabled="uiFrozen">
+								<v-icon small>mdi-home-floor-0</v-icon>
+							</v-btn>
+						</td>
+					</tr>
+				</tbody>
+			</v-simple-table>
 		</v-card-text>
 		<input-dialog :shown.sync="setWCSOffsetDialog.shown" :title="setWCSOffsetDialog.title" :prompt="setWCSOffsetDialog.prompt" :preset="setWCSOffsetDialog.preset" is-numeric-value @confirmed="setWCSOffsetDialogConfirmed"></input-dialog>
 		<confirm-dialog :shown.sync="resetDialog.shown" :question="resetDialog.question" :prompt="resetDialog.prompt" @confirmed="reset"></confirm-dialog>

@@ -7,6 +7,9 @@
 <template>
 	<v-row dense align="center">
 		<v-col cols="auto">
+			<v-icon @click="doShowSliderEditDialog">mdi-pencil</v-icon>
+		</v-col>
+		<v-col cols="auto">
 			<v-btn large icon :disabled="disabled || innerValue <= min" @click="change(-step)" @mousedown="mouseDown(false)" @mouseup="mouseUp(false)" @mouseleave="mouseUp(false)" @touchstart="mouseDown(false)" @touchend="mouseUp(false)" class="ml-0">
 				<v-icon>mdi-minus</v-icon>
 			</v-btn>
@@ -14,6 +17,7 @@
 
 		<v-col>
 			<v-slider :value="innerValue" @change="$emit('input', $event)" :min="min" :max="max" :disabled="disabled" hide-details thumb-label="always" class="slider"></v-slider>
+			<input-dialog :shown.sync="showSliderEditDialog" :title="$t('dialog.sliderEdit.title')" :prompt="$t('dialog.sliderEdit.prompt')" :preset="innerValue" is-numeric-value @confirmed="setSliderValue"></input-dialog>
 		</v-col>
 
 		<v-col cols="auto">
@@ -26,6 +30,8 @@
 
 <script>
 'use strict'
+
+import { mapGetters } from 'vuex'
 
 const debounceTime = 500
 const changeTime = 300, changeInterval = 150
@@ -50,13 +56,17 @@ export default {
 		},
 		disabled: Boolean
 	},
+	computed: {
+		...mapGetters(['isConnected']),
+	},
 	data() {
 		return {
 			innerValue: this.value,
 			debounceTimer: undefined,
 			time: undefined,
 			increaseTimer: undefined,
-			decreaseTimer: undefined
+			decreaseTimer: undefined,
+			showSliderEditDialog: false,
 		}
 	},
 	methods: {
@@ -94,7 +104,14 @@ export default {
 		decrease() {
 			this.change(-this.step);
 			this.decreaseTimer = setTimeout(this.decrease, changeInterval);
-		}
+		},
+		doShowSliderEditDialog() {
+			this.showSliderEditDialog = true;
+		},
+		setSliderValue(val) {
+			this.innerValue = Math.round(Math.min(this.max, Math.max(this.min, val)));
+			this.$emit('input', this.innerValue);
+		},
 	},
 	watch: {
 		value(to) {
@@ -102,6 +119,10 @@ export default {
 			if (this.innerValue !== newValue) {
 				this.innerValue = newValue;
 			}
+		},
+		isConnected() {
+			// Hide dialogs when the connection is interrupted
+			this.showSliderEditDialog = false;
 		}
 	}
 }

@@ -123,7 +123,7 @@ a:not(:hover) {
 			</template>
 
 			<!-- Speed Factor -->
-			<template v-show="move.speedFactor > 0">
+			<template v-if="true || vendor === 'diabase'" v-show="move.speedFactor > 0">
 				<v-divider class="mr-2"></v-divider>
 
 				<v-row align-content="center" no-gutters class="flex-nowrap">
@@ -144,7 +144,7 @@ a:not(:hover) {
 			</template>
 
 			<!-- WCS -->
-			<template v-show="move.currentWorkplace > 0">
+			<template v-if="true || vendor === 'diabase'" v-show="move.currentWorkplace > 0">
 				<v-divider class="mr-2"></v-divider>
 
 				<v-row align-content="center" no-gutters class="flex-nowrap">
@@ -165,7 +165,7 @@ a:not(:hover) {
 			</template>
 
 			<!-- Compensation -->
-			<template>
+			<template v-if="true || vendor === 'diabase'">
 				<v-divider class="mr-2"></v-divider>
 
 				<v-row align-content="center" no-gutters class="flex-nowrap">
@@ -267,7 +267,7 @@ import { mapState, mapGetters } from 'vuex'
 export default {
 	computed: {
 		...mapState('settings', ['darkTheme']),
-		...mapState('machine', ['wcsNames']),
+		...mapState('machine', ['wcsNames', 'vendor']),
 		...mapState('machine/model', ['electronics', 'fans', 'move', 'sensors', 'state']),
 		...mapGetters(['isConnected']),
 		...mapGetters('machine/model', ['isPrinting']),

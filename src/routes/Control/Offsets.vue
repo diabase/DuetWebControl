@@ -14,12 +14,3 @@
 		</v-col>
 	</v-row>
 </template>
-
-<script>
-
-import { mapState } from 'vuex'
-
-export default {
-	computed: mapState('machine/model', ['state'])
-}
-</script>

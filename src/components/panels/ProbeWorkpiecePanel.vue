@@ -1,3 +1,11 @@
+<style scoped>
+table tbody td {
+	border-bottom: none !important;
+}
+table tbody tr:hover {
+	background: rgba(0, 0, 0, 0) !important;
+}
+</style>
 <template>
 	<v-card>
 		<v-card-title class="pb-0">
@@ -7,49 +15,50 @@
 		<v-card-text>
 			<v-row>
 				<v-col>
-					<v-row>
-						<p class="mb-1">{{ $t('panel.probeworkpiece.description') }}</p>
-					</v-row>
-					<v-row align="center">
-						<v-spacer/>
-						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}workpiece_Ymax.g${doubleQuote}`" no-wait block class="move-btn">
-								Y <v-icon>{{ getIcon("Y", "max") }}</v-icon>
-							</code-btn>
-						</v-col>
-						<v-spacer/>
-						<v-spacer/>
-					</v-row>
-					<v-row align="center">
-						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}workpiece_Xmin.g${doubleQuote}`" no-wait block class="move-btn">
-								-X <v-icon>{{ getIcon("X", "min") }}</v-icon>
-							</code-btn>
-						</v-col>
-						<v-col style="text-align:center;">
-							<v-icon>mdi-cube-scan</v-icon>
-						</v-col>
-						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}workpiece_Xmax.g${doubleQuote}`" no-wait block class="move-btn">
-								<v-icon>{{ getIcon("X", "max") }}</v-icon> X
-							</code-btn>
-						</v-col>
-						<v-spacer/>
-					</v-row>
-					<v-row align="center">
-						<v-spacer/>
-						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}workpiece_Ymin.g${doubleQuote}`" no-wait block class="move-btn">
-								-Y <v-icon>{{ getIcon("Y", "min") }}</v-icon>
-							</code-btn>
-						</v-col>
-						<v-spacer/>
-						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}workpiece_Zmax.g${doubleQuote}`" no-wait block class="move-btn">
-								Z <v-icon>{{ getIcon("Z", "max") }}</v-icon>
-							</code-btn>
-						</v-col>
-					</v-row>
+					<p class="mb-1">{{ $t('panel.probeworkpiece.description') }}</p>
+					<v-simple-table :class="tableNoHover">
+						<tbody>
+							<tr>
+								<td></td>
+								<td class="text-center">
+									<code-btn :code="`M98 P${doubleQuote}workpiece_Ymax.g${doubleQuote}`" no-wait block class="move-btn">
+										Y <v-icon>{{ getIcon("Y", "max") }}</v-icon>
+									</code-btn>
+								</td>
+								<td colspan="2"></td>
+							</tr>
+							<tr>
+								<td class="text-center">
+									<code-btn :code="`M98 P${doubleQuote}workpiece_Xmin.g${doubleQuote}`" no-wait block class="move-btn">
+										-X <v-icon>{{ getIcon("X", "min") }}</v-icon>
+									</code-btn>
+								</td>
+								<td class="text-center">
+									<v-icon>mdi-cube-scan</v-icon>
+								</td>
+								<td class="text-center">
+									<code-btn :code="`M98 P${doubleQuote}workpiece_Xmax.g${doubleQuote}`" no-wait block class="move-btn">
+										<v-icon>{{ getIcon("X", "max") }}</v-icon> X
+									</code-btn>
+								</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="text-center">
+									<code-btn :code="`M98 P${doubleQuote}workpiece_Ymin.g${doubleQuote}`" no-wait block class="move-btn">
+										-Y <v-icon>{{ getIcon("Y", "min") }}</v-icon>
+									</code-btn>
+								</td>
+								<td></td>
+								<td class="text-center">
+									<code-btn :code="`M98 P${doubleQuote}workpiece_Zmax.g${doubleQuote}`" no-wait block class="move-btn">
+										Z <v-icon>{{ getIcon("Z", "max") }}</v-icon>
+									</code-btn>
+								</td>
+							</tr>
+						</tbody>
+					</v-simple-table>
 				</v-col>
 				<v-col class="flex-shrink-1">
 					<v-row dense>
@@ -77,6 +86,12 @@ export default {
 	data() {
 		return {
 			doubleQuote: '"',
+			theme: 'dark',
+			tableNoHover: {
+				table: {
+					hover: this.$vuetify.theme.themes['dark'].table.active,
+				}
+			}
 		}
 	},
 	methods: {

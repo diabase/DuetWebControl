@@ -11,11 +11,11 @@
 <template>
 	<v-card>
 		<v-card-title>
-			<v-icon small class="mr-1">{{ locked ? 'mdi-lock' : 'mdi-lock-open-variant' }}</v-icon> {{ $t('panel.turretLock.caption') }}
+			<v-icon small class="mr-1">{{ icon }}</v-icon> {{ $t('panel.turretLock.caption') }}
 		</v-card-title>
 
 		<v-card-text class="pt-0">
-			<v-btn-toggle :value="locked" @change="toggleLock" mandatory>
+			<v-btn-toggle :value="locked" mandatory>
 				<v-btn text :value="true" :disabled="uiFrozen" :loading="sendingCode" @click="toggleLock(true)">
 					{{ $t('panel.turretLock.on') }}
 				</v-btn>
@@ -30,16 +30,25 @@
 <script>
 'use strict'
 
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
 	computed: {
 		...mapGetters(['uiFrozen']),
+		...mapState('machine/model', ['sensors']),
+		locked() {
+			return this.sensors
+				&& this.sensors.endstops
+				&& this.sensors.endstops.length > 4
+				&& !this.sensors.endstops[4].triggered;
+		},
+		icon() {
+			return this.locked ? 'mdi-lock' : 'mdi-lock-open-variant';
+		}
 	},
 	data() {
 		return {
 			sendingCode: false,
-			locked: true,
 		}
 	},
 	methods: {
@@ -53,7 +62,6 @@ export default {
 				} catch (e) {
 					// handled before we get here
 				}
-				this.locked = state;
 				this.sendingCode = false;
 			}
 		}

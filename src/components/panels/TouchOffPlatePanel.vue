@@ -34,12 +34,11 @@
 <script>
 'use strict'
 
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
-		...mapState(['selectedMachine']),
 		...mapGetters('machine', ['connector']),
 	},
 	data() {
@@ -49,21 +48,27 @@ export default {
 			touchplateProbeNumber: 1,
 			installed: false,
 			updateInterval: 5000,
+			intervalId: null,
 		}
 	},
 	methods: {
 		async updateInstalled() {
-			if (!this.isConnected) {
-				setTimeout(this.updateInstalled, this.updateInterval);
-				return;
+			if (this.isConnected) {
+				const response = await this.connector.request('GET', 'rr_model', { "key": `sensors.probes[${this.touchplateProbeNumber}]` });
+				this.installed = response.result != null && response.result.value < response.result.threshold;
 			}
-			const response = await this.connector.request('GET', 'rr_model', { "key": `sensors.probes[${this.touchplateProbeNumber}]` });
-			this.installed = response.result != null && response.result.value < response.result.threshold;
-			setTimeout(this.updateInstalled, this.updateInterval);
 		},
 	},
-	mounted() {
-		this.updateInstalled();
-	},
+	watch: {
+		isConnected() {
+			if (this.isConnected) {
+				this.updateInstalled();
+				this.intervalId = setInterval(this.updateInstalled, this.updateInterval);
+			} else {
+				clearInterval(this.intervalId);
+				this.intervalId = null;
+			}
+		},
+	}
 }
 </script>
