@@ -131,14 +131,10 @@ a:not(:hover) {
 						{{ $t('panel.status.speedFactor') }}
 					</v-col>
 
-					<v-col>
-						<v-row align-content="center" no-gutters>
-					<v-col class="d-flex flex-column align-center">
+					<v-col align-self="center" class="d-flex flex-column align-center">
 						<span>
 							{{ speedFactor }}
 						</span>
-					</v-col>
-						</v-row>
 					</v-col>
 				</v-row>
 			</template>
@@ -152,14 +148,10 @@ a:not(:hover) {
 						{{ $t('panel.status.wcs') }}
 					</v-col>
 
-					<v-col>
-						<v-row align-content="center" no-gutters>
-					<v-col class="d-flex flex-column align-center">
+					<v-col align-self="center" class="d-flex flex-column align-center">
 						<span>
 							{{ wcsNames[move.currentWorkplace] }}
 						</span>
-					</v-col>
-						</v-row>
 					</v-col>
 				</v-row>
 			</template>
@@ -173,14 +165,10 @@ a:not(:hover) {
 						{{ $t('panel.status.compensation') }}
 					</v-col>
 
-					<v-col>
-						<v-row align-content="center" no-gutters>
-					<v-col class="d-flex flex-column align-center">
+					<v-col align-self="center" class="d-flex flex-column align-center">
 						<span>
 							{{ move.compensation }}
 						</span>
-					</v-col>
-						</v-row>
 					</v-col>
 				</v-row>
 			</template>
