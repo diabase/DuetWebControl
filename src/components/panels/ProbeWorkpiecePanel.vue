@@ -19,7 +19,7 @@ table tbody tr:hover {
 			<v-row>
 				<v-col>
 					<p class="mb-1">{{ $t('panel.probeworkpiece.description') }}</p>
-					<v-simple-table :class="tableNoHover">
+					<v-simple-table>
 						<tbody>
 							<tr>
 								<td></td>

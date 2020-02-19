@@ -53,7 +53,7 @@ export default {
 		async updateInstalled() {
 			if (this.isConnected) {
 				const response = await this.connector.request('GET', 'rr_model', { "key": `sensors.probes[${this.touchplateProbeNumber}]` });
-				this.installed = response.result != null && response.result.value < response.result.threshold;
+				this.installed = response.result != null && response.result.value[0] < response.result.threshold;
 			}
 		},
 	},

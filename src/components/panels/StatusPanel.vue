@@ -76,14 +76,14 @@ a:not(:hover) {
 
 					<v-col>
 						<v-row align-content="center" no-gutters>
-					<v-col v-for="(extruder, index) in move.extruders" :key="index" class="d-flex flex-column align-center">
-						<strong>
-							{{ $t('panel.status.extruderDrive', [index]) }}
-						</strong>
-						<span>
-							{{ displayExtruderPosition(extruder, index) }}
-						</span>
-					</v-col>
+							<v-col v-for="(extruder, index) in move.extruders" :key="index" class="d-flex flex-column align-center">
+								<strong>
+									{{ $t('panel.status.extruderDrive', [index]) }}
+								</strong>
+								<span>
+									{{ displayExtruderPosition(extruder, index) }}
+								</span>
+							</v-col>
 						</v-row>
 					</v-col>
 				</v-row>
@@ -100,41 +100,34 @@ a:not(:hover) {
 
 					<v-col>
 						<v-row align-content="center" no-gutters>
-					<v-col v-if="isNumber(move.currentMove.requestedSpeed)" class="d-flex flex-column align-center">
-						<strong>
-							{{ $t('panel.status.requestedSpeed') }}
-						</strong>
-						<span>
-							{{ $display(move.currentMove.requestedSpeed, 0, 'mm/s') }}
-						</span>
-					</v-col>
+							<v-col v-if="isNumber(move.currentMove.requestedSpeed)" class="d-flex flex-column align-center">
+								<strong>
+									{{ $t('panel.status.requestedSpeed') }}
+								</strong>
+								<span>
+									{{ $display(move.currentMove.requestedSpeed, 0, 'mm/s') }}
+								</span>
+							</v-col>
 
-					<v-col v-if="isNumber(move.currentMove.topSpeed)" class="d-flex flex-column align-center">
-						<strong>
-							{{ $t('panel.status.topSpeed') }}
-						</strong>
-						<span>
-							{{ $display(move.currentMove.topSpeed, 0, 'mm/s') }}
-						</span>
-					</v-col>
+							<v-col v-if="isNumber(move.currentMove.topSpeed)" class="d-flex flex-column align-center">
+								<strong>
+									{{ $t('panel.status.topSpeed') }}
+								</strong>
+								<span>
+									{{ $display(move.currentMove.topSpeed, 0, 'mm/s') }}
+								</span>
+							</v-col>
+							<v-col v-if="(true || vendor === 'diabase') && move.speedFactor > 0" class="d-flex flex-column align-center">
+								<strong>
+									{{ $t('panel.status.speedFactor') }}
+								</strong>
+								<span>
+									{{ speedFactor }}
+								</span>
+							</v-col>
 						</v-row>
-					</v-col>
-				</v-row>
-			</template>
-
-			<!-- Speed Factor -->
-			<template v-if="true || vendor === 'diabase'" v-show="move.speedFactor > 0">
-				<v-divider class="mr-2"></v-divider>
-
-				<v-row align-content="center" no-gutters class="flex-nowrap">
-					<v-col tag="strong" class="category-header">
-						{{ $t('panel.status.speedFactor') }}
-					</v-col>
-
-					<v-col align-self="center" class="d-flex flex-column align-center">
-						<span>
-							{{ speedFactor }}
-						</span>
+						<v-row align-content="center" no-gutters class="flex-nowrap">
+						</v-row>
 					</v-col>
 				</v-row>
 			</template>
