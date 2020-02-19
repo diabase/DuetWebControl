@@ -89,12 +89,6 @@ export default {
 	data() {
 		return {
 			doubleQuote: '"',
-			theme: 'dark',
-			tableNoHover: {
-				table: {
-					hover: this.$vuetify.theme.themes['dark'].table.active,
-				}
-			}
 		}
 	},
 	methods: {
