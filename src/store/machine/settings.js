@@ -116,7 +116,7 @@ export default function(hostname) {
 			setToolOffsetAmount(state, { index, value }) {
 				state.toolOffsetAmounts[index] = value;
 			},
-			toggleExtraHeaterVisibility(state, extraHeater) {
+			toggleExtraVisibility(state, extraHeater) {
 				if (state.displayedExtraTemperatures.indexOf(extraHeater) === -1) {
 					state.displayedExtraTemperatures.push(extraHeater);
 				} else {

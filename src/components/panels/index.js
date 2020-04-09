@@ -3,7 +3,6 @@
 import Vue from 'vue'
 
 import ATXPanel from './ATXPanel.vue'
-import BabysteppingPanel from './BabysteppingPanel.vue'
 import ExtrudePanel from './ExtrudePanel.vue'
 import ExtrusionFactorsPanel from './ExtrusionFactorsPanel.vue'
 import FanPanel from './FanPanel.vue'
@@ -33,9 +32,9 @@ import TouchOffPlatePanel from './TouchOffPlatePanel.vue'
 import TurretLockPanel from './TurretLockPanel.vue'
 import WebcamPanel from './WebcamPanel.vue'
 import WCSPanel from './WCSPanel.vue'
+import ZBabystepPanel from './ZBabystepPanel.vue'
 
 Vue.component('atx-panel', ATXPanel)
-Vue.component('babystepping-panel', BabysteppingPanel)
 Vue.component('extrude-panel', ExtrudePanel)
 Vue.component('extrusion-factors-panel', ExtrusionFactorsPanel)
 Vue.component('fan-panel', FanPanel)
@@ -65,10 +64,10 @@ Vue.component('touch-off-plate-panel', TouchOffPlatePanel)
 Vue.component('turret-lock-panel', TurretLockPanel)
 Vue.component('webcam-panel', WebcamPanel)
 Vue.component('wcs-panel', WCSPanel)
+Vue.component('z-babystep-panel', ZBabystepPanel)
 
 export default {
 	ATXPanel,
-	BabysteppingPanel,
 	ExtrudePanel,
 	ExtrusionFactorsPanel,
 	FanPanel,
@@ -96,6 +95,7 @@ export default {
 	ToolsPanel,
 	TouchOffPlatePanel,
 	TurretLockPanel,
-	WebcamPanel,
 	WCSPanel,
+	WebcamPanel,
+	ZBabystepPanel
 }
