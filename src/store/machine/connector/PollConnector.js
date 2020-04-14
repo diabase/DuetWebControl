@@ -645,15 +645,6 @@ export default class PollConnector extends BaseConnector {
 			}
 		}
 
-		const wcsResponse = await this.request('GET', 'rr_model', { "key": "move.axes[].workplaceOffsets" });
-		quickPatch(newData, {
-			move: {
-				axes: wcsResponse.result.map((workplaceOffsets) => ({
-					workplaceOffsets,
-				})),
-			},
-		})
-
 		// Update the data model
 		await this.dispatch('update', newData);
 

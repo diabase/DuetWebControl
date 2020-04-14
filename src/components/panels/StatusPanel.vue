@@ -143,7 +143,7 @@ a:not(:hover) {
 
 					<v-col align-self="center" class="d-flex flex-column align-center">
 						<span>
-							{{ wcsNames[move.currentWorkplace] }}
+							{{ wcsNames[move.workspaceNumber] }}
 						</span>
 					</v-col>
 				</v-row>
@@ -160,7 +160,7 @@ a:not(:hover) {
 
 					<v-col align-self="center" class="d-flex flex-column align-center">
 						<span>
-							{{ move.compensation }}
+							{{ move.compensation.type }}
 						</span>
 					</v-col>
 				</v-row>
