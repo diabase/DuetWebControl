@@ -24,7 +24,7 @@ table tbody tr:hover {
 							<tr>
 								<td></td>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}workpiece_Ymax.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Ymax.g${doubleQuote}`" no-wait block class="move-btn">
 										Y <v-icon>{{ getIcon("Y", "max") }}</v-icon>
 									</code-btn>
 								</td>
@@ -32,7 +32,7 @@ table tbody tr:hover {
 							</tr>
 							<tr>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}workpiece_Xmin.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Xmin.g${doubleQuote}`" no-wait block class="move-btn">
 										-X <v-icon>{{ getIcon("X", "min") }}</v-icon>
 									</code-btn>
 								</td>
@@ -40,7 +40,7 @@ table tbody tr:hover {
 									<v-icon>mdi-cube-scan</v-icon>
 								</td>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}workpiece_Xmax.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Xmax.g${doubleQuote}`" no-wait block class="move-btn">
 										<v-icon>{{ getIcon("X", "max") }}</v-icon> X
 									</code-btn>
 								</td>
@@ -49,13 +49,13 @@ table tbody tr:hover {
 							<tr>
 								<td></td>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}workpiece_Ymin.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Ymin.g${doubleQuote}`" no-wait block class="move-btn">
 										-Y <v-icon>{{ getIcon("Y", "min") }}</v-icon>
 									</code-btn>
 								</td>
 								<td></td>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}workpiece_Zmax.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Zmax.g${doubleQuote}`" no-wait block class="move-btn">
 										Z <v-icon>{{ getIcon("Z", "max") }}</v-icon>
 									</code-btn>
 								</td>
@@ -89,6 +89,7 @@ export default {
 	data() {
 		return {
 			doubleQuote: '"',
+			macroBaseName: 'workpieceprobe_',
 		}
 	},
 	methods: {
