@@ -86,6 +86,10 @@ export default {
 		refresh: {
 			caption: 'Refresh'
 		},
+		reset: {
+			caption: 'Reset Machine',
+			title: 'Send M999 to the machine to reset it'
+		},
 		touchoff: {
 			touchoff: 'Touch-off {0}',
 		},

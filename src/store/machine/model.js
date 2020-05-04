@@ -99,8 +99,11 @@ export class MachineModel {
 		heaters: null,
 		heatersPerTool: null,
 		monitorsPerHeater: null,
+		restorePoints: null,
 		sensors: null,
 		spindles: null,
+		tools: null,
+		trackedObjects: null,
 		triggers: null,
 		volumes: null,
 		workplaces: null,
@@ -133,11 +136,17 @@ export class MachineModel {
 				ySpacing: 0.0,
 				radius: 0.0
 			},
+			skew: {
+				tanXY: 0,
+				tanXZ: 0,
+				tanYZ: 0
+			},
 			type: 'none'			// *** no enum yet because RRF <= 2 supports 'n Point' compensation
 		},
 		currentMove: {
 			acceleration: 0,
 			deceleration: 0,
+			laserPwm: null,
 			requestedSpeed: 0,
 			topSpeed: 0
 		},
@@ -170,7 +179,7 @@ export class MachineModel {
 		analog: [],
 		endstops: [],
 		filamentMonitors: [],
-		inputs: [],
+		gpIn: [],
 		probes: []
 	}
 	spindles = []
@@ -180,6 +189,7 @@ export class MachineModel {
 		currentTool: -1,
 		displayMessage: '',
 		dsfVersion: null,						// *** missing in RRF
+		gpOut: [],
 		laserPwm: null,
 		logFile: null,
 		messageBox: null,
@@ -308,11 +318,13 @@ export class MachineModelModule {
 		},
 		jobProgress(state, getters) {
 			if (isPrinting(state.state.status)) {
-				let totalRawExtruded = state.move.extruders
-											.map(extruder => extruder && extruder.rawPosition);
-				totalRawExtruded = (totalRawExtruded.length === 0) ? 0 : totalRawExtruded.reduce((a, b) => a + b);
-				if (state.state.status === StatusType.simulating && state.job.file.filament.length > 0 && totalRawExtruded > 0) {
-					return Math.min(totalRawExtruded / state.job.file.filament.reduce((a, b) => a + b), 1);
+				if (state.state.status !== StatusType.simulating) {
+					let totalRawExtruded = state.move.extruders
+						.map(extruder => extruder && extruder.rawPosition);
+					totalRawExtruded = (totalRawExtruded.length === 0) ? 0 : totalRawExtruded.reduce((a, b) => a + b);
+					if (state.state.status === StatusType.simulating && state.job.file.filament.length > 0 && totalRawExtruded > 0) {
+						return Math.min(totalRawExtruded / state.job.file.filament.reduce((a, b) => a + b), 1);
+					}
 				}
 				return getters.fractionPrinted;
 			}

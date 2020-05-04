@@ -415,7 +415,7 @@ export default class PollConnector extends BaseConnector {
 				fans: newData.fans.map((fanData, index) => ({
 					name: !response.params.fanNames ? null : response.params.fanNames[index],
 					thermostatic: {
-						heaters: ((response.controllableFans & (1 << index)) === 0) ? [] : [-1]
+						heaters: ((response.controllableFans & (1 << index)) !== 0) ? [] : [-1]
 					}
 				})),
 				heat: {
@@ -488,6 +488,15 @@ export default class PollConnector extends BaseConnector {
 					mounted: (response.mountedVolumes & (1 << i)) !== 0
 				});
 			}
+
+			response.tools.forEach(tool => {
+				if (tool.drives.length > 0) {
+					const extruder = tool.drives[0];
+					if (extruder >= 0 && extruder < newData.move.extruders.length && newData.move.extruders[extruder] !== null) {
+						newData.move.extruders[extruder].filament = tool.filament;
+					}
+				}
+			});
 		} else if (statusType === 3) {
 			if (!newData.job) {
 				newData.job = {};
@@ -869,7 +878,6 @@ export default class PollConnector extends BaseConnector {
 			}
 
 			if (addLayers) {
-				const layerJustChanged = (status === StatusType.simulating) || ((jobKey.layer - this.layers.length) === 2);
 				if (this.printStats.duration) {
 					// Got info about the past layer, add what we know
 					this.layers.push({
@@ -888,11 +896,10 @@ export default class PollConnector extends BaseConnector {
 						this.layers.push({ duration: avgDuration });
 						layersChanged = true;
 					}
-					this.printStats.zPosition = zPosition;
 				}
 
-				// Keep track of the past layer if the layer change just happened
-				if (layerJustChanged) {
+				// Keep track of the past layer if new layers have been added
+				if (layersChanged) {
 					this.printStats.duration = jobKey.duration;
 					this.printStats.extrRaw = extrRaw;
 					this.printStats.fractionPrinted = fractionPrinted;

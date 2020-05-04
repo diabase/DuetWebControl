@@ -37,9 +37,14 @@ export class Axis {
 	machinePosition = null
 	max = 200
 	maxProbed = false
+	microstepping = {
+		interpolated: false,
+		value: 16
+	}
 	min = 0
 	minProbed = false
 	speed = 100
+	stepsPerMm = 80
 	userPosition = null
 	visible = true
 	workplaceOffsets = []
@@ -113,6 +118,10 @@ export class Extruder {
 	factor = 1.0
 	filament = ''
 	jerk = 15
+	microstepping = {
+		interpolated: false,
+		value: 16
+	}
 	nonlinear = {
 		a: 0,
 		b: 0,
@@ -122,11 +131,12 @@ export class Extruder {
 	pressureAdvance = 0
 	rawPosition = 0
 	speed = 100
+	stepsPerMm = 420
 }
 
 export class Fan {
 	constructor(initData) { quickPatch(this, initData); }
-	actualValue = 0
+	actualValue = -1
 	blip = 0.1
 	frequency = 250
 	max = 1
@@ -209,8 +219,12 @@ export class RotatingMagnetFilamentMonitor extends FilamentMonitor {
 
 export class GpInputPort {
 	constructor(initData) { quickPatch(this, initData); }
-	configured = false
-	value = null
+	value = 0
+}
+
+export class GpOutputPort {
+	constructor(initData) { quickPatch(this, initData); }
+	pwm = 0
 }
 
 export class Heater {
@@ -583,8 +597,8 @@ export function fixMachineItems(state, mergeData) {
 				}
 			});
 		}
-		if (mergeData.sensors.inputs) {
-			fixItems(state.sensors.inputs, GpInputPort);
+		if (mergeData.sensors.gpIn) {
+			fixItems(state.sensors.gpIn, GpInputPort);
 		}
 		if (mergeData.sensors.probes) {
 			fixItems(state.sensors.probes, Probe);
@@ -595,8 +609,13 @@ export function fixMachineItems(state, mergeData) {
 		fixItems(state.spindles, Spindle);
 	}
 
-	if (mergeData.state && mergeData.state.restorePoints) {
-		fixItems(state.state.restorePoints, RestorePoint);
+	if (mergeData.state) {
+		if (mergeData.state.gpOut) {
+			fixItems(state.state.gpOut, GpOutputPort);
+		}
+		if (mergeData.state.restorePoints) {
+			fixItems(state.state.restorePoints, RestorePoint);
+		}
 	}
 
 	if (mergeData.tools) {

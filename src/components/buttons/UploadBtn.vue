@@ -143,14 +143,16 @@ export default {
 			return result;
 		},
 		getBinaryName(key, fileName) {
-			return this.boards.find(board => {
+			let result = null;
+			this.boards.forEach(board => {
 				if (board && board[key]) {
 					const regEx = new RegExp(board[key].replace(/\.bin$/, '(.*)\\.bin'), 'i');
 					if (regEx.test(fileName)) {
-						return board[key];
+						result = board[key];
 					}
 				}
 			});
+			return result;
 		},
 		async doUpload(files, zipName, startTime) {
 			if (!files.length) {
@@ -216,7 +218,7 @@ export default {
 				// Adjust filename if an update is being uploaded
 				let filename = Path.combine(this.destinationDirectory, content.name);
 				if (this.target === 'system' || this.target === 'firmware') {
-					if (Path.isSdPath(content.name)) {
+					if (Path.isSdPath('/' + content.name)) {
 						filename = Path.combine('0:/', content.name);
 					} else if (this.isWebFile(content.name)) {
 						filename = Path.combine(this.directories.web, content.name);
