@@ -44,7 +44,7 @@
 			</v-simple-table>
 		</v-card-text>
 		<input-dialog :shown.sync="setWCSOffsetDialog.shown" :title="setWCSOffsetDialog.title" :prompt="setWCSOffsetDialog.prompt" :preset="setWCSOffsetDialog.preset" is-numeric-value @confirmed="setWCSOffsetDialogConfirmed"></input-dialog>
-		<confirm-dialog :shown.sync="resetDialog.shown" :question="resetDialog.question" :prompt="resetDialog.prompt" @confirmed="reset"></confirm-dialog>
+		<confirm-dialog :shown.sync="resetDialog.shown" :title="resetDialog.title" :prompt="resetDialog.prompt" @confirmed="reset"></confirm-dialog>
 	</v-card>
 </template>
 
@@ -94,7 +94,7 @@ export default {
 				preset: 0,
 			},
 			resetDialog: {
-				question: '',
+				title: '',
 				prompt: '',
 				wcsNumber: -1,
 				shown: false
@@ -126,7 +126,7 @@ export default {
 		},
 		resetClicked(wcsNumber) {
 			const wcsName = this.wcsNames[wcsNumber]
-			this.resetDialog.question = this.$t('dialog.resetWCS.title', [wcsName]);
+			this.resetDialog.title = this.$t('dialog.resetWCS.title', [wcsName]);
 			this.resetDialog.prompt = this.$t('dialog.resetWCS.prompt', [wcsName]);
 			this.resetDialog.wcsNumber = wcsNumber;
 			this.resetDialog.shown = true;

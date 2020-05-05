@@ -70,7 +70,7 @@ export default {
 		...mapState('machine/model', ['tools', 'move']),
 		...mapState('machine/settings', ['toolOffsetAmounts']),
 		toolsWithoutProbe() {
-			return this.tools.filter(t => t.number != 10);
+			return this.tools.filter(t => t != null && t.number != 10);
 		}
 	},
 	data() {
