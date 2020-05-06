@@ -117,7 +117,6 @@ export default {
 	methods: {
 		...mapActions('machine', ['sendCode']),
 		...mapMutations('machine/settings', ['setToolOffsetAmount']),
-		axisToIndex: axis => axis == "X" ? 0 : axis == "Y" ? 1 : 0,
 		async toolOffsetAdjust(axisLetter, axisIndex, tool, multiplier = 1) {
 			let amount = this.amount * multiplier;
 			const newAmount = Math.round((tool.offsets[axisIndex] + amount) * 100) / 100;
@@ -131,11 +130,10 @@ export default {
 		},
 		async toolOffsetSet(axisLetter, axisIndex, tool) {
 			let storeAxis = this.move.axes.filter(axis => axis.letter == axisLetter);
-			if (storeAxis.drives.length > 0) {
-				let position = this.move.drives[storeAxis.drives[0]].position;
+			if (storeAxis) {
 				this.busy = true;
 				try {
-					await this.sendCode(`G10 L1 P${tool.number} ${axisLetter}${position}\nM500 P10`);
+					await this.sendCode(`G10 L1 P${tool.number} ${axisLetter}${storeAxis.userPosition}\nM500 P10`);
 				} catch (e) {
 					// handled before we get here
 				}
