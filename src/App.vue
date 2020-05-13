@@ -94,6 +94,9 @@ textarea {
 
 			<v-spacer></v-spacer>
 
+			<code-btn class="mr-1" :code="`M291 P${doubleQuote}Jog${doubleQuote} S2 X1 Y1 Z1 U1 V1 W1 A1 B1 C1`" :title="`${ $t('button.titlebar.jogTitle') }`" no-wait lock>
+				<v-icon small>mdi-arrow-all</v-icon> {{ $t('button.titlebar.jog') }}
+			</code-btn>
 			<upload-btn target="start" class="mr-3 hidden-sm-and-down"></upload-btn>
 			<emergency-btn class="hidden-xs-only"></emergency-btn>
 
@@ -173,7 +176,8 @@ export default {
 			drawer: this.$vuetify.breakpoint.lgAndUp,
 			hideGlobalContainer: false,
 			routing: Routing,
-			wasXs: this.$vuetify.breakpoint.xsOnly
+			wasXs: this.$vuetify.breakpoint.xsOnly,
+			doubleQuote: '"',
 		}
 	},
 	methods: {

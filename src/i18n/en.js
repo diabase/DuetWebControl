@@ -90,6 +90,10 @@ export default {
 			caption: 'Reset Machine',
 			title: 'Send M999 to the machine to reset it'
 		},
+		titlebar: {
+			jog: 'Jog',
+			jogTitle: 'Show Jog Dialog',
+		},
 		touchoff: {
 			touchoff: 'Touch-off {0}',
 		},
