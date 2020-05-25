@@ -4,6 +4,7 @@ import Vue from 'vue'
 
 import {
 	AnalogSensorType,
+	BoardState,
 	Compatibility,
 	DistanceUnit,
 	EndstopType,
@@ -75,6 +76,7 @@ export class Board {
 	}
 	name = ''
 	shortName = ''
+	state = BoardState.unknown
 	supports12864 = false
 	v12 = {
 		current: 0,
@@ -517,22 +519,24 @@ function fixObject(item, preset) {
 
 function fixItems(items, ClassType) {
 	let preset = new ClassType();
-	items.forEach(function(item) {
-		if (item !== null) {
-			for (let key in preset) {
-				if (item[key] === undefined) {
-					Vue.set(item, key, preset[key]);
-					if (preset[key] instanceof Object) {
-						preset = new ClassType();
-					}
-				} else if (preset[key] instanceof Object) {
-					if (fixObject(item[key], preset[key])) {
-						preset = new ClassType();
+	if (items !== null && items !== undefined) {
+		items.forEach(function(item) {
+			if (item !== null) {
+				for (let key in preset) {
+					if (item[key] === undefined) {
+						Vue.set(item, key, preset[key]);
+						if (preset[key] instanceof Object) {
+							preset = new ClassType();
+						}
+					} else if (preset[key] instanceof Object) {
+						if (fixObject(item[key], preset[key])) {
+							preset = new ClassType();
+						}
 					}
 				}
 			}
-		}
-	});
+		});
+	}
 }
 
 // TODO: Eventually this could be combined with the 'merge' function
