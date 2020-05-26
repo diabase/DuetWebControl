@@ -90,6 +90,19 @@ export default {
 			caption: 'Reset Machine',
 			title: 'Send M999 to the machine to reset it'
 		},
+		rotaryaxes: {
+			control: {
+				measureZAxis: 'Measure Z axis',
+				setXmin: 'Set X min',
+				setXmax: 'Set X max',
+				setYmin: 'Set Y min',
+				setYmax: 'Set Y max',
+				levelAaxis: 'Level A axis',
+				setStockThickness: 'Set stock thickness',
+				setYoffset: 'Set Y offset',
+				autoLevel: 'Auto-level bed for printing',
+			},
+		},
 		titlebar: {
 			jog: 'Jog',
 			jogTitle: 'Show Jog Dialog',
@@ -438,7 +451,8 @@ export default {
 			dashboard: 'Dashboard',
 			console: 'Console',
 			heightmap: 'Height Map',
-			offsets: 'Offsets'
+			offsets: 'Offsets',
+			rotaryaxes: 'Rotary Axes',
 		},
 		job: {
 			caption: 'Current Job',
@@ -630,6 +644,32 @@ export default {
 		probeworkpiece: {
 			caption: 'Probe Workpiece',
 			description: 'Start probing from (and move)',
+		},
+		rotaryaxes: {
+			control: {
+				caption: 'Setup',
+				tableHeaders: {
+					steps: 'Steps',
+					actions: 'Actions',
+				},
+				step1: '1',
+				step2: '2',
+				step3: '3',
+				step4: '4',
+				step5: '5',
+				step6: '6',
+				step7: '7',
+			},
+			status: {
+				caption: 'Status',
+				tableHeaders: {
+					xMin: 'X min',
+					xMax: 'X max',
+					yMin: 'Y min',
+					yMax: 'Y max',
+					thickness: 'Stock thickness',
+				},
+			},
 		},
 		settingsAbout: {
 			caption: 'About',

@@ -45,7 +45,14 @@ export const Routing = [
 				caption: 'menu.control.offsets',
 				path: '/Offsets',
 				component: Control.Offsets
-			}
+			},
+			// Rotary Axes (OEM)
+			{
+				icon: 'mdi-axis-x-rotate-clockwise',
+				caption: 'menu.control.rotaryaxes',
+				path: '/RotaryAxes',
+				component: Control.RotaryAxes,
+			},
 		]
 	},
 	// Job

@@ -14,6 +14,8 @@ import JobDataPanel from './JobDataPanel.vue'
 import JobEstimationsPanel from './JobEstimationsPanel.vue'
 import JobInfoPanel from './JobInfoPanel.vue'
 import ProbeWorkpiecePanel from './ProbeWorkpiecePanel.vue'
+import RotaryAxesControlPanel from './RotaryAxesControlPanel.vue'
+import RotaryAxesStatusPanel from './RotaryAxesStatusPanel.vue'
 import SettingsAboutPanel from './SettingsAboutPanel.vue'
 import SettingsAppearancePanel from './SettingsAppearancePanel.vue'
 import SettingsCommunicationPanel from './SettingsCommunicationPanel.vue'
@@ -46,6 +48,8 @@ Vue.component('job-estimations-panel', JobEstimationsPanel)
 Vue.component('job-info-panel', JobInfoPanel)
 Vue.component('movement-panel', MovementPanel)
 Vue.component('probe-workpiece-panel', ProbeWorkpiecePanel)
+Vue.component('rotary-axes-control-panel', RotaryAxesControlPanel)
+Vue.component('rotary-axes-status-panel', RotaryAxesStatusPanel)
 Vue.component('settings-about-panel', SettingsAboutPanel)
 Vue.component('settings-apperance-panel', SettingsAppearancePanel)
 Vue.component('settings-communication-panel', SettingsCommunicationPanel)
@@ -79,6 +83,8 @@ export default {
 	JobInfoPanel,
 	MovementPanel,
 	ProbeWorkpiecePanel,
+	RotaryAxesControlPanel,
+	RotaryAxesStatusPanel,
 	SettingsAboutPanel,
 	SettingsAppearancePanel,
 	SettingsCommunicationPanel,
