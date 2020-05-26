@@ -32,41 +32,25 @@
 <script>
 'use strict'
 
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
-		...mapGetters('machine', ['connector']),
+		...mapState('machine/model', ['sensors']),
+		installed() {
+			return this.sensors.probes.length > this.touchplateProbeNumber
+				&& this.sensors.probes[this.touchplateProbeNumber].value[0] < this.sensors.probes[this.touchplateProbeNumber].threshold;
+		},
 	},
 	data() {
 		return {
 			axes: [ "X-Y", "Z" ],
 			doubleQuote: '"',
 			touchplateProbeNumber: 1,
-			installed: false,
 			updateInterval: 5000,
 			intervalId: null,
 		}
 	},
-	methods: {
-		async updateInstalled() {
-			if (this.isConnected) {
-				const response = await this.connector.request('GET', 'rr_model', { "key": `sensors.probes[${this.touchplateProbeNumber}]` });
-				this.installed = response.result != null && response.result.value[0] < response.result.threshold;
-			}
-		},
-	},
-	watch: {
-		isConnected() {
-			if (this.isConnected) {
-				this.updateInstalled();
-				this.intervalId = setInterval(this.updateInstalled, this.updateInterval);
-			} else {
-				clearInterval(this.intervalId);
-				this.intervalId = null;
-			}
-		},
-	}
 }
 </script>
