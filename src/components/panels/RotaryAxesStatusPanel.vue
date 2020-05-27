@@ -44,10 +44,10 @@ export default {
 	computed: {
 		...mapState('machine/model', ['move']),
 		xAxis() {
-			return this.move.axes.filter(axis => axis.letter == 'X')[0];
+			return this.move.axes.filter(axis => axis.letter == 'X')[0] || {min: 0, max: 0};
 		},
 		yAxis() {
-			return this.move.axes.filter(axis => axis.letter == 'Y')[0];
+			return this.move.axes.filter(axis => axis.letter == 'Y')[0] || {min: 0, max: 0};
 		},
 	},
 	data() {

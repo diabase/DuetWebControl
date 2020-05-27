@@ -60,18 +60,17 @@ export default {
 		...mapState('machine', ['wcsNames']),
 		workplaceOffsets() {
 			const zeroOffsets = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-			this.relevantAxes.filter(a => a == "X");
-			const xAxis = this.move.axes.filter(axis => axis.letter == "X"),
+			let xAxis = this.move.axes.filter(axis => axis.letter == "X"),
 				yAxis = this.move.axes.filter(axis => axis.letter == "Y"),
 				zAxis = this.move.axes.filter(axis => axis.letter == "Z"),
 				aAxis = this.move.axes.filter(axis => axis.letter == "A"),
 				cAxis = this.move.axes.filter(axis => axis.letter == "C");
 
-			const xOffsets = xAxis.length > 0 && xAxis[0].workplaceOffsets || zeroOffsets,
-				yOffsets = yAxis.length > 0 && yAxis[0].workplaceOffsets || zeroOffsets,
-				zOffsets = zAxis.length > 0 && zAxis[0].workplaceOffsets || zeroOffsets,
-				aOffsets = aAxis.length > 0 && aAxis[0].workplaceOffsets || zeroOffsets,
-				cOffsets = cAxis.length > 0 && cAxis[0].workplaceOffsets || zeroOffsets;
+			let xOffsets = (xAxis[0] && xAxis[0].workplaceOffsets.length > 0 && xAxis[0].workplaceOffsets) || zeroOffsets,
+				yOffsets = (yAxis[0] && yAxis[0].workplaceOffsets.length > 0 && yAxis[0].workplaceOffsets) || zeroOffsets,
+				zOffsets = (zAxis[0] && zAxis[0].workplaceOffsets.length > 0 && zAxis[0].workplaceOffsets) || zeroOffsets,
+				aOffsets = (aAxis[0] && aAxis[0].workplaceOffsets.length > 0 && aAxis[0].workplaceOffsets) || zeroOffsets,
+				cOffsets = (cAxis[0] && cAxis[0].workplaceOffsets.length > 0 && cAxis[0].workplaceOffsets) || zeroOffsets;
 			return {
 				"X": xOffsets,
 				"Y": yOffsets,

@@ -55,8 +55,8 @@ table tbody tr:hover {
 								</td>
 								<td></td>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Zmax.g${doubleQuote}`" no-wait block class="move-btn">
-										Z <v-icon>{{ getIcon("Z", "max") }}</v-icon>
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Zmin.g${doubleQuote}`" no-wait block class="move-btn">
+										Z <v-icon>{{ getIcon("Z") }}</v-icon>
 									</code-btn>
 								</td>
 							</tr>
@@ -68,6 +68,13 @@ table tbody tr:hover {
 						<v-col>
 							<code-btn :code="`M98 P${doubleQuote}tcalibrate.g${doubleQuote}`" no-wait block class="move-btn">
 								<v-icon>mdi-image-filter-center-focus</v-icon> {{ $t('button.probeWorkpiece.findCenterOfCavity') }}
+							</code-btn>
+						</v-col>
+					</v-row>
+					<v-row>
+						<v-col>
+							<code-btn :code="`M98 P${doubleQuote}measurez.g${doubleQuote}`" no-wait block class="move-btn">
+								<v-icon>mdi-ruler</v-icon> {{ $t('button.probeWorkpiece.measureZ') }}
 							</code-btn>
 						</v-col>
 					</v-row>

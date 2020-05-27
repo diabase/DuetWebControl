@@ -82,6 +82,7 @@ export default {
 		},
 		probeWorkpiece: {
 			findCenterOfCavity: 'Find center of cavity',
+			measureZ: 'Measure Z',
 		},
 		refresh: {
 			caption: 'Refresh'

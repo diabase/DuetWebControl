@@ -305,7 +305,7 @@ export default {
 			return this.move.speedFactor ? Math.round(this.move.speedFactor * 100) : 100;
 		},
 		visibleAxes() {
-			return this.move.axes.filter(axis => axis.visible);
+			return this.move.axes.filter(axis => axis.visible && !(axis.letter == 'V' || axis.letter == 'W'));
 		},
 	},
 	data() {

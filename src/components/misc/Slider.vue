@@ -7,7 +7,8 @@
 <template>
 	<v-row dense align="center">
 		<v-col cols="auto">
-			<v-icon @click="doShowSliderEditDialog">mdi-pencil</v-icon>
+			<v-text-field type="number" suffix="%" prepend-icon="mdi-pencil" v-model="innerValue" @change="$emit('input', $event)" :min="min" :max="max" :disabled="disabled"></v-text-field>
+			<!-- <v-icon @click="doShowSliderEditDialog">mdi-pencil</v-icon> -->
 		</v-col>
 		<v-col cols="auto">
 			<v-btn large icon :disabled="disabled || innerValue <= min" @click="change(-step)" @mousedown="mouseDown(false)" @mouseup="mouseUp(false)" @mouseleave="mouseUp(false)" @touchstart="mouseDown(false)" @touchend="mouseUp(false)" class="ml-0">
@@ -17,7 +18,7 @@
 
 		<v-col>
 			<v-slider :value="innerValue" @change="$emit('input', $event)" :min="min" :max="max" :disabled="disabled" hide-details thumb-label="always" class="slider"></v-slider>
-			<input-dialog :shown.sync="showSliderEditDialog" :title="$t('dialog.sliderEdit.title')" :prompt="$t('dialog.sliderEdit.prompt')" :preset="innerValue" is-numeric-value @confirmed="setSliderValue"></input-dialog>
+			<!-- <input-dialog :shown.sync="showSliderEditDialog" :title="$t('dialog.sliderEdit.title')" :prompt="$t('dialog.sliderEdit.prompt')" :preset="innerValue" is-numeric-value @confirmed="setSliderValue"></input-dialog> -->
 		</v-col>
 
 		<v-col cols="auto">
@@ -30,6 +31,7 @@
 
 <script>
 'use strict'
+
 
 import { mapGetters } from 'vuex'
 
@@ -124,6 +126,6 @@ export default {
 			// Hide dialogs when the connection is interrupted
 			this.showSliderEditDialog = false;
 		}
-	}
+	},
 }
 </script>

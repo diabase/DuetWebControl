@@ -83,9 +83,17 @@ textarea {
 				<v-icon>mdi-menu</v-icon>
 			</v-app-bar-nav-icon>
 			<v-toolbar-title>
-				<!-- TODO: Optional OEM branding -->
-				<a href="javascript:void(0)" id="title">{{ name }}</a>
+				<a href="javascript:void(0)" id="title">
+					<span class="pr-2">
+						<img src="./assets/diabase_banner.png" />
+					</span>
+					{{ name }}
+				</a>
+				<a href="https://support.diabasemachines.com" target="_blank">
+					(SUPPORT)
+				</a>
 			</v-toolbar-title>
+			<v-spacer></v-spacer>
 			<connect-btn v-if="isLocal" class="hidden-xs-only"></connect-btn>
 
 			<v-spacer></v-spacer>

@@ -95,7 +95,7 @@
 				<v-col>
 					<v-row no-gutters>
 						<v-col v-for="index in numMoveSteps" :key="-index"  :class="getMoveCellClass(index - 1)">
-							<code-btn :code="`M120\nG91\nG1 ${axis.letter}${-moveSteps(axis.letter)[index - 1]} F${moveFeedrate}\nG90\nM121`" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, index - 1)" block tile class="move-btn">
+							<code-btn :code="`M120\nG91\nG1 ${axis.letter}${-moveSteps(axis.letter)[index - 1]} F${moveFeedrate}\nG90\nM121`" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, index - 1)" block tile class="move-btn" :disabled="uiFrozen || (axis.letter == 'U' && turretLocked)">
 								<v-icon>mdi-chevron-left</v-icon> {{ axis.letter + showSign(-moveSteps(axis.letter)[index - 1]) }}
 							</code-btn>
 						</v-col>
@@ -106,7 +106,7 @@
 				<v-col>
 					<v-row no-gutters>
 						<v-col v-for="index in numMoveSteps" :key="index" :class="getMoveCellClass(numMoveSteps - index)">
-							<code-btn :code="`M120\nG91\nG1 ${axis.letter}${moveSteps(axis.letter)[numMoveSteps - index]} F${moveFeedrate}\nG90\nM121`" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, numMoveSteps - index)" block tile class="move-btn">
+							<code-btn :code="`M120\nG91\nG1 ${axis.letter}${moveSteps(axis.letter)[numMoveSteps - index]} F${moveFeedrate}\nG90\nM121`" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, numMoveSteps - index)" block tile class="move-btn" :disabled="uiFrozen || (axis.letter == 'U' && turretLocked)">
 								{{ axis.letter + showSign(moveSteps(axis.letter)[numMoveSteps - index]) }} <v-icon>mdi-chevron-right</v-icon>
 							</code-btn>
 						</v-col>
@@ -141,16 +141,22 @@ import { KinematicsName } from '../../store/machine/modelEnums.js'
 export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
-		...mapState('machine/model', ['move']),
+		...mapState('machine/model', ['move', 'sensors']),
 		...mapState('machine/settings', ['moveFeedrate']),
 		...mapGetters('machine/settings', ['moveSteps', 'numMoveSteps']),
 		isCompensationEnabled() { return this.move.compensation.type.toLowerCase() !== 'none' },
-		visibleAxes() { return this.move.axes.filter(axis => axis.visible); },
+		visibleAxes() { return this.move.axes.filter(axis => axis.visible && !(axis.letter == 'V' || axis.letter == 'W')); },
 		isDelta() {
 			return ((this.move.kinematics.name === KinematicsName.delta) ||
 					(this.move.kinematics.name === KinematicsName.rotaryDelta));
 		},
-		unhomedAxes() { return this.move.axes.filter(axis => axis.visible && !axis.homed); }
+		unhomedAxes() { return this.move.axes.filter(axis => axis.visible && !axis.homed); },
+		turretLocked() {
+			return this.sensors
+				&& this.sensors.endstops
+				&& this.sensors.endstops.length > 4
+				&& !this.sensors.endstops[4].triggered;
+		},
 	},
 	data() {
 		return {
