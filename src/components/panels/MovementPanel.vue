@@ -5,6 +5,11 @@
 	min-width: 0;
 }
 </style>
+<style scoped>
+.move-warn {
+	color: red !important;
+}
+</style>
 
 <template>
 	<v-card>
@@ -38,16 +43,31 @@
 							<v-divider></v-divider>
 						</template>
 
-						<v-list-item @click="sendCode('G32')">
+						<v-list-item style="color:red !important;" @click="sendCode('G32')">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t(isDelta ? 'panel.movement.runDelta' : 'panel.movement.runBed') }}
 						</v-list-item>
+						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_flat${doubleQuote}.g')`">
+							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBedFlat') }}
+						</v-list-item>
+						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_dovetail{doubleQuote}.g')`">
+							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBedDovetail') }}
+						</v-list-item>
+						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_4{doubleQuote}.g')`">
+							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBed4') }}
+						</v-list-item>
+						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_5{doubleQuote}.g')`">
+							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBed5') }}
+						</v-list-item>
+						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_rotary{doubleQuote}.g')`">
+							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBedRotary') }}
+						</v-list-item>
 						<v-list-item :disabled="!move.compensation.type || move.compensation.type.indexOf('Point') === -1" @click="sendCode('M561')">
-							<v-icon class="mr-1">mdi-border-none</v-icon> {{ $t('panel.movement.disableBedCompensation') }} 
+							<v-icon class="mr-1">mdi-border-none</v-icon> {{ $t('panel.movement.disableBedCompensation') }}
 						</v-list-item>
 
 						<v-divider></v-divider>
 
-						<v-list-item @click="sendCode('G29')">
+						<v-list-item style="color:red !important;" @click="sendCode('G29')">
 							<v-icon class="mr-1">mdi-grid</v-icon> {{ $t('panel.movement.runMesh') }}
 						</v-list-item>
 						<v-list-item @click="showMeshEditDialog = true">
@@ -95,7 +115,7 @@
 				<v-col>
 					<v-row no-gutters>
 						<v-col v-for="index in numMoveSteps" :key="-index"  :class="getMoveCellClass(index - 1)">
-							<code-btn :code="`M120\nG91\nG1 ${axis.letter}${-moveSteps(axis.letter)[index - 1]} F${moveFeedrate}\nG90\nM121`" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, index - 1)" block tile class="move-btn" :disabled="uiFrozen || (axis.letter == 'U' && turretLocked)">
+							<code-btn :code="`M120\nG91\nG1 ${axis.letter}${-moveSteps(axis.letter)[index - 1]} F${moveFeedrate}\nG90\nM121`" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, index - 1)" block tile class="move-btn move-warn" :disabled="uiFrozen || (axis.letter == 'U' && turretLocked)">
 								<v-icon>mdi-chevron-left</v-icon> {{ axis.letter + showSign(-moveSteps(axis.letter)[index - 1]) }}
 							</code-btn>
 						</v-col>
@@ -106,7 +126,7 @@
 				<v-col>
 					<v-row no-gutters>
 						<v-col v-for="index in numMoveSteps" :key="index" :class="getMoveCellClass(numMoveSteps - index)">
-							<code-btn :code="`M120\nG91\nG1 ${axis.letter}${moveSteps(axis.letter)[numMoveSteps - index]} F${moveFeedrate}\nG90\nM121`" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, numMoveSteps - index)" block tile class="move-btn" :disabled="uiFrozen || (axis.letter == 'U' && turretLocked)">
+							<code-btn :code="`M120\nG91\nG1 ${axis.letter}${moveSteps(axis.letter)[numMoveSteps - index]} F${moveFeedrate}\nG90\nM121`" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, numMoveSteps - index)" block tile class="move-btn move-warn" :disabled="uiFrozen || (axis.letter == 'U' && turretLocked)">
 								{{ axis.letter + showSign(moveSteps(axis.letter)[numMoveSteps - index]) }} <v-icon>mdi-chevron-right</v-icon>
 							</code-btn>
 						</v-col>
@@ -145,12 +165,21 @@ export default {
 		...mapState('machine/settings', ['moveFeedrate']),
 		...mapGetters('machine/settings', ['moveSteps', 'numMoveSteps']),
 		isCompensationEnabled() { return this.move.compensation.type.toLowerCase() !== 'none' },
-		visibleAxes() { return this.move.axes.filter(axis => axis.visible && !(axis.letter == 'V' || axis.letter == 'W')); },
+		visibleAxes() {
+			return this.move.axes.filter(
+				axis => axis.visible &&
+				!(axis.letter == 'V' || axis.letter == 'W'));
+		},
 		isDelta() {
 			return ((this.move.kinematics.name === KinematicsName.delta) ||
 					(this.move.kinematics.name === KinematicsName.rotaryDelta));
 		},
-		unhomedAxes() { return this.move.axes.filter(axis => axis.visible && !axis.homed); },
+		unhomedAxes() {
+			return this.move.axes.filter(axis =>
+				axis.visible &&
+				!(axis.letter == 'V' || axis.letter == 'W') &&
+				!axis.homed);
+		},
 		turretLocked() {
 			return this.sensors
 				&& this.sensors.endstops
@@ -166,7 +195,8 @@ export default {
 				axis: 'X',
 				index: 0,
 				preset: 0
-			}
+			},
+			doubleQuote: '"',
 		}
 	},
 	methods: {
