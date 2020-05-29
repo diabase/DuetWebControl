@@ -29,11 +29,12 @@
 				</v-list>
 			</v-menu>
 		</v-card-title>
-		
+
 		<v-card-text class="d-flex flex-column pb-0">
 			<div v-for="fan in visibleFans" :key="fan" class="d-flex flex-column pt-2">
 				{{ (fan === -1) ? $t('panel.fans.toolFan') : (fans[fan].name ? fans[fan].name : $t('panel.fans.fan', [fan])) }}
-				<slider :value="getFanValue(fan)" @input="setFanValue(fan, $event)" :disabled="uiFrozen"></slider>
+				<slider v-if="fan === -1 || !fans[fan] || fans[fan].min < 1.0" :value="getFanValue(fan)" @input="setFanValue(fan, $event)" :disabled="uiFrozen"></slider>
+				<v-switch v-else @change="setFanValue(fan, $event)" :disabled="uiFrozen" :label="`${$t('panel.fans.fanOn')}`"></v-switch>
 			</div>
 		</v-card-text>
 
@@ -80,6 +81,9 @@ export default {
 			return (fan >= 0 && fan < this.fans.length && this.fans[fan]) ? Math.round(this.fans[fan].requestedValue * 100) : 0;
 		},
 		setFanValue(fan, value) {
+			if (value === true) {
+				value = 1;
+			}
 			if (fan === -1) {
 				this.sendCode(`M106 S${value / 100}`);
 			} else {

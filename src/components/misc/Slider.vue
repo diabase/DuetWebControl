@@ -7,7 +7,7 @@
 <template>
 	<v-row dense align="center">
 		<v-col cols="auto">
-			<v-text-field type="number" suffix="%" prepend-icon="mdi-pencil" v-model="innerValue" @change="$emit('input', $event)" :min="min" :max="max" :disabled="disabled"></v-text-field>
+			<v-text-field type="number" suffix="%" prepend-icon="mdi-pencil" v-model.number="innerValue" @change="$emit('input', $event)" :min="min" :max="max" :disabled="disabled"></v-text-field>
 			<!-- <v-icon @click="doShowSliderEditDialog">mdi-pencil</v-icon> -->
 		</v-col>
 		<v-col cols="auto">

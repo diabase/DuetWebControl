@@ -35,7 +35,8 @@
 				</v-col>
 
 				<v-col cols="12" sm="auto" order="0" order-sm="1" class="flex-sm-grow-1">
-					<slider v-model="fanValue" :disabled="uiFrozen"></slider>
+					<slider v-if="!fans[fan] || fans[fan].min < 1.0" v-model="fanValue" :disabled="uiFrozen"></slider>
+					<v-switch v-else class="pt-6" v-model="fanValue" :disabled="uiFrozen" :label="`${$t('panel.fans.fanOn')}`"></v-switch>
 				</v-col>
 			</v-row>
 		</v-card-text>
@@ -65,7 +66,11 @@ export default {
 				return (fan >= 0 && fan < this.fans.length && this.fans[fan]) ? Math.round(this.fans[fan].requestedValue * 100) : 0;
 			},
 			set(value) {
-				value = Math.min(100, Math.max(0, value)) / 100;
+				if (value === true) {
+					value = 1;
+				} else {
+					value = Math.min(100, Math.max(0, value)) / 100;
+				}
 				if (this.fan === -1) {
 					this.sendCode(`M106 S${value.toFixed(2)}`);
 				} else {

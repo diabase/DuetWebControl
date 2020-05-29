@@ -570,7 +570,8 @@ export default {
 			changeVisibility: 'Change Visibility',
 			toolFan: 'Tool Fan',
 			fan: 'Fan {0}',
-			noFans: 'No Fans'
+			noFans: 'No Fans',
+			fanOn: 'On',
 		},
 		heightmap: {
 			scale: 'Scale:',
