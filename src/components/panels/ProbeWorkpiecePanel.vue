@@ -62,9 +62,7 @@ table tbody tr:hover {
 							</tr>
 						</tbody>
 					</v-simple-table>
-				</v-col>
-				<v-col class="flex-shrink-1">
-					<v-row dense>
+					<v-row dense class="pt-8">
 						<v-col>
 							<code-btn :code="`M98 P${doubleQuote}tcalibrate.g${doubleQuote}`" no-wait block class="move-btn">
 								<v-icon>mdi-image-filter-center-focus</v-icon> {{ $t('button.probeWorkpiece.findCenterOfCavity') }}
@@ -78,6 +76,9 @@ table tbody tr:hover {
 							</code-btn>
 						</v-col>
 					</v-row>
+				</v-col>
+				<v-col class="flex-shrink-1">
+					<img src="../../assets/probe.png"/>
 				</v-col>
 			</v-row>
 		</v-card-text>

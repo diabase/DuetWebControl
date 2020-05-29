@@ -12,7 +12,7 @@
 
 		<v-card-text>
 			<v-row>
-				<v-col>
+				<v-col :cols="9">
 					<v-simple-table fixed-header>
 						<thead>
 							<tr>
@@ -27,6 +27,7 @@
 									<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, t)" :title="`${ $t('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen">
 										<v-icon small>mdi-home-import-outline</v-icon>
 									</v-btn>
+									<div style="display: inline-block; white-space:nowrap;">
 									<v-btn @click="toolOffsetAdjust(axis.name, index, t, -1)" no-wait lock small :disabled="uiFrozen">
 										<v-icon small>{{ axis.iconMinus }}</v-icon> {{ axis.textMinus }}
 									</v-btn>
@@ -34,10 +35,14 @@
 									<v-btn @click="toolOffsetAdjust(axis.name, index, t)" no-wait lock small :disabled="uiFrozen">
 										<v-icon small>{{ axis.iconPlus }}</v-icon> {{ axis.textPlus }}
 									</v-btn>
+									</div>
 								</td>
 							</tr>
 						</tbody>
 					</v-simple-table>
+				</v-col>
+				<v-col :cols="3">
+					<img src="../../assets/tooloffset.png"/>
 				</v-col>
 			</v-row>
 			<v-row align="center" class="pb-1">

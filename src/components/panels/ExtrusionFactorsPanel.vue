@@ -20,7 +20,7 @@
 				</v-list>
 			</v-menu>
 		</v-card-title>
-		
+
 		<v-card-text v-if="visibleExtruders.length" class="d-flex flex-column pb-0">
 			<div v-for="extruder in visibleExtruders" :key="extruder" class="d-flex flex-column pt-2">
 				<div class="d-inline-flex">

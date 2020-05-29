@@ -18,6 +18,11 @@
 					</code-btn>
 				</v-col>
 			</v-row>
+			<v-row>
+				<v-col>
+					<img src="../../assets/touchplate.png"/>
+				</v-col>
+			</v-row>
 		</v-card-text>
 
 		<v-alert v-if="installed" type="success" class="mb-0">

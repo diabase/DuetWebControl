@@ -90,7 +90,7 @@ textarea {
 					{{ name }}
 				</a>
 				<a href="https://support.diabasemachines.com" target="_blank">
-					(SUPPORT)
+					<v-icon>mdi-book-open-variant</v-icon> (SUPPORT)
 				</a>
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
