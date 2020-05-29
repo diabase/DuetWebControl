@@ -15,7 +15,7 @@
 						<v-icon class="mr-1">
 							{{ (displayedExtruders.indexOf(index) !== -1) ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank' }}
 						</v-icon>
-						{{ $t('panel.extrusionFactors.extruder', [index]) }}
+						{{ $t('panel.extrusionFactors.extruder', [getAssociatedTool(index)]) }}
 					</v-list-item>
 				</v-list>
 			</v-menu>
@@ -24,7 +24,7 @@
 		<v-card-text v-if="visibleExtruders.length" class="d-flex flex-column pb-0">
 			<div v-for="extruder in visibleExtruders" :key="extruder" class="d-flex flex-column pt-2">
 				<div class="d-inline-flex">
-					{{ $t('panel.extrusionFactors.extruder', [extruder]) }}
+					{{ $t('panel.extrusionFactors.extruder', [getAssociatedTool(extruder)]) }}
 					<v-spacer></v-spacer>
 					<a v-show="move.extruders[extruder].factor !== 1.0" href="javascript:void(0)" :disabled="uiFrozen" @click.prevent="setExtrusionFactor(extruder, 100)" class="subtitle-2">
 						<v-icon small class="mr-1">mdi-backup-restore</v-icon> {{ $t('generic.reset') }}
@@ -49,11 +49,11 @@ import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
 	computed: {
 		...mapGetters(['uiFrozen']),
-		...mapState('machine/model', ['move']),
+		...mapState('machine/model', ['move', 'tools']),
 		...mapState('machine/settings', ['displayedExtruders']),
 		visibleExtruders() {
 			return this.displayedExtruders.filter(drive => drive < this.move.extruders.length, this);
-		}
+		},
 	},
 	methods: {
 		...mapActions('machine', ['sendCode']),
@@ -64,7 +64,11 @@ export default {
 		},
 		setExtrusionFactor(extruder, value) {
 			this.sendCode(`M221 D${extruder} S${value}`);
-		}
+		},
+		getAssociatedTool(extruder) {
+			let tools = this.tools.filter(tool => tool && tool.extruders.indexOf(extruder) > -1).map(tool => tool.name || "Tool " + tool.number);
+			return extruder + ((tools.length) ? " (" + tools.join(", ") + ")" : "") ;
+		},
 	}
 }
 </script>
