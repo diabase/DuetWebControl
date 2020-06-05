@@ -24,6 +24,12 @@ a:not(:hover) {
 .probe-span:not(:last-child) {
 	margin-right: 8px;
 }
+table tbody tr:hover {
+	background: transparent !important;
+}
+.axis-pos {
+	font-size: 30px;
+}
 </style>
 
 <template>
@@ -51,16 +57,22 @@ a:not(:hover) {
 					</v-col>
 
 					<v-col>
-						<v-row align-content="center" no-gutters>
-							<v-col v-for="(axis, index) in visibleAxes" :key="index" class="d-flex flex-column align-center">
-								<strong>
-									{{ axis.letter }}
-								</strong>
-								<span>
-									{{ displayAxisPosition(axis, index) }}
-								</span>
-							</v-col>
-						</v-row>
+						<v-simple-table id="axisPositionTable" style="background-color: transparent;">
+							<tbody>
+								<tr v-for="(axis, index) in visibleAxes" :key="index">
+									<td class="axis-pos">
+										<strong>
+											{{ axis.letter }}
+										</strong>
+									</td>
+									<td class="axis-pos">
+										<span>
+											{{ displayAxisPosition(axis, index) }}
+										</span>
+									</td>
+								</tr>
+							</tbody>
+						</v-simple-table>
 					</v-col>
 				</v-row>
 			</template>

@@ -10,7 +10,7 @@ module.exports = {
 			}),
 			new ZipPlugin({
 				filename: 'DuetWebControl-SD.zip',
-				include: [/\.gz$/, /\.woff$/, /\.woff2$/],
+				include: [/\.gz$/, /\.woff$/, /\.woff2$/, /\.png$/],
 			}),
 			new ZipPlugin({
 				filename: 'DuetWebControl-SBC.zip',

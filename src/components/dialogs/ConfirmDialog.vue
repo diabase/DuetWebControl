@@ -1,6 +1,6 @@
 <template>
 	<v-dialog v-model="internalShown" @keydown.escape="dismissed" persistent width="480">
-		<v-card>
+		<v-card v-bind="{ light: darkTheme, dark: !darkTheme }">
 			<v-card-title>
 				<span class="headline">
 					{{ title }}
@@ -23,6 +23,8 @@
 <script>
 'use strict'
 
+import { mapState } from 'vuex'
+
 export default {
 	props: {
 		title: {
@@ -39,6 +41,7 @@ export default {
 		}
 	},
 	computed: {
+		...mapState('settings', ['darkTheme']),
 		internalShown: {
 			get() { return this.shown; },
 			set(value) {

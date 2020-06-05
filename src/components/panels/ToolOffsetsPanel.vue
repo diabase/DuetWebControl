@@ -134,11 +134,12 @@ export default {
 			this.busy = false;
 		},
 		async toolOffsetSet(axisLetter, axisIndex, tool) {
-			let storeAxis = this.move.axes.filter(axis => axis.letter == axisLetter);
-			if (storeAxis) {
+			let axes = this.move.axes.filter(axis => axis.letter == axisLetter);
+			if (axes.length > 0) {
+				let axis = axes[0];
 				this.busy = true;
 				try {
-					await this.sendCode(`G10 L1 P${tool.number} ${axisLetter}${storeAxis.userPosition}\nM500 P10`);
+					await this.sendCode(`G10 L1 P${tool.number} ${axisLetter}${axis.userPosition}\nM500 P10`);
 				} catch (e) {
 					// handled before we get here
 				}

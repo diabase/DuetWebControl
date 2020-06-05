@@ -5,7 +5,7 @@
 </style>
 <template>
 	<v-dialog v-model="shown" :persistent="persistent">
-		<v-card>
+		<v-card v-bind="{ light: darkTheme, dark: !darkTheme }">
 			<v-card-title class="justify-center">
 				<span class="headline">
 					{{ messageBox ? messageBox.title : $t('generic.noValue') }}
@@ -78,6 +78,7 @@ export default {
 		}),
 		...mapState('machine/settings', ['moveFeedrate']),
 		...mapGetters('machine/settings', ['moveSteps', 'numMoveSteps']),
+		...mapState('settings', ['darkTheme']),
 		displayedAxes() {
 			const axisControls = this.messageBox ? this.messageBox.axisControls : 0;
 			return this.move.axes.filter((axis, index) => axis.visible && ((axisControls & (1 << index)) !== 0));

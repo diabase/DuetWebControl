@@ -1,6 +1,9 @@
-<style>
+<style scoped>
 .wcs-value {
 	cursor: pointer;
+}
+.current-wcs {
+	color: lightgreen;
 }
 </style>
 
@@ -21,8 +24,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="w in wcs" :key="w">
-						<td class="text-left">{{ w + ' (' + wcsNames[w] + ')' }} <v-icon v-if="move.currentWorkplace == w" small class="mr-1">mdi-checkbox-marked-outline</v-icon></td>
+					<tr v-for="w in wcs" :key="w" :class="{'current-wcs': move.workspaceNumber == w}">
+						<td class="text-left">{{ w + ' (' + wcsNames[w] + ')' }} <v-icon v-if="move.workspaceNumber == w" small class="mr-1">mdi-checkbox-marked-outline</v-icon></td>
 						<td class="text-center">
 							<code-btn :code="`${wcsNames[w]}`" no-wait lock small v-if="move.currentWorkplace != w">
 								<v-icon small>mdi-marker-check</v-icon>
@@ -111,7 +114,7 @@ export default {
 			this.setWCSOffsetDialog.prompt = this.$t('dialog.setWCSOffset.prompt', [ axis, wcsName ]);
 			this.setWCSOffsetDialog.axis = axis;
 			this.setWCSOffsetDialog.wcsNumber = wcsNumber;
-			this.setWCSOffsetDialog.preset = this.workplaceOffsets[axis][wcsNumber];
+			this.setWCSOffsetDialog.preset = this.workplaceOffsets[axis][wcsNumber-1];
 			this.setWCSOffsetDialog.shown = true;
 		},
 		async setWCSOffsetDialogConfirmed(value) {

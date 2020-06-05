@@ -3,7 +3,7 @@ table tbody td {
 	border-bottom: none !important;
 }
 table tbody tr:hover {
-	background: rgba(0, 0, 0, 0) !important;
+	background: transparent !important;
 }
 .move-btn {
 	color: red;
@@ -24,7 +24,7 @@ table tbody tr:hover {
 							<tr>
 								<td></td>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Ymax.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Ymin.g${doubleQuote}`" no-wait block class="move-btn">
 										Y <v-icon>{{ getIcon("Y", "max") }}</v-icon>
 									</code-btn>
 								</td>
@@ -32,7 +32,7 @@ table tbody tr:hover {
 							</tr>
 							<tr>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Xmin.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Xmax.g${doubleQuote}`" no-wait block class="move-btn">
 										-X <v-icon>{{ getIcon("X", "min") }}</v-icon>
 									</code-btn>
 								</td>
@@ -40,7 +40,7 @@ table tbody tr:hover {
 									<v-icon>mdi-cube-scan</v-icon>
 								</td>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Xmax.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Xmin.g${doubleQuote}`" no-wait block class="move-btn">
 										<v-icon>{{ getIcon("X", "max") }}</v-icon> X
 									</code-btn>
 								</td>
@@ -49,7 +49,7 @@ table tbody tr:hover {
 							<tr>
 								<td></td>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Ymin.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Ymax.g${doubleQuote}`" no-wait block class="move-btn">
 										-Y <v-icon>{{ getIcon("Y", "min") }}</v-icon>
 									</code-btn>
 								</td>
