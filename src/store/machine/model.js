@@ -321,7 +321,7 @@ export class MachineModelModule {
 		jobProgress(state, getters) {
 			if (isPrinting(state.state.status)) {
 				if (state.state.status !== StatusType.simulating) {
-					let totalRawExtruded = state.move.extruders
+					let totalRawExtruded = state.move.extruders.slice(0, state.move.extruders.length - 1)
 						.map(extruder => extruder && extruder.rawPosition);
 					totalRawExtruded = (totalRawExtruded.length === 0) ? 0 : totalRawExtruded.reduce((a, b) => a + b);
 					if (state.state.status === StatusType.simulating && state.job.file.filament.length > 0 && totalRawExtruded > 0) {

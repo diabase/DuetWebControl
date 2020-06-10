@@ -28,6 +28,9 @@ export default {
 			machineMode: state => state.state.machineMode,
 			status: state => state.state.status
 		}),
+		extrudersAssignedToOnlyOneTool() {
+			return this.extruders.length > 0 ? this.extruders.slice(0, this.extruders.length - 1) : [];
+		},
 		...mapGetters('machine/model', ['jobProgress']),
 		printStatus() {
 			if (isPrinting(this.status)) {
@@ -62,9 +65,9 @@ export default {
 			if (this.job.layer !== null && this.job.file.numLayers) {
 				details = this.$t('jobProgress.layer', [this.job.layer, this.job.file.numLayers]);
 			}
-			if (this.extruders.length > 0) {
+			if (this.extrudersAssignedToOnlyOneTool.length > 0) {
 				if (details !== '') { details += ', '; }
-				const totalRawExtruded = this.extruders
+				const totalRawExtruded = this.extrudersAssignedToOnlyOneTool
 											.map(extruder => extruder.rawPosition)
 											.reduce((a, b) => a + b);
 				details += this.$t('jobProgress.filament', [this.$display(totalRawExtruded, 1, 'mm')]);
