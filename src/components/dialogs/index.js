@@ -2,6 +2,8 @@
 
 import Vue from 'vue'
 
+import CalibrateScannerDialog from './CalibrateScannerDialog.vue'
+import CalibrationProgressDialog from './CalibrationProgressDialog.vue'
 import ConfirmDialog from './ConfirmDialog.vue'
 import ConnectDialog from './ConnectDialog.vue'
 import ConnectionDialog from './ConnectionDialog.vue'
@@ -13,7 +15,11 @@ import MessageBoxDialog from './MessageBoxDialog.vue'
 import NewFileDialog from './NewFileDialog.vue'
 import NewDirectoryDialog from './NewDirectoryDialog.vue'
 import ResetHeaterFaultDialog from './ResetHeaterFaultDialog.vue'
+import ScanDialog from './ScanDialog.vue'
+import ScanProgressDialog from './ScanProgressDialog.vue'
 
+Vue.component('calibrate-scanner-dialog', CalibrateScannerDialog)
+Vue.component('calibration-progress-dialog', CalibrationProgressDialog)
 Vue.component('confirm-dialog', ConfirmDialog)
 Vue.component('connect-dialog', ConnectDialog)
 Vue.component('connection-dialog', ConnectionDialog)
@@ -25,8 +31,12 @@ Vue.component('messagebox-dialog', MessageBoxDialog)
 Vue.component('new-file-dialog', NewFileDialog)
 Vue.component('new-directory-dialog', NewDirectoryDialog)
 Vue.component('reset-heater-fault-dialog', ResetHeaterFaultDialog)
+Vue.component('scan-dialog', ScanDialog)
+Vue.component('scan-progress-dialog', ScanProgressDialog)
 
 export default {
+	CalibrateScannerDialog,
+	CalibrationProgressDialog,
 	ConfirmDialog,
 	ConnectDialog,
 	ConnectionDialog,
@@ -37,5 +47,7 @@ export default {
 	MessageBoxDialog,
 	NewDirectoryDialog,
 	NewFileDialog,
-	ResetHeaterFaultDialog
+	ResetHeaterFaultDialog,
+	ScanDialog,
+	ScanProgressDialog,
 }

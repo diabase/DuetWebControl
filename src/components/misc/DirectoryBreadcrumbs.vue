@@ -44,6 +44,10 @@ export default {
 					pathItems.shift();
 					pathItems[0] = this.directories.menu;
 					rootCaption = this.$t('directory.menu');
+				} else if (Path.startsWith(this.value, Path.scans)) {
+					pathItems.shift();
+					pathItems[0] = this.directories.scans;
+					rootCaption = this.$t('directory.scans');
 				} else if (Path.startsWith(this.value, Path.system)) {
 					pathItems.shift();
 					pathItems[0] = Path.system;

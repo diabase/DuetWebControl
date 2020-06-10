@@ -5,6 +5,7 @@ import Console from './Console.vue'
 import Heightmap from './Heightmap.vue'
 import Offsets from './Offsets.vue'
 import RotaryAxes from './RotaryAxes.vue'
+import ThreeDScanner from './ThreeDScanner.vue'
 
 export default {
 	Dashboard,
@@ -12,4 +13,5 @@ export default {
 	Heightmap,
 	Offsets,
 	RotaryAxes,
+	ThreeDScanner,
 }

@@ -28,6 +28,7 @@ import SettingsNotificationsPanel from './SettingsNotificationsPanel.vue'
 import SettingsWebcamPanel from './SettingsWebcamPanel.vue'
 import SpeedFactorPanel from './SpeedFactorPanel.vue'
 import StatusPanel from './StatusPanel.vue'
+import ThreeDScannerPanel from './ThreeDScannerPanel.vue'
 import ToolOffsetsPanel from './ToolOffsetsPanel.vue'
 import ToolsPanel from './ToolsPanel.vue'
 import TouchOffPlatePanel from './TouchOffPlatePanel.vue'
@@ -62,6 +63,7 @@ Vue.component('settings-notifications-panel', SettingsNotificationsPanel)
 Vue.component('settings-webcam-panel', SettingsWebcamPanel)
 Vue.component('status-panel', StatusPanel)
 Vue.component('speed-factor-panel', SpeedFactorPanel)
+Vue.component('threeD-scanner-panel', ThreeDScannerPanel)
 Vue.component('tool-offsets-panel', ToolOffsetsPanel)
 Vue.component('tools-panel', ToolsPanel)
 Vue.component('touch-off-plate-panel', TouchOffPlatePanel)
@@ -97,6 +99,7 @@ export default {
 	SettingsWebcamPanel,
 	SpeedFactorPanel,
 	StatusPanel,
+	ThreeDScannerPanel,
 	ToolOffsetsPanel,
 	ToolsPanel,
 	TouchOffPlatePanel,

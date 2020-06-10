@@ -55,6 +55,10 @@ export default {
 		add: {
 			caption: 'Add'
 		},
+		calibratescanner: {
+			linear: 'Linear',
+			rotary: 'Rotary',
+		},
 		connect: {
 			connect: 'Connect',
 			connecting: 'Connecting...',
@@ -104,6 +108,19 @@ export default {
 				autoLevel: 'Auto-level bed for printing',
 			},
 		},
+		scandialog: {
+			linear: 'Linear',
+			rotary: 'Rotary',
+			activateLaser: 'Activate Laser',
+			deactivateLaser: 'Deactivate Laser',
+			startScan: 'Start Scan',
+		},
+		threedscanner: {
+			goToScanLocation: 'Move to Scan Location',
+			calibrate: 'Calibrate',
+			startScan: 'Start Scan',
+			shutdownScanner: 'Shutdown Scanner',
+		},
 		titlebar: {
 			jog: 'Jog',
 			jogTitle: 'Show Jog Dialog',
@@ -134,6 +151,10 @@ export default {
 			menu: {
 				caption: 'Upload Menu Files',
 				title: 'Upload one or more menu files (drag&drop is supported as well)'
+			},
+			scans: {
+				caption: 'Upload Scan Files',
+				title: 'Upload one or more scan files (drag&drop supported as well)',
 			},
 			system: {
 				caption: 'Upload System Files',
@@ -173,6 +194,15 @@ export default {
 		}
 	},
 	dialog: {
+		calibratescanner: {
+			title: 'Calibrate Scanner',
+			prompt: 'In what mode would you like to run the calibration?',
+		},
+		calibrationprogress: {
+			title: 'Calibrating...',
+			progressBarTitle: 'Calibration Progress',
+			prompt: 'Please wait while the scanner is being calibtrated. This may take a while...',
+		},
 		changeMoveStep: {
 			title: 'Change move step',
 			prompt: 'Please enter a new value for the clicked move button:'
@@ -262,6 +292,33 @@ export default {
 			title: 'Run {0}',
 			prompt: 'Do you want to run {0}?'
 		},
+		scan: {
+			title: 'Start 3D Scan',
+			step1: {
+				title: '1. Enter a filename for your scan',
+				placeholder: 'Choose a filename...',
+			},
+			step2: {
+				title: '2. Specify scan details',
+				scanRange: 'Scan range:',
+				stepSize: 'Step size:',
+				mode: 'Mode:',
+			},
+			step3: {
+				title: "3. Check alignment",
+				description: 'In order to align your object you can toggle the right laser before you start:',
+			},
+			step4: {
+				title: '4. Move the object to the center',
+			}
+		},
+		scanprogress: {
+			title: 'Scan in Progress',
+			scanProgress: 'Scan progress',
+			postProcessingProgress: 'Post-processing progress',
+			uploadProgress: 'Upload progress',
+			complete: 'Your 3D scan is now complete! You may download it from the file list next.'
+		},
 		setToolOffset: {
 			title: 'Set {0} offset',
 			prompt: 'Please enter a new {0} offset for {1}:'
@@ -291,6 +348,7 @@ export default {
 		gcodes: 'G-Codes Directory',
 		macros: 'Macros Directory',
 		system: 'System Directory',
+		scans: 'Scans Directory',
 		web: 'WWW Directory'
 	},
 	error: {
@@ -441,6 +499,11 @@ export default {
 			start: 'Start File',
 			simulate: 'Simulate File'
 		},
+		scans: {
+			caption: 'Scans',
+			noScans: 'No Scans',
+			root: 'Root',
+		},
 		system: {
 			noFiles: 'No System Files',
 			configToolNote: 'edit via config tool'
@@ -454,6 +517,7 @@ export default {
 			heightmap: 'Height Map',
 			offsets: 'Offsets',
 			rotaryaxes: 'Rotary Axes',
+			threedscanner: '3D Scanner',
 		},
 		job: {
 			caption: 'Current Job',
@@ -780,6 +844,9 @@ export default {
 			noStatus: 'No Status',
 			wcs: 'WCS',
 			compensation: 'Compensation in use',
+		},
+		threedscanner: {
+			caption: '3D Scanner Control',
 		},
 		tooloffsets: {
 			caption: 'Tool Offsets',

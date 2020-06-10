@@ -53,6 +53,13 @@ export const Routing = [
 				path: '/RotaryAxes',
 				component: Control.RotaryAxes,
 			},
+			// 3D Scanner (OEM)
+			{
+				icon: 'mdi-cube-scan',
+				caption: 'menu.control.threedscanner',
+				path: '/3DScanner',
+				component: Control.ThreeDScanner,
+			},
 		]
 	},
 	// Job

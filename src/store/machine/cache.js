@@ -31,6 +31,10 @@ export default function(hostname) {
 					column: 'name',
 					descending: false
 				},
+				scans: {
+					column: 'name',
+					descending: false,
+				},
 				sys: {
 					column: 'name',
 					descending: false
