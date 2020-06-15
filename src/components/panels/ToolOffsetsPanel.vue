@@ -123,6 +123,9 @@ export default {
 		...mapActions('machine', ['sendCode']),
 		...mapMutations('machine/settings', ['setToolOffsetAmount']),
 		async toolOffsetAdjust(axisLetter, axisIndex, tool, multiplier = 1) {
+			if (axisLetter == 'Z') {
+				multiplier += -1;
+			}
 			let amount = this.amount * multiplier;
 			const newAmount = Math.round((tool.offsets[axisIndex] + amount) * 100) / 100;
 			this.busy = true;
@@ -139,7 +142,7 @@ export default {
 				let axis = axes[0];
 				this.busy = true;
 				try {
-					await this.sendCode(`G10 L1 P${tool.number} ${axisLetter}${axis.userPosition}\nM500 P10`);
+					await this.sendCode(`G10 L1 P${tool.number} ${axisLetter}${axisLetter == 'Z' ? '-' : ''}${axis.userPosition}\nM500 P10`);
 				} catch (e) {
 					// handled before we get here
 				}
