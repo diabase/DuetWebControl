@@ -51,9 +51,9 @@ export default {
 				const heater = this.tool.heaters[this.toolHeaterIndex];
 				return (heater >= 0 && heater < this.heat.heaters.length && this.heat.heaters[heater] !== null);
 			} else if (this.bed && this.bedIndex >= 0 && this.bedIndex < this.heat.heaters.length) {
-				return (this.heat.heaters[this.bedIndex] !== null);
+				return (this.heat.heaters[this.heat.bedHeaters[this.bedIndex]] !== null);
 			} else if (this.chamber && this.chamberIndex >= 0 && this.chamberIndex < this.heat.heaters.length) {
-				return (this.heat.heaters[this.chamberIndex] !== null);
+				return (this.heat.heaters[this.heat.chamberHeaters[this.chamberIndex]] !== null);
 			}
 			return false;
 		}
