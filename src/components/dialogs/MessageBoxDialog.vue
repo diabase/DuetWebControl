@@ -101,7 +101,7 @@ export default {
 			} else {
 				position = axis.machinePosition;
 			}
-			return (axis.letter === 'Z') ? this.$displayZ(position, false) : this.$display(position, 1);
+			return (axis.letter === 'Z') ? this.$displayZ(position, false) : this.$display(position, 2);
 		},
 		getMoveCellClass(index) {
 			let classes = '';

@@ -31,7 +31,7 @@
 									<v-btn @click="toolOffsetAdjust(axis.name, index, t, -1)" no-wait lock small :disabled="uiFrozen">
 										<v-icon small>{{ axis.iconMinus }}</v-icon> {{ axis.textMinus }}
 									</v-btn>
-									<span class="mx-2 tooloffset-value text-right" @click="showSetToolOffsetDialog(axis.name, index, t)">{{ (t.offsets[index] && t.offsets[index].toFixed(2) || (0).toFixed(2)) }}mm</span>
+									<span class="mx-2 tooloffset-value text-right" @click="showSetToolOffsetDialog(axis.name, index, t)">{{ $display((t.offsets[index] && t.offsets[index] || 0), axis.name === 'Z' ? 3 : 2, 'mm') }}</span>
 									<v-btn @click="toolOffsetAdjust(axis.name, index, t)" no-wait lock small :disabled="uiFrozen">
 										<v-icon small>{{ axis.iconPlus }}</v-icon> {{ axis.textPlus }}
 									</v-btn>

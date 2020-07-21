@@ -35,7 +35,7 @@
 							<code-btn class="mr-1" :code="`G10 L20 P${w} ${axis}`" :title="`${ $t('button.wcs.setToCurrent') }`" no-wait lock small>
 								<v-icon small>mdi-home-import-outline</v-icon>
 							</code-btn>
-							<span class="wcs-value" @click="showSetWCSOffsetDialog(axis, w)"> {{ workplaceOffsets[axis][w-1].toFixed(2) }}mm</span>
+							<span class="wcs-value" @click="showSetWCSOffsetDialog(axis, w)">{{ $display(workplaceOffsets[axis][w-1], (axis === "Z" ? 3 : 2), 'mm') }}</span>
 						</td>
 						<td class="text-center">
 							<v-btn @click="resetClicked(w)" no-wait lock small :disabled="uiFrozen">

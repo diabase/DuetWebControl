@@ -107,6 +107,7 @@ export default {
 				setYoffset: 'Set Y offset',
 				autoLevel: 'Auto-level bed for printing',
 			},
+			home: 'Rotary',
 		},
 		scandialog: {
 			linear: 'Linear',
@@ -741,6 +742,7 @@ export default {
 					thickness: 'Stock thickness',
 				},
 			},
+			betaWarning: 'Beta version - some functionality missing',
 		},
 		settingsAbout: {
 			caption: 'About',
