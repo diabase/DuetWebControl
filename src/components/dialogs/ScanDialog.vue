@@ -239,7 +239,7 @@ export default {
 		async toggleLaser() {
 			this.busy = true;
 			try {
-				await this.sendCode({ code: `M755 P${this.toggleLaser ? 1 : 0}`, log: false });
+				await this.sendCode({ code: `M755 P${this.laserActive ? 0 : 1}`, log: false });
 			} catch (e) {
 				// already handled
 			}
