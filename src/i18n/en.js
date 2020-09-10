@@ -106,6 +106,7 @@ export default {
 				setStockThickness: 'Set stock thickness',
 				setYoffset: 'Set Y offset',
 				autoLevel: 'Auto-level bed for printing',
+				unrotary: 'Reset to normal mode',
 			},
 			home: 'Rotary',
 		},
@@ -731,6 +732,7 @@ export default {
 				step5: '5',
 				step6: '6',
 				step7: '7',
+				step8: '8',
 			},
 			status: {
 				caption: 'Status',
@@ -743,6 +745,9 @@ export default {
 				},
 			},
 			betaWarning: 'Beta version - some functionality missing',
+		},
+		rotaryprinting: {
+			caption: 'Rotary Printing',
 		},
 		settingsAbout: {
 			caption: 'About',
@@ -905,5 +910,11 @@ export default {
 				reset: 'Reset',
 			},
 		}
-	}
+	},
+	tabs: {
+		rotaryaxes: {
+			rotaryprinting: 'Rotary Printing',
+			rotaryaxescontrol: 'Multi Axes',
+		}
+	},
 }

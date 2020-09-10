@@ -7,17 +7,10 @@
 <template>
 	<v-card>
 		<v-card-title class="pb-0">
-			<v-icon small class="mr-1">mdi-tools</v-icon> {{ $t('panel.rotaryaxes.control.caption') }}
+			<v-icon small class="mr-1">mdi-tools</v-icon> {{ $t('panel.rotaryprinting.caption') }}
 		</v-card-title>
 
 		<v-card-text>
-			<v-row>
-				<v-col>
-					<code-btn :color="uAxis.homed ? 'primary' : 'warning'" :disabled="uiFrozen" :code="`M98 P${doubleQuote}homerotary-y.g${doubleQuote}`" class="ml-0">
-						{{ $t('button.home.caption', [$t('button.rotaryaxes.home')]) }}
-					</code-btn>
-				</v-col>
-			</v-row>
 			<v-row>
 				<v-col>
 					<v-simple-table>
@@ -65,36 +58,13 @@
 							<tr>
 								<td class="text-center">{{ $t('panel.rotaryaxes.control.step4') }}</td>
 								<td colspan="2">
-									<code-btn :code="`M98 P${doubleQuote}levelA.g${doubleQuote}`" no-wait block class="move-btn">
-										{{ $t('button.rotaryaxes.control.levelAaxis') }}
+									<code-btn :code="`M98 P${doubleQuote}homerotary-y.g${doubleQuote}`" no-wait block class="move-btn">
+										{{ $t('button.home.caption', [$t('button.rotaryaxes.home')]) }}
 									</code-btn>
 								</td>
 							</tr>
 							<tr>
 								<td class="text-center">{{ $t('panel.rotaryaxes.control.step5') }}</td>
-								<td colspan="2">
-									<code-btn :code="`M117 Not yet implemented`" no-wait block>
-										{{ $t('button.rotaryaxes.control.setStockThickness') }}
-									</code-btn>
-								</td>
-							</tr>
-							<tr>
-								<td class="text-center">{{ $t('panel.rotaryaxes.control.step6') }}</td>
-								<td colspan="2">
-									<code-btn :code="`M98 P${doubleQuote}centerY.g${doubleQuote}`" no-wait block>
-										{{ $t('button.rotaryaxes.control.setYoffset') }}
-									</code-btn>
-								</td>
-							</tr>
-							<tr>
-								<td class="text-center">{{ $t('panel.rotaryaxes.control.step7') }}</td>
-								<td colspan="2">
-									<code-btn :code="`M98 P${doubleQuote}4thbed.g${doubleQuote}`" no-wait block class="move-btn">
-										{{ $t('button.rotaryaxes.control.autoLevel') }}
-									</code-btn>
-								</td>
-							</tr><tr>
-								<td class="text-center">{{ $t('panel.rotaryaxes.control.step8') }}</td>
 								<td colspan="2">
 									<code-btn :code="`M98 P${doubleQuote}unrotary.g${doubleQuote}`" no-wait block>
 										{{ $t('button.rotaryaxes.control.unrotary') }}
