@@ -24,13 +24,20 @@
 							<tr>
 								<td class="text-center">{{ $t('panel.rotaryaxes.control.step1') }}</td>
 								<td colspan="2">
+									<code-btn :code="`M98 P${doubleQuote}rotaryprint.g${doubleQuote}`" no-wait block class="move-btn">
+										{{ $t('button.rotaryaxes.control.configure') }}
+									</code-btn>
+								</td>
+							</tr><tr>
+								<td class="text-center">{{ $t('panel.rotaryaxes.control.step2') }}</td>
+								<td colspan="2">
 									<code-btn :code="`M98 P${doubleQuote}measurez.g${doubleQuote}`" no-wait block class="move-btn">
 										{{ $t('button.rotaryaxes.control.measureZAxis') }}
 									</code-btn>
 								</td>
 							</tr>
 							<tr>
-								<td class="text-center">{{ $t('panel.rotaryaxes.control.step2') }}</td>
+								<td class="text-center">{{ $t('panel.rotaryaxes.control.step3') }}</td>
 								<td>
 									<code-btn :code="`M208 X${ocb}move.axes[0].userPosition${ccb} S1`" no-wait block>
 										{{ $t('button.rotaryaxes.control.setXmin') }}
@@ -39,19 +46,6 @@
 								<td>
 									<code-btn :code="`M208 X${ocb}move.axes[0].userPosition${ccb} S0`" no-wait block>
 										{{ $t('button.rotaryaxes.control.setXmax') }}
-									</code-btn>
-								</td>
-							</tr>
-							<tr>
-								<td class="text-center">{{ $t('panel.rotaryaxes.control.step3') }}</td>
-								<td>
-									<code-btn :code="`M208 Y${ocb}move.axes[1].userPosition${ccb} S1`" no-wait block>
-										{{ $t('button.rotaryaxes.control.setYmin') }}
-									</code-btn>
-								</td>
-								<td>
-									<code-btn :code="`M208 Y${ocb}move.axes[1].userPosition${ccb} S0`" no-wait block>
-										{{ $t('button.rotaryaxes.control.setYmax') }}
 									</code-btn>
 								</td>
 							</tr>

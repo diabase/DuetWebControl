@@ -26,7 +26,7 @@ export default {
 			if (this.disableAutoComplete) {
 				return [];
 			}
-			
+
 			const key = this.active ? 'active' : 'standby';
 			if (this.tool || this.all) {
 				return this.temperatures.tool[key];
@@ -120,7 +120,7 @@ export default {
 						} else if (this.all) {
 							// Set all temps
 							let code = '';
-							this.tools.forEach(function(tool) {
+							this.tools.filter(tool => tool !== null).forEach(function(tool) {
 								if (tool.heaters.length) {
 									const temps = tool.heaters.map(() => this.value, this).join(':');
 									code += `G10 P${tool.number} ${this.active ? 'S' : 'R'}${temps}\n`;
