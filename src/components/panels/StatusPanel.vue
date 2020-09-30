@@ -28,7 +28,7 @@ table tbody tr:hover {
 	background: transparent !important;
 }
 .axis-pos {
-	font-size: 30px;
+	font-size: 30px !important;
 }
 </style>
 
