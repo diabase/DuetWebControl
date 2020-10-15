@@ -88,14 +88,17 @@ table tbody tr:hover {
 
 					<v-col>
 						<v-row align-content="center" no-gutters>
-					<v-col v-for="(extruder, index) in move.extruders" :key="index" class="d-flex flex-column align-center">
-						<strong>
-							{{ $t('panel.status.extruderDrive', [index]) }}
-						</strong>
-						<span>
-							{{ $display(extruder.position, 1) }}
-						</span>
-					</v-col>
+							<v-col v-for="(extruder, index) in move.extruders" :key="index" class="d-flex flex-column align-center">
+								<strong>
+									{{ $t('panel.status.extruderDrive', [index]) }}
+									<v-icon v-if="isFilamentSensorPresent(index)" small>
+										{{ sensors.filamentSensors[index].filamentPresent ? 'mdi-check' : 'mdi-window-close' }}
+									</v-icon>
+								</strong>
+								<span>
+									{{ $display(extruder.position, 1) }}
+								</span>
+							</v-col>
 						</v-row>
 					</v-col>
 				</v-row>
@@ -330,6 +333,12 @@ export default {
 			const position = this.displayToolPosition ? axis.userPosition : axis.machinePosition;
 			return this.$displayZ(position, false);
 			// return (axis.letter === 'Z') ? this.$displayZ(position, false) : this.$display(position, 1);
+		},
+		isFilamentSensorPresent(extruderIndex) {
+			return (extruderIndex < this.sensors.filamentMonitors.length) &&
+					this.sensors.filamentMonitors[extruderIndex] &&
+					this.sensors.filamentMonitors[extruderIndex].enabled &&
+					this.sensors.filamentMonitors[extruderIndex].filamentPresent instanceof Boolean;
 		},
 		formatProbeValue(values) {
 			if (values.length === 1) {

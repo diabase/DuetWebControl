@@ -28,6 +28,7 @@ import { patch, quickPatch } from '../../utils/patch.js'
 // This must be kept in sync for things to work properly...
 export class MachineModel {
 	constructor(initData) { quickPatch(this, initData); }
+
 	boards = []
 	directories = {
 		filaments: Path.filaments,
@@ -110,6 +111,7 @@ export class MachineModel {
 		zProbeProgramBytes: null,
 		zProbes: null
 	}
+	messages = []								// *** never populated in DWC, only used to transfer generic messages from connectors to the model
 	move = {
 		axes: [],
 		calibration: {
@@ -165,13 +167,14 @@ export class MachineModel {
 		speedFactor: 100,
 		travelAcceleration: 10000,
 		virtualEPos: 0,
-		workspaceNumber: 1
+		workplaceNumber: 0
 	}
 	network = {
 		hostname: 'duet',
 		interfaces: [],
 		name: 'My Duet'
 	}
+	plugins = []
 	scanner = {
 		progress: 0.0,
 		status: 'D'
@@ -195,6 +198,7 @@ export class MachineModel {
 		logFile: null,
 		messageBox: null,
 		machineMode: MachineMode.fff,
+		msUpTime: 0,
 		nextTool: -1,
 		powerFailScript: '',
 		previousTool: -1,
@@ -259,7 +263,7 @@ export const DefaultMachineModel = new MachineModel({
 		]
 	},
 	network: {
-		name: 'Duet Web Control 2'
+		name: 'Duet Web Control'
 	},
 	sensors: {
 		probes: [
@@ -335,6 +339,7 @@ export class MachineModelModule {
 	}
 	mutations = {
 		update(state, payload) {
+			// Fix kinematics type
 			if (payload.move && payload.move.kinematics && payload.move.kinematics.name !== undefined && state.move.kinematics.name !== payload.move.kinematics.name) {
 				switch (payload.move.kinematics.name) {
 					case KinematicsName.cartesian:
@@ -364,8 +369,17 @@ export class MachineModelModule {
 						break;
 				}
 			}
+
+			// Apply new data
 			patch(state, payload, true);
 			fixMachineItems(state, payload);
+		},
+
+		addPlugin(state, plugin) {
+			state.plugins.push(plugin);
+		},
+		removePlugin(state, plugin) {
+			state.plugins = state.plugins.filter(item => item.name !== plugin.name);
 		}
 	}
 }

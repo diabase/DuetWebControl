@@ -35,9 +35,11 @@
 </template>
 
 <script>
+'use strict'
 
 import { mapState } from 'vuex'
 
+import { registerRoute } from '..'
 import { MachineMode } from '../../store/machine/modelEnums.js'
 
 export default {
@@ -49,6 +51,18 @@ export default {
 		isFFForUnset() {
 			return !this.machineMode || (this.machineMode === MachineMode.fff);
 		}
+	},
+	install() {
+		// Register a route via Control -> Dashboard
+		registerRoute(this, {
+			Control: {
+				Dashboard: {
+					icon: 'mdi-view-dashboard',
+					caption: 'menu.control.dashboard',
+					path: '/'
+				}
+			}
+		});
 	}
 }
 </script>

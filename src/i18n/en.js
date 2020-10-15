@@ -55,10 +55,6 @@ export default {
 		add: {
 			caption: 'Add'
 		},
-		calibratescanner: {
-			linear: 'Linear',
-			rotary: 'Rotary',
-		},
 		connect: {
 			connect: 'Connect',
 			connecting: 'Connecting...',
@@ -84,10 +80,6 @@ export default {
 		newFile: {
 			caption: 'New File'
 		},
-		probeWorkpiece: {
-			findCenterOfCavity: 'Find center of cavity',
-			measureZ: 'Measure Z',
-		},
 		refresh: {
 			caption: 'Refresh'
 		},
@@ -95,44 +87,9 @@ export default {
 			caption: 'Reset Machine',
 			title: 'Send M999 to the machine to reset it'
 		},
-		rotaryaxes: {
-			control: {
-				configure: 'Configure Rotary Printing',
-				measureZAxis: 'Measure Z axis',
-				setXmin: 'Set X min',
-				setXmax: 'Set X max',
-				setYmin: 'Set Y min',
-				setYmax: 'Set Y max',
-				levelAaxis: 'Level A axis',
-				setStockThickness: 'Set stock thickness',
-				setYoffset: 'Set Y offset',
-				autoLevel: 'Auto-level bed for printing',
-				unrotary: 'Reset to normal mode',
-			},
-			home: 'Rotary',
-		},
-		scandialog: {
-			linear: 'Linear',
-			rotary: 'Rotary',
-			activateLaser: 'Activate Laser',
-			deactivateLaser: 'Deactivate Laser',
-			startScan: 'Start Scan',
-		},
-		threedscanner: {
-			goToScanLocation: 'Move to Scan Location',
-			calibrate: 'Calibrate',
-			startScan: 'Start Scan',
-			shutdownScanner: 'Shutdown Scanner',
-		},
 		titlebar: {
 			jog: 'Jog',
 			jogTitle: 'Show Jog Dialog',
-		},
-		touchoff: {
-			touchoff: 'Touch-off {0}',
-		},
-		tooloffsets: {
-			setToCurrent: 'Set to current value',
 		},
 		upload: {
 			gcodes: {
@@ -172,9 +129,6 @@ export default {
 				title: 'Upload an update package (drag&drop is supported as well)'
 			}
 		},
-		wcs: {
-			setToCurrent: 'Set to current value',
-		},
 	},
 	chart: {
 		layer: {
@@ -197,15 +151,6 @@ export default {
 		}
 	},
 	dialog: {
-		calibratescanner: {
-			title: 'Calibrate Scanner',
-			prompt: 'In what mode would you like to run the calibration?',
-		},
-		calibrationprogress: {
-			title: 'Calibrating...',
-			progressBarTitle: 'Calibration Progress',
-			prompt: 'Please wait while the scanner is being calibtrated. This may take a while...',
-		},
 		changeMoveStep: {
 			title: 'Change move step',
 			prompt: 'Please enter a new value for the clicked move button:'
@@ -238,10 +183,6 @@ export default {
 		editExtrusionFeedrate: {
 			title: 'Edit extrusion feedrate',
 			prompt: 'Please enter a new feedrate for the clicked button:'
-		},
-		editToolOffsetAmount: {
-			title: 'Edit tool offset movement amount',
-			prompt: 'Please enter a new amount for the clicked button:'
 		},
 		factoryReset: {
 			title: 'Perform factory reset?',
@@ -284,7 +225,7 @@ export default {
 		},
 		resetHeaterFault: {
 			title: 'Reset Heater Fault',
-			prompt: 'A heater fault has occurred on heater {0}. It is strongly advised to turn off your machine now and to check your wiring before you continue. If you are absolutely sure that this is not a phsical problem, you can reset the heater fault ON YOUR OWN RISK. Be aware that this is NOT RECOMMENDED and can lead to further problems. How would you like to proceed?',
+			prompt: 'A heater fault has occurred on heater {0}. It is strongly advised to turn off your machine now and to check your wiring before you continue. If you are absolutely sure that this is not a physical problem, you can reset the heater fault ON YOUR OWN RISK. Be aware that this is NOT RECOMMENDED and can lead to further problems. How would you like to proceed?',
 			resetFault: 'Reset Fault'
 		},
 		resetWCS: {
@@ -294,41 +235,6 @@ export default {
 		runMacro: {
 			title: 'Run {0}',
 			prompt: 'Do you want to run {0}?'
-		},
-		scan: {
-			title: 'Start 3D Scan',
-			step1: {
-				title: '1. Enter a filename for your scan',
-				placeholder: 'Choose a filename...',
-			},
-			step2: {
-				title: '2. Specify scan details',
-				scanRange: 'Scan range:',
-				stepSize: 'Step size:',
-				mode: 'Mode:',
-			},
-			step3: {
-				title: "3. Check alignment",
-				description: 'In order to align your object you can toggle the right laser before you start:',
-			},
-			step4: {
-				title: '4. Move the object to the center',
-			}
-		},
-		scanprogress: {
-			title: 'Scan in Progress',
-			scanProgress: 'Scan progress',
-			postProcessingProgress: 'Post-processing progress',
-			uploadProgress: 'Upload progress',
-			complete: 'Your 3D scan is now complete! You may download it from the file list next.'
-		},
-		setToolOffset: {
-			title: 'Set {0} offset',
-			prompt: 'Please enter a new {0} offset for {1}:'
-		},
-		setWCSOffset: {
-			title: 'Set {0} offset',
-			prompt: 'Please enter a new {0} offset for {1}:'
 		},
 		sliderEdit: {
 			title: 'Slider value',
@@ -412,6 +318,7 @@ export default {
 			offline: 'offline'
 		},
 		status: {
+			starting: 'Starting',
 			updating: 'Updating',
 			off: 'Off',
 			halted: 'Halted',
@@ -502,11 +409,6 @@ export default {
 			start: 'Start File',
 			simulate: 'Simulate File'
 		},
-		scans: {
-			caption: 'Scans',
-			noScans: 'No Scans',
-			root: 'Root',
-		},
 		system: {
 			noFiles: 'No System Files',
 			configToolNote: 'edit via config tool'
@@ -516,17 +418,12 @@ export default {
 		control: {
 			caption: 'Machine Control',
 			dashboard: 'Dashboard',
-			console: 'Console',
-			heightmap: 'Height Map',
-			offsets: 'Offsets',
-			rotaryaxes: 'Rotary Axes',
-			threedscanner: '3D Scanner',
+			console: 'Console'
 		},
 		job: {
 			caption: 'Current Job',
 			status: 'Status',
-			webcam: 'Webcam',
-			visualiser: 'Visualiser'
+			webcam: 'Webcam'
 		},
 		files: {
 			caption: 'File Management',
@@ -537,11 +434,13 @@ export default {
 			system: 'System',
 			web: 'Web'
 		},
+		plugins: {
+			caption: 'Plugins'
+		},
 		settings: {
 			caption: 'Settings',
 			general: 'General',
-			machine: 'Machine-Specific',
-			update: 'Update'
+			machine: 'Machine-Specific'
 		}
 	},
 	notification: {
@@ -640,24 +539,6 @@ export default {
 			noFans: 'No Fans',
 			fanOn: 'On',
 		},
-		heightmap: {
-			scale: 'Scale:',
-			orMore: 'or more',
-			orLess: 'or less',
-			axes: 'Axes:',
-			notAvailable: 'height map not available',
-			numPoints: 'Number of points: {0}',
-			radius: 'Probing radius: {0}',
-			area: 'Probe area: {0}',
-			maxDeviations: 'Maximum deviations: {0} / {1}',
-			meanError: 'Mean error: {0}',
-			rmsError: 'RMS error: {0}',
-			topView: 'Top view',
-			colorScheme: 'Color scheme:',
-			terrain: 'Terrain',
-			heat: 'Heat',
-			reload: 'Reload Height Map'
-		},
 		jobControl: {
 			caption: 'Job Control',
 			cancelJob: 'Cancel Job',
@@ -715,41 +596,6 @@ export default {
 			axesNotHomed: 'The following axis is not homed:|The following axes are not homed:',
 			noAxes: 'No Axes'
 		},
-		probeworkpiece: {
-			caption: 'Probe Workpiece',
-			description: 'Start probing from (and move)',
-		},
-		rotaryaxes: {
-			control: {
-				caption: 'Setup',
-				tableHeaders: {
-					steps: 'Steps',
-					actions: 'Actions',
-				},
-				step1: '1',
-				step2: '2',
-				step3: '3',
-				step4: '4',
-				step5: '5',
-				step6: '6',
-				step7: '7',
-				step8: '8',
-			},
-			status: {
-				caption: 'Status',
-				tableHeaders: {
-					xMin: 'X min',
-					xMax: 'X max',
-					yMin: 'Y min',
-					yMax: 'Y max',
-					thickness: 'Stock thickness',
-				},
-			},
-			betaWarning: 'Beta version - some functionality missing',
-		},
-		rotaryprinting: {
-			caption: 'Rotary Printing',
-		},
 		settingsAbout: {
 			caption: 'About',
 			developedBy: 'Web Interface developed by',
@@ -805,7 +651,6 @@ export default {
 		},
 		settingsMachine: {
 			caption: 'Machine-Specific',
-			revertDWC: 'Revert to DWC1',
 			babystepAmount: 'Babystep amount ({0})',
 			moveFeedrate: 'Feedrate for move buttons ({0})'
 		},
@@ -853,16 +698,6 @@ export default {
 			wcs: 'WCS',
 			compensation: 'Compensation in use',
 		},
-		threedscanner: {
-			caption: '3D Scanner Control',
-		},
-		tooloffsets: {
-			caption: 'Tool Offsets',
-			tableHeaders: {
-				name: 'Name',
-			},
-			amount: 'Offset amount in {0}:',
-		},
 		tools: {
 			caption: 'Tools',
 			controlAll: 'Control All',
@@ -889,11 +724,6 @@ export default {
 			},
 			noTools: 'No Tools'
 		},
-		touchoff: {
-			caption: 'Touch-off Plate',
-			plateInstalled: 'Touch-off Plate installed',
-			plateMissing: 'Touch-off Plate not installed',
-		},
 		turretLock: {
 			caption: 'Turret Lock',
 			on: 'Lock',
@@ -903,19 +733,259 @@ export default {
 			caption: 'Webcam Surveillance',
 			alt: '(webcam image)'
 		},
-		wcs: {
-			caption: 'Workpiece Coordinate Offsets',
-			tableHeaders: {
-				wcs: 'Workpiece',
-				changeTo: 'Change to',
-				reset: 'Reset',
+	},
+	plugins: {
+		autoUpdate: {
+			menuCaption: 'Update'
+		},
+		heightmap: {
+			menuCaption: 'Height Map',
+			listTitle: 'Height Maps',
+			none: 'None',
+			scale: 'Scale:',
+			orMore: 'or more',
+			orLess: 'or less',
+			axes: 'Axes:',
+			notAvailable: 'height map not available',
+			statistics: 'Statistics',
+			numPoints: 'Number of points: {0}',
+			radius: 'Probing radius: {0}',
+			area: 'Probe area: {0}',
+			maxDeviations: 'Maximum deviations: {0} / {1}',
+			meanError: 'Mean error: {0}',
+			rmsError: 'RMS error: {0}',
+			display: 'Display',
+			colorScheme: 'Color scheme:',
+			terrain: 'Terrain',
+			heat: 'Heat',
+			invertZ: 'Invert Z coordinates',
+			topView: 'Top view',
+		},
+		objectModelBrowser: {
+			menuCaption: 'Object Model'
+		},
+		visualizer: {
+			menuCaption: 'Visualizer'
+		},
+		offsets: {
+			menuCaption: 'Offsets',
+			button: {
+				probeWorkpiece: {
+					findCenterOfCavity: 'Find center of cavity',
+					measureZ: 'Measure Z',
+				},
+				touchoff: {
+					touchoff: 'Touch-off {0}',
+				},
+				tooloffsets: {
+					setToCurrent: 'Set to current value',
+				},
+				wcs: {
+					setToCurrent: 'Set to current value',
+				},
+			},
+			dialog: {
+				editToolOffsetAmount: {
+					title: 'Edit tool offset movement amount',
+					prompt: 'Please enter a new amount for the clicked button:'
+				},
+				setToolOffset: {
+					title: 'Set {0} offset',
+					prompt: 'Please enter a new {0} offset for {1}:'
+				},
+				setWCSOffset: {
+					title: 'Set {0} offset',
+					prompt: 'Please enter a new {0} offset for {1}:'
+				},
+			},
+			panel: {
+				probeworkpiece: {
+					caption: 'Probe Workpiece',
+					description: 'Start probing from (and move)',
+				},
+				tooloffsets: {
+					caption: 'Tool Offsets',
+					tableHeaders: {
+						name: 'Name',
+					},
+					amount: 'Offset amount in {0}:',
+				},
+				touchoff: {
+					caption: 'Touch-off Plate',
+					plateInstalled: 'Touch-off Plate installed',
+					plateMissing: 'Touch-off Plate not installed',
+				},
+				wcs: {
+					caption: 'Workpiece Coordinate Offsets',
+					tableHeaders: {
+						wcs: 'Workpiece',
+						changeTo: 'Change to',
+						reset: 'Reset',
+					},
+				},
+			},
+		},
+		rotaryAxes: {
+			menuCaption: 'Rotary Axes',
+			button: {
+				rotaryaxes: {
+					control: {
+						configure: 'Configure Rotary Printing',
+						measureZAxis: 'Measure Z axis',
+						setXmin: 'Set X min',
+						setXmax: 'Set X max',
+						setYmin: 'Set Y min',
+						setYmax: 'Set Y max',
+						levelAaxis: 'Level A axis',
+						setStockThickness: 'Set stock thickness',
+						setYoffset: 'Set Y offset',
+						autoLevel: 'Auto-level bed for printing',
+						unrotary: 'Reset to normal mode',
+					},
+					home: 'Rotary',
+				},
+			},
+			panel: {
+				rotaryaxes: {
+					control: {
+						caption: 'Setup',
+						tableHeaders: {
+							steps: 'Steps',
+							actions: 'Actions',
+						},
+						step1: '1',
+						step2: '2',
+						step3: '3',
+						step4: '4',
+						step5: '5',
+						step6: '6',
+						step7: '7',
+						step8: '8',
+					},
+					status: {
+						caption: 'Status',
+						tableHeaders: {
+							xMin: 'X min',
+							xMax: 'X max',
+							yMin: 'Y min',
+							yMax: 'Y max',
+							thickness: 'Stock thickness',
+						},
+					},
+					betaWarning: 'Beta version - some functionality missing',
+				},
+				rotaryprinting: {
+					caption: 'Rotary Printing',
+				},
+			},
+			tabs: {
+				rotaryaxes: {
+					rotaryprinting: 'Rotary Printing',
+					rotaryaxescontrol: 'Multi Axes',
+				}
+			},
+		},
+		threeDScanner: {
+			menuCaption: '3D Scanner',
+			button: {
+				calibratescanner: {
+					linear: 'Linear',
+					rotary: 'Rotary',
+				},
+				scandialog: {
+					linear: 'Linear',
+					rotary: 'Rotary',
+					activateLaser: 'Activate Laser',
+					deactivateLaser: 'Deactivate Laser',
+					startScan: 'Start Scan',
+				},
+				threedscanner: {
+					goToScanLocation: 'Move to Scan Location',
+					calibrate: 'Calibrate',
+					startScan: 'Start Scan',
+					shutdownScanner: 'Shutdown Scanner',
+				},
+			},
+			dialog: {
+				calibratescanner: {
+					title: 'Calibrate Scanner',
+					prompt: 'In what mode would you like to run the calibration?',
+				},
+				calibrationprogress: {
+					title: 'Calibrating...',
+					progressBarTitle: 'Calibration Progress',
+					prompt: 'Please wait while the scanner is being calibtrated. This may take a while...',
+				},
+				scan: {
+					title: 'Start 3D Scan',
+					step1: {
+						title: '1. Enter a filename for your scan',
+						placeholder: 'Choose a filename...',
+					},
+					step2: {
+						title: '2. Specify scan details',
+						scanRange: 'Scan range:',
+						stepSize: 'Step size:',
+						mode: 'Mode:',
+					},
+					step3: {
+						title: "3. Check alignment",
+						description: 'In order to align your object you can toggle the right laser before you start:',
+					},
+					step4: {
+						title: '4. Move the object to the center',
+					}
+				},
+				scanprogress: {
+					title: 'Scan in Progress',
+					scanProgress: 'Scan progress',
+					postProcessingProgress: 'Post-processing progress',
+					uploadProgress: 'Upload progress',
+					complete: 'Your 3D scan is now complete! You may download it from the file list next.'
+				},
+			},
+			list: {
+				scans: {
+					caption: 'Scans',
+					noScans: 'No Scans',
+					root: 'Root',
+				},
+			},
+			panel: {
+				threedscanner: {
+					caption: '3D Scanner Control',
+				},
 			},
 		}
 	},
 	tabs: {
-		rotaryaxes: {
-			rotaryprinting: 'Rotary Printing',
-			rotaryaxescontrol: 'Multi Axes',
+		generalSettings: {
+			caption: 'General'
+		},
+		machineSettings: {
+			caption: 'General'
+		},
+		plugins: {
+			caption: 'Plugins',
+			headers: {
+				name: 'Name',
+				author: 'Author',
+				version: 'Version',
+				license: 'License',
+				components: 'Components',
+				dependencies: 'Dependencies',
+				status: 'Status'
+			},
+			optional: 'optional',
+			start: 'Start',
+			partiallyStarted: 'partially started',
+			started: 'started',
+			stop: 'Stop',
+			deactivated: 'deactivated',
+			stopped: 'stopped',
+			uninstall: 'Uninstall',
+			noPlugins: 'No Plugins',
+			refreshNote: 'Refresh the page to finish unloading some DWC plugins'
 		}
-	},
+	}
 }

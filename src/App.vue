@@ -63,16 +63,16 @@ textarea {
 			</div>
 
 			<v-list class="pt-0" :expand="$vuetify.breakpoint.mdAndUp">
-				<v-list-group v-for="(category, index) in routing" :key="index" :prepend-icon="category.icon" no-action :value="isExpanded(category)">
+				<v-list-group v-for="(category, index) in categories" :key="index" :prepend-icon="category.icon" no-action :value="isExpanded(category)">
 					<template #activator>
-						<v-list-item-title>{{ $t(category.caption) }}</v-list-item-title>
+						<v-list-item-title>{{ category.translated ? category.caption : $t(category.caption) }}</v-list-item-title>
 					</template>
 
-					<v-list-item v-for="(page, pageIndex) in category.pages.filter(page => checkMenuCondition(page.condition))" :key="`${index}-${pageIndex}`" v-ripple :to="page.path" @click.prevent="">
+					<v-list-item v-for="(page, pageIndex) in getPages(category)" :key="`${index}-${pageIndex}`" v-ripple :to="page.path" @click.prevent="">
 						<v-list-item-icon>
 							<v-icon>{{ page.icon }}</v-icon>
 						</v-list-item-icon>
-						<v-list-item-title>{{ $t(page.caption) }}</v-list-item-title>
+						<v-list-item-title>{{ page.translated ? page.caption : $t(page.caption) }}</v-list-item-title>
 					</v-list-item>
 				</v-list-group>
 			</v-list>
@@ -113,7 +113,7 @@ textarea {
 			</v-btn>
 		</v-app-bar>
 
-		<v-content id="content">
+		<v-main id="content">
 			<v-scroll-y-transition>
 				<v-container v-show="!hideGlobalContainer || $vuetify.breakpoint.mdAndUp" id="global-container" fluid class="py-0">
 					<v-row>
@@ -139,11 +139,13 @@ textarea {
 					<router-view></router-view>
 				</keep-alive>
 			</v-container>
-		</v-content>
+		</v-main>
 
 		<connect-dialog></connect-dialog>
 		<connection-dialog></connection-dialog>
 		<messagebox-dialog></messagebox-dialog>
+
+		<component v-for="component in injectedComponents" :is="component" :key="component"></component>
 	</v-app>
 </template>
 
@@ -153,7 +155,8 @@ textarea {
 import Piecon from 'piecon'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
-import { Routing } from './routes'
+import { setInjectComponent } from './plugins'
+import { Menu, Routes } from './routes'
 import { isPrinting } from './store/machine/modelEnums.js'
 
 export default {
@@ -172,6 +175,24 @@ export default {
 		}),
 		...mapGetters('machine', ['hasTemperaturesToDisplay']),
 		...mapGetters('machine/model', ['jobProgress']),
+		categories() {
+			return Object.keys(Menu).map(key => Menu[key]).filter(item => item.condition || item.pages.some(page => page.condition));
+		},
+		currentPageCondition() {
+			const currentRoute = this.$route;
+			let checkRoute = function(route, isChild) {
+				let flag = (route.path === currentRoute.path && route.condition);
+				if (!flag && isChild) {
+					let curPath = currentRoute.path.replace(/\/$/, '');
+					if (curPath.endsWith(route.path))
+						flag = (curPath.substring(0, curPath.length-route.path.length) + route.path === curPath && route.condition)
+				}
+				if (!flag && route.children != undefined)
+					flag = route.children.some(child => checkRoute(child, true));
+				return flag;
+			};
+			return Routes.some(route => checkRoute(route));
+		},
 		toggleGlobalContainerColor() {
 			if (this.hideGlobalContainer) {
 				return this.darkTheme ? 'red darken-5' : 'red lighten-4';
@@ -182,8 +203,8 @@ export default {
 	data() {
 		return {
 			drawer: this.$vuetify.breakpoint.lgAndUp,
+			injectedComponents: [],
 			hideGlobalContainer: false,
-			routing: Routing,
 			wasXs: this.$vuetify.breakpoint.xsOnly,
 			doubleQuote: '"',
 		}
@@ -191,14 +212,8 @@ export default {
 	methods: {
 		...mapActions(['connect', 'disconnectAll']),
 		...mapActions('settings', ['load']),
-		checkMenuCondition(condition) {
-			if (condition === 'webcam') {
-				return (this.webcam.url !== '');
-			}
-			if (condition === 'display') {
-				return (this.boards.length > 0) && this.boards[0].supports12864;
-			}
-			return true;
+		getPages(category) {
+			return category.pages.filter(page => page.condition);
 		},
 		isExpanded(category) {
 			if (this.$vuetify.breakpoint.xsOnly) {
@@ -213,6 +228,10 @@ export default {
 			if (document.title !== title) {
 				document.title = title;
 			}
+		},
+		injectComponent(name, component) {
+			this.$options.components[name] = component;
+			this.injectedComponents.push(name);
 		}
 	},
 	mounted() {
@@ -228,19 +247,13 @@ export default {
 		this.load();
 
 		// Validate navigation
-		const that = this;
 		this.$router.beforeEach((to, from, next) => {
-			if (Routing.some(group => group.pages.some(page => page.path === to.path && !that.checkMenuCondition(page.condition)))) {
+			if (Routes.some(route => route.path === to.path && !route.condition)) {
 				next('/');
 			} else {
 				next();
 			}
 		});
-
-		const route = this.$route;
-		if (Routing.some(group => group.pages.some(page => page.path === route.path && !this.checkMenuCondition(page.condition)))) {
-			this.$router.push('/');
-		}
 
 		// Set up Piecon
 		Piecon.setOptions({
@@ -249,8 +262,16 @@ export default {
 			shadow: '#fff',			// Outer ring color
 			fallback: false			// Toggles displaying percentage in the title bar (possible values - true, false, 'force')
 		});
+
+		// Register function to inject custom components
+		setInjectComponent(this.injectComponent);
 	},
 	watch: {
+		currentPageCondition(to) {
+			if (!to) {
+				this.$router.push('/');
+			}
+		},
 		darkTheme(to) {
 			this.$vuetify.theme.dark = to;
 		},
