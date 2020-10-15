@@ -407,7 +407,7 @@ export default {
 		},
 		async turnEverythingOff() {
 			let code = '';
-			this.tools.forEach(function(tool) {
+			this.visibleTools.forEach(function(tool) {
 				if (tool && tool.heaters.length) {
 					const temps = tool.heaters.map(() => '-273.15').join(':');
 					code += `G10 P${tool.number} R${temps} S${temps}\n`;
