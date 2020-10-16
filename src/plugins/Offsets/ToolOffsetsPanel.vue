@@ -67,13 +67,24 @@
 <script>
 'use strict'
 
-import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
+import { setPluginData, PluginDataType } from '../../store'
 
 export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
 		...mapState('machine/model', ['tools', 'move']),
-		...mapState('machine/settings', ['toolOffsetAmounts']),
+		...mapState('machine/settings', {
+			pluginSettings: state => state.plugins.Offsets
+		}),
+		toolOffsetAmounts: {
+			get() { return this.pluginSettings.toolOffsetAmounts; },
+			set({ index, value }) {
+				let toolOffsetAmounts = this.pluginSettings.toolOffsetAmounts;
+				toolOffsetAmounts[index] = value;
+				setPluginData('Offsets', PluginDataType.machineSetting, 'toolOffsetAmounts', toolOffsetAmounts);
+			},
+		},
 		toolsWithoutProbe() {
 			return this.tools.filter(t => t != null && t.number != 10);
 		}
@@ -121,7 +132,6 @@ export default {
 	},
 	methods: {
 		...mapActions('machine', ['sendCode']),
-		...mapMutations('machine/settings', ['setToolOffsetAmount']),
 		async toolOffsetAdjust(axisLetter, axisIndex, tool, multiplier = 1) {
 			if (axisLetter == 'Z') {
 				multiplier *= -1;
@@ -156,7 +166,7 @@ export default {
 			this.editAmountDialog.shown = true;
 		},
 		setAmount(value) {
-			this.setExtrusionAmount({ index: this.editAmountDialog.index, value });
+			this.toolOffsetAmounts = { index: this.editAmountDialog.index, value };
 			this.amount = value;
 		},
 		showSetToolOffsetDialog(axisLetter, axisIndex, tool) {

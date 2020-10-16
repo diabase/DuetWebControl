@@ -2,6 +2,7 @@
 
 import Vue from 'vue'
 import { registerRoute } from '../../routes'
+import { registerPluginData, PluginDataType } from '../../store'
 
 import Offsets from './Offsets.vue'
 import ProbeWorkpiecePanel from './ProbeWorkpiecePanel.vue'
@@ -26,3 +27,4 @@ registerRoute(Offsets, {
 });
 
 // TODO: Add WCS names to cache here
+registerPluginData('Offsets', PluginDataType.machineSetting, 'toolOffsetAmounts', [10, 5, 2, 1, 0.1, 0.01]);

@@ -49,7 +49,6 @@ export default function(connector, pluginSettingFields) {
 				},
 				chamber: [90, 80, 70, 60, 50, 40, 0]
 			},
-			toolOffsetAmounts: [10, 5, 2, 1, 0.1, 0.01],// mm
 			spindleRPM: [10000, 75000, 5000, 2500, 1000, 0],
 			enabledPlugins: [],
 			plugins: Object.assign({}, pluginSettingFields)		// Third-party values
@@ -222,9 +221,6 @@ export default function(connector, pluginSettingFields) {
 					state.moveSteps[axis] = state.moveSteps.default.slice();
 				}
 				state.moveSteps[axis][index] = value;
-			},
-			setToolOffsetAmount(state, { index, value }) {
-				state.toolOffsetAmounts[index] = value;
 			},
 			toggleExtraVisibility(state, extraHeater) {
 				if (state.displayedExtraTemperatures.indexOf(extraHeater) === -1) {

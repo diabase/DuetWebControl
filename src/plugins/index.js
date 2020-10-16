@@ -103,7 +103,7 @@ export default [
 		author: 'Diabase Engineering',
 		version,
 		loadDwcResources: () => import(
-			/* webpackChunkName: "OnScreenKeyboard" */
+			/* webpackChunkName: "Offsets" */
 			'./Offsets/index.js'
 		)
 	}),
@@ -112,7 +112,7 @@ export default [
 		author: 'Diabase Engineering',
 		version,
 		loadDwcResources: () => import(
-			/* webpackChunkName: "OnScreenKeyboard" */
+			/* webpackChunkName: "RotaryAxes" */
 			'./RotaryAxes/index.js'
 		)
 	}),
@@ -121,7 +121,7 @@ export default [
 		author: 'Diabase Engineering',
 		version,
 		loadDwcResources: () => import(
-			/* webpackChunkName: "OnScreenKeyboard" */
+			/* webpackChunkName: "3DScanner" */
 			'./3DScanner/index.js'
 		)
 	}),
