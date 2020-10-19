@@ -20,7 +20,7 @@
 			</v-row>
 			<v-row>
 				<v-col>
-					<img src="../../assets/touchplate.png"/>
+					<img src="./touchplate.png"/>
 				</v-col>
 			</v-row>
 		</v-card-text>

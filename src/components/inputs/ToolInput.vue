@@ -179,8 +179,10 @@ export default {
 	mounted() {
 		this.inputElement = this.$el.querySelector('input');
 		if (this.tool) {
-			this.actualValue = this.tool[this.active ? 'active' : 'standby'][this.toolHeaterIndex];
-			this.inputValue = this.tool[this.active ? 'active' : 'standby'][this.toolHeaterIndex].toString();
+			if (this.tool[this.active ? 'active' : 'standby'].length > 0) {
+				this.actualValue = this.tool[this.active ? 'active' : 'standby'][this.toolHeaterIndex];
+				this.inputValue = this.tool[this.active ? 'active' : 'standby'][this.toolHeaterIndex].toString();
+			}
 		} else if (this.bed) {
 			this.actualValue = this.bed[this.active ? 'active' : 'standby'];
 			this.inputValue = this.bed[this.active ? 'active' : 'standby'].toString();

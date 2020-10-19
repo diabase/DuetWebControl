@@ -42,7 +42,7 @@
 					</v-simple-table>
 				</v-col>
 				<v-col :cols="3">
-					<img src="../../assets/tooloffset.png"/>
+					<img src="./tooloffset.png"/>
 				</v-col>
 			</v-row>
 			<v-row align="center" class="pb-1">

@@ -78,7 +78,7 @@ table tbody tr:hover {
 					</v-row>
 				</v-col>
 				<v-col class="flex-shrink-1">
-					<img src="../../assets/probe.png"/>
+					<img src="./probe.png"/>
 				</v-col>
 			</v-row>
 		</v-card-text>
