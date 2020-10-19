@@ -26,7 +26,6 @@ export default {
 			if (this.disableAutoComplete) {
 				return [];
 			}
-
 			const key = this.active ? 'active' : 'standby';
 			if (this.tool || this.all) {
 				return this.temperatures.tool[key];

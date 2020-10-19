@@ -19,3 +19,4 @@ Vue.component('job-file-list', JobFileList)
 Vue.component('macro-file-list', MacroFileList)
 Vue.component('macro-list', MacroList)
 Vue.component('system-file-list', SystemFileList)
+

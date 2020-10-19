@@ -5,7 +5,7 @@ import { registerPluginData, PluginDataType } from '../../store'
 
 import HeightMap from './HeightMap.vue'
 
-// Register a route via Control -> 3D Scanner
+// Register a route via Control -> Height Map
 registerRoute(HeightMap, {
 	Control: {
 		HeightMap: {

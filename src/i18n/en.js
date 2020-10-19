@@ -112,10 +112,6 @@ export default {
 				caption: 'Upload Menu Files',
 				title: 'Upload one or more menu files (drag&drop is supported as well)'
 			},
-			scans: {
-				caption: 'Upload Scan Files',
-				title: 'Upload one or more scan files (drag&drop supported as well)',
-			},
 			system: {
 				caption: 'Upload System Files',
 				title: 'Upload one or more system files (drag&drop is supported as well)'
@@ -227,10 +223,6 @@ export default {
 			title: 'Reset Heater Fault',
 			prompt: 'A heater fault has occurred on heater {0}. It is strongly advised to turn off your machine now and to check your wiring before you continue. If you are absolutely sure that this is not a physical problem, you can reset the heater fault ON YOUR OWN RISK. Be aware that this is NOT RECOMMENDED and can lead to further problems. How would you like to proceed?',
 			resetFault: 'Reset Fault'
-		},
-		resetWCS: {
-			title: 'Reset {0}',
-			prompt: 'Do you want to reset {0} to all 0?',
 		},
 		runMacro: {
 			title: 'Run {0}',
@@ -788,6 +780,10 @@ export default {
 				editToolOffsetAmount: {
 					title: 'Edit tool offset movement amount',
 					prompt: 'Please enter a new amount for the clicked button:'
+				},
+				resetWCS: {
+					title: 'Reset {0}',
+					prompt: 'Do you want to reset {0} to all 0?',
 				},
 				setToolOffset: {
 					title: 'Set {0} offset',

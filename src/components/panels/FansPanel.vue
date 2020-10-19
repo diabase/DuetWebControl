@@ -30,7 +30,6 @@
 				</v-list>
 			</v-menu>
 		</v-card-title>
-
 		<v-card-text class="d-flex flex-column pb-0">
 			<div v-for="fan in visibleFans" :key="fan" class="d-flex flex-column pt-2">
 				{{ (fan === -1) ? $t('panel.fans.toolFan') : (fans[fan].name ? fans[fan].name : $t('panel.fans.fan', [fan])) }}

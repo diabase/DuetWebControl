@@ -50,6 +50,7 @@ export default function(connector, pluginSettingFields) {
 				chamber: [90, 80, 70, 60, 50, 40, 0]
 			},
 			spindleRPM: [10000, 75000, 5000, 2500, 1000, 0],
+
 			enabledPlugins: [],
 			plugins: Object.assign({}, pluginSettingFields)		// Third-party values
 		},

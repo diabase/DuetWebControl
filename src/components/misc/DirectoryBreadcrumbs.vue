@@ -45,6 +45,7 @@ export default {
 					pathItems[0] = this.directories.menu;
 					rootCaption = this.$t('directory.menu');
 				} else if (Path.startsWith(this.value, Path.scans)) {
+					// TODO: Move this into the plugin somehow?
 					pathItems.shift();
 					pathItems[0] = this.directories.scans;
 					rootCaption = this.$t('directory.scans');

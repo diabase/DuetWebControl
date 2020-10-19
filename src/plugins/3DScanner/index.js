@@ -2,6 +2,7 @@
 
 import Vue from 'vue'
 import { registerRoute } from '../../routes'
+import { registerPluginData, PluginDataType } from '../../store'
 
 import ThreeDScanner from './ThreeDScanner.vue'
 import CalibrateScannerDialog from './CalibrateScannerDialog.vue'
@@ -28,3 +29,6 @@ registerRoute(ThreeDScanner, {
 		},
 	}
 });
+
+registerPluginData('ThreeDScanner', PluginDataType.machineCache, 'column', 'name');
+registerPluginData('ThreeDScanner', PluginDataType.machineCache, 'descending', false);

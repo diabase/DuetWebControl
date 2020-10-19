@@ -25,3 +25,4 @@ Vue.component('messagebox-dialog', MessageBoxDialog)
 Vue.component('new-file-dialog', NewFileDialog)
 Vue.component('new-directory-dialog', NewDirectoryDialog)
 Vue.component('reset-heater-fault-dialog', ResetHeaterFaultDialog)
+
