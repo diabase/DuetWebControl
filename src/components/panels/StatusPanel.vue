@@ -148,7 +148,7 @@ table tbody tr:hover {
 			</template>
 
 			<!-- WCS -->
-			<template v-if="true || vendor === 'diabase'" v-show="move.currentWorkplace > 0">
+			<template v-if="true || vendor === 'diabase'">
 				<v-divider class="mr-2"></v-divider>
 
 				<v-row align-content="center" no-gutters class="flex-nowrap">
@@ -158,7 +158,7 @@ table tbody tr:hover {
 
 					<v-col align-self="center" class="d-flex flex-column align-center">
 						<span>
-							{{ wcsNames[move.workspaceNumber] }}
+							{{ wcsNames[move.workplaceNumber] }}
 						</span>
 					</v-col>
 				</v-row>

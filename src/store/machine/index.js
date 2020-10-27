@@ -30,7 +30,7 @@ export default function(connector, pluginCacheFields, pluginSettingFields) {
 			events: [],								// provides machine events in the form of { date, type, title, message }
 			isReconnecting: false,
 			filesBeingChanged: [],
-			wcsNames: ['n/a', 'G54', 'G55', 'G56', 'G57', 'G58', 'G59', 'G59.1', 'G59.2', 'G59.3'],
+			wcsNames: ['G54', 'G55', 'G56', 'G57', 'G58', 'G59', 'G59.1', 'G59.2', 'G59.3'],
 			vendor: undefined,
 		},
 		getters: {
