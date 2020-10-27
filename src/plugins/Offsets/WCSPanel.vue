@@ -27,7 +27,7 @@
 					<tr v-for="w in wcs" :key="w" :class="{'current-wcs': move.workplaceNumber == w-1}">
 						<td class="text-left">{{ w + ' (' + wcsNames[w-1] + ')' }} <v-icon v-if="move.workplaceNumber == w-1" small class="mr-1">mdi-checkbox-marked-outline</v-icon></td>
 						<td class="text-center">
-							<code-btn :code="`${wcsNames[w]}`" no-wait lock small v-if="move.currentWorkplace != w">
+							<code-btn :code="`${wcsNames[w-1]}`" no-wait lock small v-if="move.workplaceNumber != w-1">
 								<v-icon small>mdi-marker-check</v-icon>
 							</code-btn>
 						</td>
@@ -109,9 +109,9 @@ export default {
 			if (this.uiFrozen) {
 				return;
 			}
-			const wcsName = this.wcsNames[wcsNumber];
-			this.setWCSOffsetDialog.title = this.$t('dialog.setWCSOffset.title', [ wcsName ]);
-			this.setWCSOffsetDialog.prompt = this.$t('dialog.setWCSOffset.prompt', [ axis, wcsName ]);
+			const wcsName = this.wcsNames[wcsNumber-1];
+			this.setWCSOffsetDialog.title = this.$t('plugins.offsets.dialog.setWCSOffset.title', [ wcsName ]);
+			this.setWCSOffsetDialog.prompt = this.$t('plugins.offsets.dialog.setWCSOffset.prompt', [ axis, wcsName ]);
 			this.setWCSOffsetDialog.axis = axis;
 			this.setWCSOffsetDialog.wcsNumber = wcsNumber;
 			this.setWCSOffsetDialog.preset = this.workplaceOffsets[axis][wcsNumber-1];
@@ -127,7 +127,7 @@ export default {
 			this.busy = false;
 		},
 		resetClicked(wcsNumber) {
-			const wcsName = this.wcsNames[wcsNumber]
+			const wcsName = this.wcsNames[wcsNumber-1]
 			this.resetDialog.title = this.$t('plugins.offsets.dialog.resetWCS.title', [wcsName]);
 			this.resetDialog.prompt = this.$t('plugins.offsets.dialog.resetWCS.prompt', [wcsName]);
 			this.resetDialog.wcsNumber = wcsNumber;
