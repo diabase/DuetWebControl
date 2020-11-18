@@ -46,19 +46,19 @@
 						<v-list-item style="color:red !important;" @click="sendCode('G32')">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t(isDelta ? 'panel.movement.runDelta' : 'panel.movement.runBed') }}
 						</v-list-item>
-						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_flat${doubleQuote}.g')`">
+						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_flat.g${doubleQuote}')`">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBedFlat') }}
 						</v-list-item>
-						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_dovetail{doubleQuote}.g')`">
+						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_dovetail.g${doubleQuote}')`">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBedDovetail') }}
 						</v-list-item>
-						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_4{doubleQuote}.g')`">
+						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_4.g${doubleQuote}')`">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBed4') }}
 						</v-list-item>
-						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_5{doubleQuote}.g')`">
+						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_5.g${doubleQuote}')`">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBed5') }}
 						</v-list-item>
-						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_rotary{doubleQuote}.g')`">
+						<v-list-item style="color:red !important;" @click="`sendCode('M98 P${doubleQuote}bed_rotary.g${doubleQuote}')`">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBedRotary') }}
 						</v-list-item>
 						<v-list-item :disabled="!move.compensation.type || move.compensation.type.indexOf('Point') === -1" @click="sendCode('M561')">
