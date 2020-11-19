@@ -24,7 +24,7 @@ table tbody tr:hover {
 							<tr>
 								<td></td>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Ymin.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Ymin.g${doubleQuote}`" no-wait block class="move-btn" :disabled="disable">
 										Y <v-icon>{{ getIcon("Y", "max") }}</v-icon>
 									</code-btn>
 								</td>
@@ -32,7 +32,7 @@ table tbody tr:hover {
 							</tr>
 							<tr>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Xmax.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Xmax.g${doubleQuote}`" no-wait block class="move-btn" :disabled="disable">
 										-X <v-icon>{{ getIcon("X", "min") }}</v-icon>
 									</code-btn>
 								</td>
@@ -40,7 +40,7 @@ table tbody tr:hover {
 									<v-icon>mdi-cube-scan</v-icon>
 								</td>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Xmin.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Xmin.g${doubleQuote}`" no-wait block class="move-btn" :disabled="disable">
 										<v-icon>{{ getIcon("X", "max") }}</v-icon> X
 									</code-btn>
 								</td>
@@ -49,13 +49,13 @@ table tbody tr:hover {
 							<tr>
 								<td></td>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Ymax.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Ymax.g${doubleQuote}`" no-wait block class="move-btn" :disabled="disable">
 										-Y <v-icon>{{ getIcon("Y", "min") }}</v-icon>
 									</code-btn>
 								</td>
 								<td></td>
 								<td class="text-center">
-									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Zmin.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}${macroBaseName}Zmin.g${doubleQuote}`" no-wait block class="move-btn" :disabled="disable">
 										Z <v-icon>{{ getIcon("Z") }}</v-icon>
 									</code-btn>
 								</td>
@@ -64,14 +64,14 @@ table tbody tr:hover {
 					</v-simple-table>
 					<v-row dense class="pt-8">
 						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}tcalibrate.g${doubleQuote}`" no-wait block class="move-btn">
+							<code-btn :code="`M98 P${doubleQuote}tcalibrate.g${doubleQuote}`" no-wait block class="move-btn" :disabled="disable">
 								<v-icon>mdi-image-filter-center-focus</v-icon> {{ $t('plugins.offsets.button.probeWorkpiece.findCenterOfCavity') }}
 							</code-btn>
 						</v-col>
 					</v-row>
 					<v-row>
 						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}measurez.g${doubleQuote}`" no-wait block class="move-btn">
+							<code-btn :code="`M98 P${doubleQuote}measurez.g${doubleQuote}`" no-wait block class="move-btn" :disabled="disable">
 								<v-icon>mdi-ruler</v-icon> {{ $t('plugins.offsets.button.probeWorkpiece.measureZ') }}
 							</code-btn>
 						</v-col>
@@ -88,11 +88,19 @@ table tbody tr:hover {
 <script>
 'use strict'
 
-import {mapGetters, mapActions } from 'vuex'
+import {mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
+		...mapState('machine', ['vendor']),
+		...mapState('machine/model', ['state']),
+		disable() {
+			if (this.vendor === 'diabase') {
+				return this.state.currentTool != 10;
+			}
+			return false;
+		},
 	},
 	data() {
 		return {

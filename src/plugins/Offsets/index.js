@@ -1,6 +1,19 @@
 'use strict'
 
 import Vue from 'vue'
+
+// import VueI18n from 'vue-i18n'
+// import en from './i18n/en.js'
+// const messages = {
+// 	en,
+// }
+// const localT = new VueI18n({
+// 	locale: 'en',
+// 	fallbackLocale: 'en',
+// 	messages,
+// })
+// localT.tc(''); // TODO: Remove if provided to components
+
 import { registerRoute } from '../../routes'
 import { registerPluginData, PluginDataType } from '../../store'
 
@@ -28,3 +41,4 @@ registerRoute(Offsets, {
 
 // TODO: Add WCS names to cache here
 registerPluginData('Offsets', PluginDataType.machineSetting, 'toolOffsetAmounts', [10, 5, 2, 1, 0.1, 0.01]);
+// registerPluginData('Offsets', PluginDataType.machineCache, 'localT', localT);

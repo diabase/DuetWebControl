@@ -64,6 +64,11 @@ const store = new Vuex.Store({
 				const module = machine(connectorInstance, pluginCacheFields, pluginSettingFields);
 				commit('addMachine', { hostname, module });
 				connectorInstance.register(module);
+				connectorInstance.download("0:/sys/oem.json").then(
+					function(oem) {
+						module.state.vendor = oem.vendor;
+					}
+				)
 
 				commit('setSelectedMachine', hostname);
 				logGlobal('success', i18n.t('events.connected', [hostname]));

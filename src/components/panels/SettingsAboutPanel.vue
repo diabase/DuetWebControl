@@ -1,7 +1,7 @@
 <template>
 	<v-card outlined>
 		<v-card-title>
-			<span>Duet Web Control {{ version }}</span>
+			<span>Duet Web Control HSeries {{ version }}</span>
 			<v-spacer></v-spacer>
 			<a href="https://github.com/Duet3D/DuetWebControl" target="_blank">
 				<v-icon small>mdi-star</v-icon> GitHub
