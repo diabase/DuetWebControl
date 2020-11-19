@@ -229,7 +229,8 @@ export default {
 				// Create THREE instances
 				this.three.scene = new Scene();
 				this.three.camera = new PerspectiveCamera(45, size.width / size.height, 0.1, 1000);
-				this.three.camera.position.set(1, 1, 1);
+				this.three.camera.rotation.set(Math.PI / 4, 0, 0)
+				this.three.camera.position.set(0, -1.25, 1.25);
 				this.three.camera.up = new Vector3(0, 0, 1);
 				this.three.renderer = new WebGLRenderer({ canvas: this.$refs.canvas });
 				this.three.renderer.setSize(size.width, size.height);
@@ -285,7 +286,7 @@ export default {
 		},
 		showCSV(csvData) {
 			// Load the CSV. The first line is a comment that can be removed
-			const csv = new CSV(csvData.substring(csvData.indexOf("\n") + 1));
+			const csv = new CSV(csvData.substring(csvData.indexOf('\n') + 1));
 			let radius = parseFloat(csv.get('radius'));
 			if (radius <= 0) { radius = undefined; }
 			const xMin = parseFloat(csv.get('xmin'));
@@ -300,7 +301,7 @@ export default {
 			for (let y = 1; y < csv.content.length; y++) {
 				for (let x = 0; x < csv.content[y].length; x++) {
 					const value = csv.content[y][x].trim();
-					points.push([xMin + x * xSpacing, yMin + (y - 1) * ySpacing, (value === "0") ? NaN : parseFloat(value)]);
+					points.push([xMin + x * xSpacing, yMin + (y - 1) * ySpacing, (value === '0') ? NaN : parseFloat(value)]);
 				}
 			}
 
@@ -443,6 +444,7 @@ export default {
 			this.three.camera.position.set(0, 0, 1.5);
 			this.three.camera.rotation.set(0, 0, 0);
 			this.three.camera.updateProjectionMatrix();
+			this.three.orbitControls.update();
 		},
 
 		async refresh() {
@@ -603,7 +605,15 @@ export default {
 		},
 		heightmapFile(to) {
 			if (to) {
-				this.refresh().then(() => this.selectedFile = Path.extractFileName(to));
+				const that = this;
+				this.refresh().then(async function() {
+					const fileName = Path.extractFileName(to);
+					if (that.selectedFile === fileName) {
+						await that.getHeightMap();
+					} else {
+						that.selectedFile = fileName;
+					}
+				});
 			}
 		},
 		selectedFile() {

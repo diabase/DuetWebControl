@@ -6,7 +6,7 @@
 
 <template>
 	<v-combobox ref="input" type="number" min="-273" max="1999" step="any" class="tool-input" :label="label"
-				:value="inputValue" :search-input.sync="inputValue" @change="change" @keyup.enter="apply" @blur="blur"
+				:value="inputValue" :search-input="inputValue" @update:search-input="change" @keyup.enter="apply" @blur="blur"
 				:loading="applying" :disabled="uiFrozen || !isValid" :items="items" hide-selected>
 	</v-combobox>
 </template>
@@ -172,7 +172,10 @@ export default {
 		async change(value) {
 			// Note that value is of type String when a user enters a value and then leaves it without confirming...
 			if (typeof value === 'number') {
+				this.inputValue = value.toString();
 				await this.apply();
+			} else {
+				this.inputValue = value;
 			}
 		}
 	},

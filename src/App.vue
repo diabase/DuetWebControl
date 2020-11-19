@@ -145,7 +145,7 @@ textarea {
 		<connection-dialog></connection-dialog>
 		<messagebox-dialog></messagebox-dialog>
 
-		<component v-for="component in injectedComponents" :is="component" :key="component"></component>
+		<component v-for="component in injectedComponentNames" :is="component" :key="component"></component>
 	</v-app>
 </template>
 
@@ -155,7 +155,6 @@ textarea {
 import Piecon from 'piecon'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
-import { setInjectComponent } from './plugins'
 import { Menu, Routes } from './routes'
 import { isPrinting } from './store/machine/modelEnums.js'
 
@@ -171,7 +170,9 @@ export default {
 			status: state => state.machine.model.state.status,
 
 			darkTheme: state => state.settings.darkTheme,
-			webcam: state => state.settings.webcam
+			webcam: state => state.settings.webcam,
+
+			injectedComponents: state => state.uiInjection.injectedComponents
 		}),
 		...mapGetters('machine', ['hasTemperaturesToDisplay']),
 		...mapGetters('machine/model', ['jobProgress']),
@@ -203,10 +204,10 @@ export default {
 	data() {
 		return {
 			drawer: this.$vuetify.breakpoint.lgAndUp,
-			injectedComponents: [],
 			hideGlobalContainer: false,
 			wasXs: this.$vuetify.breakpoint.xsOnly,
 			doubleQuote: '"',
+			injectedComponentNames: []
 		}
 	},
 	methods: {
@@ -228,10 +229,6 @@ export default {
 			if (document.title !== title) {
 				document.title = title;
 			}
-		},
-		injectComponent(name, component) {
-			this.$options.components[name] = component;
-			this.injectedComponents.push(name);
 		}
 	},
 	mounted() {
@@ -262,9 +259,6 @@ export default {
 			shadow: '#fff',			// Outer ring color
 			fallback: false			// Toggles displaying percentage in the title bar (possible values - true, false, 'force')
 		});
-
-		// Register function to inject custom components
-		setInjectComponent(this.injectComponent);
 	},
 	watch: {
 		currentPageCondition(to) {
@@ -295,6 +289,14 @@ export default {
 				Piecon.setProgress(to * 100);
 			}
 			this.updateTitle();
+		},
+		injectedComponents() {
+			this.injectedComponents.forEach(function(item) {
+				if (this.injectedComponentNames.indexOf(item.name) === -1) {
+					this.$options.components[item.name] = item.component;
+					this.injectedComponentNames.push(item.name);
+				}
+			}, this);
 		}
 	}
 }
