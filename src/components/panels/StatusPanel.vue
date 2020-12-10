@@ -158,7 +158,7 @@ table tbody tr:hover {
 
 					<v-col align-self="center" class="d-flex flex-column align-center">
 						<span>
-							{{ wcsNames[move.workplaceNumber] }}
+							{{ wcsNames[move.workspaceNumber-1] }}
 						</span>
 					</v-col>
 				</v-row>
