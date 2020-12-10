@@ -2,17 +2,16 @@
 
 import Vue from 'vue'
 
-// import VueI18n from 'vue-i18n'
-// import en from './i18n/en.js'
-// const messages = {
-// 	en,
-// }
-// const localT = new VueI18n({
-// 	locale: 'en',
-// 	fallbackLocale: 'en',
-// 	messages,
-// })
-// localT.tc(''); // TODO: Remove if provided to components
+import VueI18n from 'vue-i18n'
+import en from './i18n/en.js'
+const messages = {
+	en,
+}
+export const localT = new VueI18n({
+	locale: 'en',
+	fallbackLocale: 'en',
+	messages,
+})
 
 import { registerRoute } from '../../routes'
 import { registerPluginData, PluginDataType } from '../../store'
@@ -33,7 +32,7 @@ registerRoute(Offsets, {
 	Control: {
 		Offsets: {
 			icon: 'mdi-arrow-expand-all',
-			caption: 'plugins.offsets.menuCaption',
+			caption: localT.tc('menuCaption'),
 			path: '/Offsets',
 		},
 	}

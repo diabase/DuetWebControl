@@ -7,29 +7,29 @@
 <template>
 	<v-card>
 		<v-card-title class="pb-0">
-			<v-icon small class="mr-1">mdi-cube-scan</v-icon> {{ $t('plugins.threeDScanner.panel.threedscanner.caption') }}
+			<v-icon small class="mr-1">mdi-cube-scan</v-icon> {{ t.tc('panel.threedscanner.caption') }}
 		</v-card-title>
 
 		<v-card-text>
 			<v-row dense>
 				<v-col>
 					<code-btn :code="`M98 P${doubleQuote}scanner_go.g${doubleQuote}`" no-wait block class="move-btn">
-						<v-icon>mdi-home</v-icon> {{ $t('plugins.threeDScanner.button.threedscanner.goToScanLocation') }}
+						<v-icon>mdi-home</v-icon> {{ t.tc('button.threedscanner.goToScanLocation') }}
 					</code-btn>
 				</v-col>
 				<v-col>
 					<v-btn no-wait block @click="showCalibrateDialog = true" :disabled="uiFrozen || !allVisibleAxesHomed || scannerDisonnected">
-						<v-icon>mdi-crosshairs-gps</v-icon> {{ $t('plugins.threeDScanner.button.threedscanner.calibrate') }}
+						<v-icon>mdi-crosshairs-gps</v-icon> {{ t.tc('button.threedscanner.calibrate') }}
 					</v-btn>
 				</v-col>
 				<v-col>
 					<v-btn no-wait block @click="showScanDialog = true" :disabled="uiFrozen || !allVisibleAxesHomed || scannerDisonnected">
-						<v-icon>mdi-eye</v-icon> {{ $t('plugins.threeDScanner.button.threedscanner.startScan') }}
+						<v-icon>mdi-eye</v-icon> {{ t.tc('button.threedscanner.startScan') }}
 					</v-btn>
 				</v-col>
 				<v-col>
 					<code-btn :code="`M756`" no-wait block :disabled="uiFrozen || !allVisibleAxesHomed || scannerDisonnected" style="color: red;">
-						<v-icon>mdi-power-standby</v-icon> {{ $t('plugins.threeDScanner.button.threedscanner.shutdownScanner') }}
+						<v-icon>mdi-power-standby</v-icon> {{ t.tc('button.threedscanner.shutdownScanner') }}
 					</code-btn>
 				</v-col>
 			</v-row>
@@ -45,6 +45,7 @@
 'use strict'
 
 import { mapGetters, mapState } from 'vuex'
+import { localT } from './index.js'
 
 export default {
 	computed: {
@@ -80,6 +81,7 @@ export default {
 			showCalibrateDialog: false,
 			showScanDialog: false,
 			showScanProgressDialog: false,
+			t: localT,
 		}
 	},
 	watch: {

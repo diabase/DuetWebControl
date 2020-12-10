@@ -3,7 +3,7 @@
 		<v-card>
 			<v-card-title>
 				<span class="headline">
-					{{ $t('plugins.threeDScanner.dialog.calibrationprogress.title') }}
+					{{ t.tc('dialog.calibrationprogress.title') }}
 				</span>
 			</v-card-title>
 
@@ -19,7 +19,7 @@
 				</v-row>
 				<v-row>
 					<v-col>
-						{{ $t('plugins.threeDScanner.dialog.calibrationprogress.prompt') }}
+						{{ t.tc('dialog.calibrationprogress.prompt') }}
 					</v-col>
 				</v-row>
 			</v-card-text>
@@ -27,7 +27,7 @@
 			<v-card-actions>
 				<v-spacer></v-spacer>
 				<code-btn :code="`M753`" color="red darken-1" text>
-					<v-icon>mdi-close</v-icon> {{ $t('generic.cancel') }}
+					<v-icon>mdi-close</v-icon> {{ t.tc('generic.cancel') }}
 				</code-btn>
 			</v-card-actions>
 		</v-card>
@@ -38,6 +38,7 @@
 'use strict'
 
 import { mapState } from 'vuex'
+import { localT } from './index.js'
 
 export default {
 	props: {
@@ -53,6 +54,11 @@ export default {
 		},
 		internalShown: {
 			get() { return this.shown; },
+		}
+	},
+	data() {
+		return {
+			t: localT,
 		}
 	},
 }

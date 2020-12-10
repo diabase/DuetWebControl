@@ -7,14 +7,14 @@
 <template>
 	<v-card>
 		<v-card-title class="pb-0">
-			<v-icon small class="mr-1">mdi-gesture-tap</v-icon> {{ $t('plugins.offsets.panel.touchoff.caption') }}
+			<v-icon small class="mr-1">mdi-gesture-tap</v-icon> {{ t.tc('panel.touchoff.caption') }}
 		</v-card-title>
 
 		<v-card-text>
 			<v-row dense>
 				<v-col v-for="axis in axes" :key="axis">
 					<code-btn :code="`M98 P${doubleQuote}touchoff_${ axis }.g${doubleQuote}`" no-wait block class="move-btn">
-						{{ $t('plugins.offsets.button.touchoff.touchoff', [axis]) }}
+						{{ t.tc('button.touchoff.touchoff', [axis]) }}
 					</code-btn>
 				</v-col>
 			</v-row>
@@ -26,10 +26,10 @@
 		</v-card-text>
 
 		<v-alert v-if="installed" type="success" class="mb-0">
-			{{ $t('plugins.offsets.panel.touchoff.plateInstalled') }}
+			{{ t.tc('panel.touchoff.plateInstalled') }}
 		</v-alert>
 		<v-alert v-else type="warning" class="mb-0">
-			{{ $t('plugins.offsets.panel.touchoff.plateMissing') }}
+			{{ t.tc('panel.touchoff.plateMissing') }}
 		</v-alert>
 	</v-card>
 </template>
@@ -38,6 +38,7 @@
 'use strict'
 
 import { mapGetters, mapState } from 'vuex'
+import { localT } from './index.js'
 
 export default {
 	computed: {
@@ -55,6 +56,7 @@ export default {
 			touchplateProbeNumber: 1,
 			updateInterval: 5000,
 			intervalId: null,
+			t: localT,
 		}
 	},
 }

@@ -4,6 +4,17 @@ import Vue from 'vue'
 import { registerRoute } from '../../routes'
 import { registerPluginData, PluginDataType } from '../../store'
 
+import VueI18n from 'vue-i18n'
+import en from './i18n/en.js'
+const messages = {
+	en,
+}
+export const localT = new VueI18n({
+	locale: 'en',
+	fallbackLocale: 'en',
+	messages,
+})
+
 import ThreeDScanner from './ThreeDScanner.vue'
 import CalibrateScannerDialog from './CalibrateScannerDialog.vue'
 import CalibrationProgressDialog from './CalibrationProgressDialog.vue'
@@ -24,7 +35,7 @@ registerRoute(ThreeDScanner, {
 	Control: {
 		ThreeDScanner: {
 			icon: 'mdi-cube-scan',
-			caption: 'plugins.threeDScanner.menuCaption',
+			caption: localT.tc('menuCaption'),
 			path: '/3DScanner',
 		},
 	}

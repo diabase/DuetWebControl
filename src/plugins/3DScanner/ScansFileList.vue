@@ -13,7 +13,7 @@
 			</v-btn>
 		</v-toolbar>
 
-		<base-file-list ref="filelist" v-model="selection" :directory.sync="directory" :loading.sync="loading" sort-table="scans" @fileClicked="fileClicked" no-files-text="plugins.threeDScanner.list.scans.noScans"></base-file-list>
+		<base-file-list ref="filelist" v-model="selection" :directory.sync="directory" :loading.sync="loading" sort-table="scans" @fileClicked="fileClicked" no-files-text="list.scans.noScans"></base-file-list>
 
 		<v-speed-dial v-model="fab" bottom right fixed direction="top" transition="scale-transition" class="hidden-md-and-up">
 			<template #activator>
@@ -40,6 +40,7 @@
 'use strict'
 
 import { mapGetters, mapState, mapActions } from 'vuex'
+import { localT } from './index.js'
 
 import Path from '../../utils/path.js'
 
@@ -59,7 +60,8 @@ export default {
 			selection: [],
 			showNewDirectory: false,
 			showNewFile: false,
-			fab: false
+			fab: false,
+			t: localT,
 		}
 	},
 	methods: {

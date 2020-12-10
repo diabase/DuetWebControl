@@ -3,14 +3,14 @@
 		<v-card>
 			<v-card-title>
 				<span class="headline">
-					{{ $t('plugins.threeDScanner.dialog.scanprogress.title') }}
+					{{ t.tc('dialog.scanprogress.title') }}
 				</span>
 			</v-card-title>
 
 			<v-card-text>
 				<v-row>
 					<v-col>
-						{{ $t('dialog.scanprogress.scanProgress') }}
+						{{ t.tc('dialog.scanprogress.scanProgress') }}
 						<v-progress-linear rounded color="green" height="25" :value="scanProgress" class="my-1" reactive>
 							<template v-slot="{ value }">
 								<strong>{{ Math.ceil(value) }}%</strong>
@@ -20,7 +20,7 @@
 				</v-row>
 				<v-row>
 					<v-col>
-						{{ $t('dialog.scanprogress.postProcessingProgress') }}
+						{{ t.tc('dialog.scanprogress.postProcessingProgress') }}
 						<v-progress-linear rounded color="orange" height="25" :value="postProcessingProgress" class="my-1" reactive>
 							<template v-slot="{ value }">
 								<strong>{{ Math.ceil(value) }}%</strong>
@@ -30,7 +30,7 @@
 				</v-row>
 				<v-row>
 					<v-col>
-						{{ $t('dialog.scanprogress.uploadProgress') }}
+						{{ t.tc('dialog.scanprogress.uploadProgress') }}
 						<v-progress-linear rounded height="25" color="blue" :value="uploadProgress" class="my-1" reactive>
 							<template v-slot="{ value }">
 								<strong>{{ Math.ceil(value) }}%</strong>
@@ -43,10 +43,10 @@
 			<v-card-actions>
 				<v-spacer></v-spacer>
 				<v-btn v-if="scanInProgress" @click="cancelScan" color="red darken-1" text>
-					<v-icon>mdi-close</v-icon> {{ $t('generic.cancel') }}
+					<v-icon>mdi-close</v-icon> {{ t.tc('generic.cancel') }}
 				</v-btn>
 				<v-btn v-else @click="dismissed" color="blue darken-1" text>
-					<v-icon>mdi-close</v-icon> {{ $t('generic.close') }}
+					<v-icon>mdi-close</v-icon> {{ t.tc('generic.close') }}
 				</v-btn>
 			</v-card-actions>
 		</v-card>
@@ -57,6 +57,7 @@
 'use strict'
 
 import { mapState, mapActions } from 'vuex'
+import { localT } from './index.js'
 
 export default {
 	props: {
@@ -84,6 +85,7 @@ export default {
 			scanProgress: 0,
 			postProcessingProgress: 0,
 			uploadProgress: 0,
+			t: localT,
 		}
 	},
 	methods: {

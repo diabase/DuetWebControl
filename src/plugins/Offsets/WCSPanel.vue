@@ -10,17 +10,17 @@
 <template>
 	<v-card>
 		<v-card-title class="pb-0">
-			<v-icon small class="mr-1">mdi-axis-arrow</v-icon> {{ $t('plugins.offsets.panel.wcs.caption') }}
+			<v-icon small class="mr-1">mdi-axis-arrow</v-icon> {{ t.tc('panel.wcs.caption') }}
 		</v-card-title>
 
 		<v-card-text>
 			<v-simple-table fixed-header>
 				<thead>
 					<tr>
-						<th class="text-center">{{ $t('plugins.offsets.panel.wcs.tableHeaders.wcs') }}</th>
-						<th class="text-center">{{ $t('plugins.offsets.panel.wcs.tableHeaders.changeTo') }}</th>
+						<th class="text-center">{{ t.tc('panel.wcs.tableHeaders.wcs') }}</th>
+						<th class="text-center">{{ t.tc('panel.wcs.tableHeaders.changeTo') }}</th>
 						<th class="text-center" v-for="axis in relevantAxes" :key="axis">{{ axis }}</th>
-						<th class="text-center">{{ $t('plugins.offsets.panel.wcs.tableHeaders.reset') }}</th>
+						<th class="text-center">{{ t.tc('panel.wcs.tableHeaders.reset') }}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -32,7 +32,7 @@
 							</code-btn>
 						</td>
 						<td class="text-right" v-for="axis in relevantAxes" :key="axis">
-							<code-btn class="mr-1" :code="`G10 L20 P${w} ${axis}`" :title="`${ $t('plugins.offsets.button.wcs.setToCurrent') }`" no-wait lock small>
+							<code-btn class="mr-1" :code="`G10 L20 P${w} ${axis}`" :title="`${ t.tc('button.wcs.setToCurrent') }`" no-wait lock small>
 								<v-icon small>mdi-home-import-outline</v-icon>
 							</code-btn>
 							<span class="wcs-value" @click="showSetWCSOffsetDialog(axis, w)">{{ $display(workplaceOffsets[axis][w-1], (axis === "Z" ? 3 : 2), 'mm') }}</span>
@@ -55,6 +55,7 @@
 'use strict'
 
 import { mapState, mapGetters, mapActions } from 'vuex'
+import { localT } from './index.js'
 
 export default {
 	computed: {
@@ -101,6 +102,7 @@ export default {
 				wcsNumber: -1,
 				shown: false
 			},
+			t: localT,
 		}
 	},
 	methods: {
@@ -110,8 +112,8 @@ export default {
 				return;
 			}
 			const wcsName = this.wcsNames[wcsNumber-1];
-			this.setWCSOffsetDialog.title = this.$t('plugins.offsets.dialog.setWCSOffset.title', [ wcsName ]);
-			this.setWCSOffsetDialog.prompt = this.$t('plugins.offsets.dialog.setWCSOffset.prompt', [ axis, wcsName ]);
+			this.setWCSOffsetDialog.title = this.t.tc('dialog.setWCSOffset.title', [ wcsName ]);
+			this.setWCSOffsetDialog.prompt = this.t.tc('dialog.setWCSOffset.prompt', [ axis, wcsName ]);
 			this.setWCSOffsetDialog.axis = axis;
 			this.setWCSOffsetDialog.wcsNumber = wcsNumber;
 			this.setWCSOffsetDialog.preset = this.workplaceOffsets[axis][wcsNumber-1];
@@ -128,8 +130,8 @@ export default {
 		},
 		resetClicked(wcsNumber) {
 			const wcsName = this.wcsNames[wcsNumber-1]
-			this.resetDialog.title = this.$t('plugins.offsets.dialog.resetWCS.title', [wcsName]);
-			this.resetDialog.prompt = this.$t('plugins.offsets.dialog.resetWCS.prompt', [wcsName]);
+			this.resetDialog.title = this.t.tc('dialog.resetWCS.title', [wcsName]);
+			this.resetDialog.prompt = this.t.tc('dialog.resetWCS.prompt', [wcsName]);
 			this.resetDialog.wcsNumber = wcsNumber;
 			this.resetDialog.shown = true;
 		},

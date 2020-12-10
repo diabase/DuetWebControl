@@ -7,7 +7,7 @@
 <template>
 	<v-card>
 		<v-card-title class="pb-0">
-			<v-icon small class="mr-1">mdi-tools</v-icon> {{ $t('plugins.offsets.panel.tooloffsets.caption') }}
+			<v-icon small class="mr-1">mdi-tools</v-icon> {{ t.tc('panel.tooloffsets.caption') }}
 		</v-card-title>
 
 		<v-card-text>
@@ -16,22 +16,22 @@
 					<v-simple-table fixed-header>
 						<thead>
 							<tr>
-								<th class="text-center">{{ $t('plugins.offsets.panel.tooloffsets.tableHeaders.name') }}</th>
+								<th class="text-center">{{ t.tc('panel.tooloffsets.tableHeaders.name') }}</th>
 								<th class="text-center" v-for="axis in relevantAxes" :key="axis.name">{{ axis.name }}</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="t in toolsWithoutProbe" :key="t.number">
-								<td class="text-center">{{ t.name || "Tool " + t.number }}</td>
+							<tr v-for="tool in toolsWithoutProbe" :key="tool.number">
+								<td class="text-center">{{ tool.name || "Tool " + tool.number }}</td>
 								<td class="text-center" v-for="(axis, index) in relevantAxes" :key="index">
-									<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, t)" :title="`${ $t('plugins.offsets.button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen">
+									<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, t)" :title="`${ t.tc('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen">
 										<v-icon small>mdi-home-import-outline</v-icon>
 									</v-btn>
 									<div style="display: inline-block; white-space:nowrap;">
 									<v-btn @click="toolOffsetAdjust(axis.name, index, t, -1)" no-wait lock small :disabled="uiFrozen">
 										<v-icon small>{{ axis.iconMinus }}</v-icon> {{ axis.textMinus }}
 									</v-btn>
-									<span class="mx-2 tooloffset-value text-right" @click="showSetToolOffsetDialog(axis.name, index, t)">{{ $display((t.offsets[index] && t.offsets[index] || 0), axis.name === 'Z' ? 3 : 2, 'mm') }}</span>
+									<span class="mx-2 tooloffset-value text-right" @click="showSetToolOffsetDialog(axis.name, index, t)">{{ $display((tool.offsets[index] && tool.offsets[index] || 0), axis.name === 'Z' ? 3 : 2, 'mm') }}</span>
 									<v-btn @click="toolOffsetAdjust(axis.name, index, t)" no-wait lock small :disabled="uiFrozen">
 										<v-icon small>{{ axis.iconPlus }}</v-icon> {{ axis.textPlus }}
 									</v-btn>
@@ -48,7 +48,7 @@
 			<v-row align="center" class="pb-1">
 				<v-col cols="4">
 					<p class="mb-1">
-					{{ $t('plugins.offsets.panel.tooloffsets.amount', ['mm']) }}
+					{{ t.tc('panel.tooloffsets.amount', ['mm']) }}
 					</p>
 					<v-btn-toggle v-model="amount" mandatory class="d-flex">
 						<v-btn v-for="(savedAmount, index) in toolOffsetAmounts" :key="index" :value="savedAmount" :disabled="uiFrozen" @contextmenu.prevent="editAmount(index)" class="flex-grow-1">
@@ -60,7 +60,7 @@
 		</v-card-text>
 
 		<input-dialog :shown.sync="setToolOffsetDialog.shown" :title="setToolOffsetDialog.title" :prompt="setToolOffsetDialog.prompt" :preset="setToolOffsetDialog.preset" is-numeric-value @confirmed="setToolOffsetDialogConfirmed"></input-dialog>
-		<input-dialog :shown.sync="editAmountDialog.shown" :title="$t('plugins.offsets.dialog.editToolOffsetAmount.title')" :prompt="$t('plugins.offsets.dialog.editToolOffsetAmount.prompt')" :preset="editAmountDialog.preset" is-numeric-value @confirmed="setAmount"></input-dialog>
+		<input-dialog :shown.sync="editAmountDialog.shown" :title="t.tc('dialog.editToolOffsetAmount.title')" :prompt="t.tc('dialog.editToolOffsetAmount.prompt')" :preset="editAmountDialog.preset" is-numeric-value @confirmed="setAmount"></input-dialog>
 	</v-card>
 </template>
 
@@ -69,6 +69,7 @@
 
 import { mapState, mapGetters, mapActions } from 'vuex'
 import { setPluginData, PluginDataType } from '../../store'
+import { localT } from './index.js'
 
 export default {
 	computed: {
@@ -127,7 +128,8 @@ export default {
 				axisLetter: 'X',
 				toolNumber: -1,
 				preset: 0,
-			}
+			},
+			t: localT,
 		}
 	},
 	methods: {
@@ -174,8 +176,8 @@ export default {
 				return;
 			}
 			const toolName = tool.name || "Tool " + tool.number;
-			this.setToolOffsetDialog.title = this.$t('plugins.offsets.dialog.setToolOffset.title', [ toolName ]);
-			this.setToolOffsetDialog.prompt = this.$t('plugins.offsets.dialog.setToolOffset.prompt', [ axisLetter, toolName ]);
+			this.setToolOffsetDialog.title = this.t.tc('dialog.setToolOffset.title', [ toolName ]);
+			this.setToolOffsetDialog.prompt = this.t.tc('dialog.setToolOffset.prompt', [ axisLetter, toolName ]);
 			this.setToolOffsetDialog.axisLetter = axisLetter;
 			this.setToolOffsetDialog.toolNumber = tool.number;
 			this.setToolOffsetDialog.preset = tool.offsets[axisIndex];

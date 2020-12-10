@@ -265,7 +265,7 @@ export default {
 		gcodes: 'G-Codes Directory',
 		macros: 'Macros Directory',
 		system: 'System Directory',
-		scans: 'Scans Directory',
+		scans: 'Scans Directory', // FIXME: Move into plugin eventually
 		web: 'WWW Directory'
 	},
 	error: {
@@ -419,7 +419,10 @@ export default {
 		system: {
 			noFiles: 'No System Files',
 			configToolNote: 'edit via config tool'
-		}
+		},
+		scans: { // FIXME: Move into plugin eventually
+			noScans: 'No Scans',
+		},
 	},
 	menu: {
 		control: {
@@ -778,200 +781,6 @@ export default {
 		visualizer: {
 			menuCaption: 'Visualizer'
 		},
-		offsets: {
-			menuCaption: 'Offsets',
-			button: {
-				probeWorkpiece: {
-					findCenterOfCavity: 'Find center of cavity',
-					measureZ: 'Measure Z',
-				},
-				touchoff: {
-					touchoff: 'Touch-off {0}',
-				},
-				tooloffsets: {
-					setToCurrent: 'Set to current value',
-				},
-				wcs: {
-					setToCurrent: 'Set to current value',
-				},
-			},
-			dialog: {
-				editToolOffsetAmount: {
-					title: 'Edit tool offset movement amount',
-					prompt: 'Please enter a new amount for the clicked button:'
-				},
-				resetWCS: {
-					title: 'Reset {0}',
-					prompt: 'Do you want to reset {0} to all 0?',
-				},
-				setToolOffset: {
-					title: 'Set {0} offset',
-					prompt: 'Please enter a new {0} offset for {1}:'
-				},
-				setWCSOffset: {
-					title: 'Set {0} offset',
-					prompt: 'Please enter a new {0} offset for {1}:'
-				},
-			},
-			panel: {
-				probeworkpiece: {
-					caption: 'Probe Workpiece',
-					description: 'Start probing from (and move)',
-				},
-				tooloffsets: {
-					caption: 'Tool Offsets',
-					tableHeaders: {
-						name: 'Name',
-					},
-					amount: 'Offset amount in {0}:',
-				},
-				touchoff: {
-					caption: 'Touch-off Plate',
-					plateInstalled: 'Touch-off Plate installed',
-					plateMissing: 'Touch-off Plate not installed',
-				},
-				wcs: {
-					caption: 'Workpiece Coordinate Offsets',
-					tableHeaders: {
-						wcs: 'Workpiece',
-						changeTo: 'Change to',
-						reset: 'Reset',
-					},
-				},
-			},
-		},
-		rotaryAxes: {
-			menuCaption: 'Rotary Axes',
-			button: {
-				rotaryaxes: {
-					control: {
-						configure: 'Configure Rotary Printing',
-						measureZAxis: 'Measure Z axis',
-						setXmin: 'Set X min',
-						setXmax: 'Set X max',
-						setYmin: 'Set Y min',
-						setYmax: 'Set Y max',
-						levelAaxis: 'Level A axis',
-						setStockThickness: 'Set stock thickness',
-						setYoffset: 'Set Y offset',
-						autoLevel: 'Auto-level bed for printing',
-						unrotary: 'Reset to normal mode',
-					},
-					home: 'Rotary',
-				},
-			},
-			panel: {
-				rotaryaxes: {
-					control: {
-						caption: 'Setup',
-						tableHeaders: {
-							steps: 'Steps',
-							actions: 'Actions',
-						},
-						step1: '1',
-						step2: '2',
-						step3: '3',
-						step4: '4',
-						step5: '5',
-						step6: '6',
-						step7: '7',
-						step8: '8',
-					},
-					status: {
-						caption: 'Status',
-						tableHeaders: {
-							xMin: 'X min',
-							xMax: 'X max',
-							yMin: 'Y min',
-							yMax: 'Y max',
-							thickness: 'Stock thickness',
-						},
-					},
-					betaWarning: 'Beta version - some functionality missing',
-				},
-				rotaryprinting: {
-					caption: 'Rotary Printing',
-				},
-			},
-			tabs: {
-				rotaryaxes: {
-					rotaryprinting: 'Rotary Printing',
-					rotaryaxescontrol: 'Multi Axes',
-				}
-			},
-		},
-		threeDScanner: {
-			menuCaption: '3D Scanner',
-			button: {
-				calibratescanner: {
-					linear: 'Linear',
-					rotary: 'Rotary',
-				},
-				scandialog: {
-					linear: 'Linear',
-					rotary: 'Rotary',
-					activateLaser: 'Activate Laser',
-					deactivateLaser: 'Deactivate Laser',
-					startScan: 'Start Scan',
-				},
-				threedscanner: {
-					goToScanLocation: 'Move to Scan Location',
-					calibrate: 'Calibrate',
-					startScan: 'Start Scan',
-					shutdownScanner: 'Shutdown Scanner',
-				},
-			},
-			dialog: {
-				calibratescanner: {
-					title: 'Calibrate Scanner',
-					prompt: 'In what mode would you like to run the calibration?',
-				},
-				calibrationprogress: {
-					title: 'Calibrating...',
-					progressBarTitle: 'Calibration Progress',
-					prompt: 'Please wait while the scanner is being calibtrated. This may take a while...',
-				},
-				scan: {
-					title: 'Start 3D Scan',
-					step1: {
-						title: '1. Enter a filename for your scan',
-						placeholder: 'Choose a filename...',
-					},
-					step2: {
-						title: '2. Specify scan details',
-						scanRange: 'Scan range:',
-						stepSize: 'Step size:',
-						mode: 'Mode:',
-					},
-					step3: {
-						title: "3. Check alignment",
-						description: 'In order to align your object you can toggle the right laser before you start:',
-					},
-					step4: {
-						title: '4. Move the object to the center',
-					}
-				},
-				scanprogress: {
-					title: 'Scan in Progress',
-					scanProgress: 'Scan progress',
-					postProcessingProgress: 'Post-processing progress',
-					uploadProgress: 'Upload progress',
-					complete: 'Your 3D scan is now complete! You may download it from the file list next.'
-				},
-			},
-			list: {
-				scans: {
-					caption: 'Scans',
-					noScans: 'No Scans',
-					root: 'Root',
-				},
-			},
-			panel: {
-				threedscanner: {
-					caption: '3D Scanner Control',
-				},
-			},
-		}
 	},
 	tabs: {
 		generalSettings: {
