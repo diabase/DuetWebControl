@@ -143,6 +143,7 @@ textarea {
 
 		<connect-dialog></connect-dialog>
 		<connection-dialog></connection-dialog>
+		<file-transfer-dialog></file-transfer-dialog>
 		<messagebox-dialog></messagebox-dialog>
 
 		<component v-for="component in injectedComponentNames" :is="component" :key="component"></component>
@@ -284,8 +285,8 @@ export default {
 			}
 		},
 		name() { this.updateTitle(); },
-		jobProgress(to) {
-			if (isPrinting(this.status)) {
+		jobProgress(to, from) {
+			if (isPrinting(this.status) && Math.round(to * 100) !== Math.round(from * 100)) {
 				Piecon.setProgress(to * 100);
 			}
 			this.updateTitle();

@@ -230,7 +230,9 @@ export default {
 		},
 		update: {
 			title: 'Updates installieren?',
-			prompt: 'Sie haben gerade mindestens ein Firmwareupdate hochgeladen. Möchten Sie diese jetzt installieren?'
+			prompt: 'Sie haben gerade mindestens ein Firmwareupdate hochgeladen. Möchten Sie diese jetzt installieren?',
+			resetTitle: 'Firmware zurücksetzen?',
+			resetPrompt: 'Sie haben gerade Updates für Erweiterungsboards installiert. Möchten Sie den Hauptcontroller jetzt neustarten um die vorige Konfiguration wiederherzustellen?'
 		},
 		inputRequired: 'Bitte Wert eingeben',
 		numberRequired: 'Bitte gültige Zahl eingeben'
@@ -261,7 +263,6 @@ export default {
 		uploadStartWrongFileCount: 'Nur eine einzige Datei kann hochgeladen und gestartet werden',
 		uploadNoSingleZIP: 'Es kann nur eine einzige ZIP-Datei auf einmal hochgeladen werden',
 		uploadNoFiles: 'Dieses ZIP enthält keine brauchbaren Dateien',
-		uploadDecompressionFailed: 'Konnte ZIP-Datei nicht entpacken',
 		codeResponse: 'Konnte Code nicht ausführen weil eine ungültige Antwort empfangen wurde',
 		codeBuffer: 'Konnte Code nicht ausführen weil der Pufferplatz aufgebraucht ist',
 		enterValidNumber: 'Bitte geben Sie eine gültige Zahl ein',
@@ -432,6 +433,11 @@ export default {
 			message: 'Bitte warten während Ihre Dateien komprimiert werden...',
 			errorTitle: 'Konnte Dateien nicht komprimieren'
 		},
+		decompress: {
+			title: 'Entpacke Dateien...',
+			message: 'Bitte warten während Ihre Dateien entpackt werden...',
+			errorTitle: 'Konnte Dateien nicht entpacken'
+		},
 		delete: {
 			errorTitle: 'Konnte {0} nicht löschen',
 			errorMessageDirectory: 'Bitte stellen Sie sicher, dass das ausgewählte Verzeichnis leer ist',
@@ -591,6 +597,7 @@ export default {
 		settingsCommunication: {
 			caption: 'Kommunikation',
 			pingInterval: 'PING-Intervall im Leerlauf ({0})',
+			updateDelay: 'Aktualisierungsverzögerung ({0})',
 			ajaxRetries: 'Maximale Anzahl an wiederholten AJAX-Versuchen',
 			updateInterval: 'Aktualisierungsintervall ({0})',
 			extendedUpdateEvery: 'Erweitertes Statusupdateintervall',

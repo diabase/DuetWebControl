@@ -140,6 +140,7 @@ export class MachineModel {
 				radius: 0.0
 			},
 			skew: {
+				compensateXY: true,
 				tanXY: 0,
 				tanXZ: 0,
 				tanYZ: 0
@@ -168,9 +169,10 @@ export class MachineModel {
 		speedFactor: 100,
 		travelAcceleration: 10000,
 		virtualEPos: 0,
-		workplaceNumber: 0
+		workspaceNumber: 1
 	}
 	network = {
+		corsSite: null,
 		hostname: 'duet',
 		interfaces: [],
 		name: 'My Duet'
