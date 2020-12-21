@@ -37,7 +37,7 @@ export class MachineModel {
 		gCodes: Path.gCodes,
 		macros: Path.macros,
 		menu: Path.menu,
-		scans: Path.scans,
+		scans: Path.scans, // FIXME: Move into plugin
 		system: Path.system,
 		web: Path.web
 	}

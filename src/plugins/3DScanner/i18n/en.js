@@ -58,6 +58,14 @@ export default {
 			complete: 'Your 3D scan is now complete! You may download it from the file list next.'
 		},
 	},
+	directory: {
+		scans: 'Scans Directory',
+	},
+	list: {
+		scans: {
+			noScans: 'No Scans',
+		},
+	},
 	panel: {
 		threedscanner: {
 			caption: '3D Scanner Control',

@@ -55,7 +55,7 @@ export default {
 	},
 	data() {
 		return {
-			directory: Path.scans,
+			directory: '0:/scans',
 			loading: false,
 			selection: [],
 			showNewDirectory: false,

@@ -33,8 +33,7 @@ export default function(connector, pluginCacheFields) {
 					column: 'name',
 					descending: false
 				},
-				// TODO: Remove as soon as BaseFileList can access plugin data
-				scans: {
+				scans: { // TODO: Remove as soon as BaseFileList can access plugin data
 					column: 'name',
 					descending: false,
 				},

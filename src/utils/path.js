@@ -122,7 +122,6 @@ export function isSdPath(path) {
 			startsWith(path, pathObj.gCodes) ||
 			startsWith(path, pathObj.macros) ||
 			startsWith(path, pathObj.menu) ||
-			startsWith(path, pathObj.scans) ||
 			startsWith(path, pathObj.system) ||
 			startsWith(path, pathObj.web));
 }
@@ -151,7 +150,7 @@ const pathObj = {
 	gCodes: '0:/gcodes',
 	macros: '0:/macros',
 	menu: '0:/menu',
-	scans: '0:/scans',
+	scans: '0:/scans', // FIXME: move into plugin
 	system: '0:/sys',
 	web: '0:/www',
 

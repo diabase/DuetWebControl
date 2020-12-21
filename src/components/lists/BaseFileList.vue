@@ -109,7 +109,7 @@ td {
 			</v-list>
 		</v-menu>
 
-		<file-edit-dialog :shown.sync="editDialog.shown" :filename="editDialog.filename" v-model="editDialog.content" @editComplete="$emit('fileEdited', $event)"></file-edit-dialog>
+		<file-edit-dialog :shown.sync="editDialog.shown" :filename="editDialog.filename" v-model="editDialog.content" @editComplete="$emit('file-edited', $event)"></file-edit-dialog>
 		<input-dialog :shown.sync="renameDialog.shown" :title="$t('dialog.renameFile.title')" :prompt="$t('dialog.renameFile.prompt')" :preset="renameDialog.item && renameDialog.item.name" @confirmed="renameCallback"></input-dialog>
 	</div>
 </template>
