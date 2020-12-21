@@ -56,7 +56,12 @@ export default function(connector, pluginCacheFields) {
 					cache = getLocalSetting(`cache/${connector.hostname}`);
 				} else {
 					try {
-						cache = await dispatch(`machines/${connector.hostname}/download`, { filename: Path.dwcCacheFile, showProgress: false, showSuccess: false, showError: false });
+						cache = await dispatch(`machines/${connector.hostname}/download`, {
+							filename: Path.dwcCacheFile,
+							showProgress: false,
+							showSuccess: false,
+							showError: false
+						});
 					} catch (e) {
 						if (!(e instanceof FileNotFoundError)) {
 							throw e;
@@ -65,7 +70,12 @@ export default function(connector, pluginCacheFields) {
 
 					if (!cache) {
 						try {
-							cache = await dispatch(`machines/${connector.hostname}/download`, { filename: Path.legacyDwcCacheFile, showProgress: false, showSuccess: false, showError: false });
+							cache = await dispatch(`machines/${connector.hostname}/download`, {
+								filename: Path.legacyDwcCacheFile,
+								showProgress: false,
+								showSuccess: false,
+								showError: false
+							});
 							await dispatch(`machines/${connector.hostname}/delete`, Path.legacyDwcCacheFile);
 						} catch (e) {
 							if (!(e instanceof FileNotFoundError)) {
@@ -91,7 +101,13 @@ export default function(connector, pluginCacheFields) {
 
 					try {
 						const content = new Blob([JSON.stringify(state)]);
-						dispatch(`machines/${connector.hostname}/upload`, { filename: Path.dwcCacheFile, content, showProgress: false, showSuccess: false });
+						dispatch(`machines/${connector.hostname}/upload`, {
+							filename: Path.dwcCacheFile,
+							content,
+							showProgress: false,
+							showSuccess: false,
+							showError: false
+						});
 					} catch (e) {
 						// handled before we get here
 					}
