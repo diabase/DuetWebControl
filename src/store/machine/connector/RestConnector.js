@@ -255,7 +255,11 @@ export default class RestConnector extends BaseConnector {
 			clearTimeout(this.pingTask);
 			this.pingTask = undefined;
 		}
-		this.dispatch('onConnectionError', new NetworkError(e.reason));
+
+		if (this.socket) {
+			this.socket = null;
+			this.dispatch('onConnectionError', new NetworkError(e.reason));
+		}
 	}
 
 	async disconnect() {

@@ -1,11 +1,43 @@
 Summary of important changes in recent versions
 ===============================================
 
+Version 3.2.0
+=============
+
+Compatible versions:
+- DuetSoftwareFramework 3.2.0
+- RepRapFirmware 2 or newer (1.2x may work but untested)
+
+Changed behaviour:
+- Apart from the tool fan the first three fans are displayed by default
+- Reduced extrusion slider step size from 5% to 1%
+
+Bug fixes:
+- When an error occurred during a plugin installation, the upload button became unusable
+- New code editor was always disabled in Chrome-based browsers due to touchscreen detection
+- Standard editor always displayed end of the file
+- Sometimes the heightmap could not be shown and only a black frame was displayed
+
+Version 3.2.0-rc2
+=================
+
+Compatible versions:
+- DuetSoftwareFramework 3.2.0-rc2
+- RepRapFirmware 2 or newer (1.2x may work but untested)
+
+Bug fixes:
+- New code editor has been disabled on touch devices for now due to incompatibilities
+- Extra sensors were labelled as heaters in the temperature chart
+- Change callbacks in the tool input component didn't check changed values properly
+- Simulation state wasn't recorded correctly in the job estimations panel
+- When connected in SBC mode multiple concurrent reconnect attempts could be started
+- Fixed G3 in the GCode Viewer
+
 Version 3.2.0-rc1
 =================
 
 Compatible versions:
-- DuetSoftwareFramework 3.2.0-RC1
+- DuetSoftwareFramework 3.2.0-rc1
 - RepRapFirmware 2 or newer (1.2x may work but untested)
 
 Changed behaviour:
