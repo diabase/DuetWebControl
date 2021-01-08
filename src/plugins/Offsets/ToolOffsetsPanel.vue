@@ -24,15 +24,15 @@
 							<tr v-for="tool in toolsWithoutProbe" :key="tool.number">
 								<td class="text-center">{{ tool.name || "Tool " + tool.number }}</td>
 								<td class="text-center" v-for="(axis, index) in relevantAxes" :key="index">
-									<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, t)" :title="`${ t.tc('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen">
+									<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, tool)" :title="`${ t.tc('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen">
 										<v-icon small>mdi-home-import-outline</v-icon>
 									</v-btn>
 									<div style="display: inline-block; white-space:nowrap;">
-									<v-btn @click="toolOffsetAdjust(axis.name, index, t, -1)" no-wait lock small :disabled="uiFrozen">
+									<v-btn @click="toolOffsetAdjust(axis.name, index, tool, -1)" no-wait lock small :disabled="uiFrozen">
 										<v-icon small>{{ axis.iconMinus }}</v-icon> {{ axis.textMinus }}
 									</v-btn>
-									<span class="mx-2 tooloffset-value text-right" @click="showSetToolOffsetDialog(axis.name, index, t)">{{ $display((tool.offsets[index] && tool.offsets[index] || 0), axis.name === 'Z' ? 3 : 2, 'mm') }}</span>
-									<v-btn @click="toolOffsetAdjust(axis.name, index, t)" no-wait lock small :disabled="uiFrozen">
+									<span class="mx-2 tooloffset-value text-right" @click="showSetToolOffsetDialog(axis.name, index, tool)">{{ $display((tool.offsets[index] && tool.offsets[index] || 0), axis.name === 'Z' ? 3 : 2, 'mm') }}</span>
+									<v-btn @click="toolOffsetAdjust(axis.name, index, tool)" no-wait lock small :disabled="uiFrozen">
 										<v-icon small>{{ axis.iconPlus }}</v-icon> {{ axis.textPlus }}
 									</v-btn>
 									</div>
