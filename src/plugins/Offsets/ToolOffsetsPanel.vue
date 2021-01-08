@@ -7,7 +7,7 @@
 <template>
 	<v-card>
 		<v-card-title class="pb-0">
-			<v-icon small class="mr-1">mdi-tools</v-icon> {{ t.tc('panel.tooloffsets.caption') }}
+			<v-icon small class="mr-1">mdi-tools</v-icon> {{ t('panel.tooloffsets.caption') }}
 		</v-card-title>
 
 		<v-card-text>
@@ -16,7 +16,7 @@
 					<v-simple-table fixed-header>
 						<thead>
 							<tr>
-								<th class="text-center">{{ t.tc('panel.tooloffsets.tableHeaders.name') }}</th>
+								<th class="text-center">{{ t('panel.tooloffsets.tableHeaders.name') }}</th>
 								<th class="text-center" v-for="axis in relevantAxes" :key="axis.name">{{ axis.name }}</th>
 							</tr>
 						</thead>
@@ -24,7 +24,7 @@
 							<tr v-for="tool in toolsWithoutProbe" :key="tool.number">
 								<td class="text-center">{{ tool.name || "Tool " + tool.number }}</td>
 								<td class="text-center" v-for="(axis, index) in relevantAxes" :key="index">
-									<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, tool)" :title="`${ t.tc('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen">
+									<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, tool)" :title="`${ t('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen">
 										<v-icon small>mdi-home-import-outline</v-icon>
 									</v-btn>
 									<div style="display: inline-block; white-space:nowrap;">
@@ -48,7 +48,7 @@
 			<v-row align="center" class="pb-1">
 				<v-col cols="4">
 					<p class="mb-1">
-					{{ t.tc('panel.tooloffsets.amount', ['mm']) }}
+					{{ t('panel.tooloffsets.amount', ['mm']) }}
 					</p>
 					<v-btn-toggle v-model="amount" mandatory class="d-flex">
 						<v-btn v-for="(savedAmount, index) in toolOffsetAmounts" :key="index" :value="savedAmount" :disabled="uiFrozen" @contextmenu.prevent="editAmount(index)" class="flex-grow-1">
@@ -60,7 +60,7 @@
 		</v-card-text>
 
 		<input-dialog :shown.sync="setToolOffsetDialog.shown" :title="setToolOffsetDialog.title" :prompt="setToolOffsetDialog.prompt" :preset="setToolOffsetDialog.preset" is-numeric-value @confirmed="setToolOffsetDialogConfirmed"></input-dialog>
-		<input-dialog :shown.sync="editAmountDialog.shown" :title="t.tc('dialog.editToolOffsetAmount.title')" :prompt="t.tc('dialog.editToolOffsetAmount.prompt')" :preset="editAmountDialog.preset" is-numeric-value @confirmed="setAmount"></input-dialog>
+		<input-dialog :shown.sync="editAmountDialog.shown" :title="t('dialog.editToolOffsetAmount.title')" :prompt="t('dialog.editToolOffsetAmount.prompt')" :preset="editAmountDialog.preset" is-numeric-value @confirmed="setAmount"></input-dialog>
 	</v-card>
 </template>
 
@@ -176,8 +176,8 @@ export default {
 				return;
 			}
 			const toolName = tool.name || "Tool " + tool.number;
-			this.setToolOffsetDialog.title = this.t.tc('dialog.setToolOffset.title', [ toolName ]);
-			this.setToolOffsetDialog.prompt = this.t.tc('dialog.setToolOffset.prompt', [ axisLetter, toolName ]);
+			this.setToolOffsetDialog.title = this.t('dialog.setToolOffset.title', [ toolName ]);
+			this.setToolOffsetDialog.prompt = this.t('dialog.setToolOffset.prompt', [ axisLetter, toolName ]);
 			this.setToolOffsetDialog.axisLetter = axisLetter;
 			this.setToolOffsetDialog.toolNumber = tool.number;
 			this.setToolOffsetDialog.preset = tool.offsets[axisIndex];

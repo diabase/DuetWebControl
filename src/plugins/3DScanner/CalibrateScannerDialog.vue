@@ -3,24 +3,24 @@
 		<v-card v-bind="{ light: darkTheme, dark: !darkTheme }">
 			<v-card-title>
 				<span class="headline">
-					{{ t.tc('dialog.calibratescanner.title') }}
+					{{ t('dialog.calibratescanner.title') }}
 				</span>
 			</v-card-title>
 
 			<v-card-text>
-				{{ t.tc('dialog.calibratescanner.prompt') }}
+				{{ t('dialog.calibratescanner.prompt') }}
 			</v-card-text>
 
 			<v-card-actions>
 				<v-spacer></v-spacer>
 				<v-btn color="red darken-1" text @click="dismissed">
-					<v-icon>mdi-close</v-icon> {{ t.tc('generic.cancel') }}
+					<v-icon>mdi-close</v-icon> {{ t('generic.cancel') }}
 				</v-btn>
 				<v-btn color="blue darken-1" text @click="calibrateLinear">
-					<v-icon>mdi-arrow-expand</v-icon> {{ t.tc('button.calibratescanner.linear') }}
+					<v-icon>mdi-arrow-expand</v-icon> {{ t('button.calibratescanner.linear') }}
 				</v-btn>
 				<v-btn color="blue darken-1" text @click="calibrateRotary">
-					<v-icon>mdi-sync</v-icon> {{ t.tc('button.calibratescanner.rotary') }}
+					<v-icon>mdi-sync</v-icon> {{ t('button.calibratescanner.rotary') }}
 				</v-btn>
 			</v-card-actions>
 		</v-card>

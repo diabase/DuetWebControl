@@ -13,7 +13,7 @@
 	<v-dialog v-model="internalShown" @keydown.escape="dismissed" persistent>
 		<v-card>
 			<v-card-title>
-				{{ t.tc('dialog.scan.title') }}
+				{{ t('dialog.scan.title') }}
 			</v-card-title>
 
 			<v-card-text>
@@ -22,12 +22,12 @@
 					<v-col cols="6">
 						<v-row dense>
 							<v-col class="step-title">
-								{{ t.tc('dialog.scan.step1.title') }}
+								{{ t('dialog.scan.step1.title') }}
 							</v-col>
 						</v-row>
 						<v-row dense>
 							<v-col class="step-description">
-								<v-text-field v-model="filename" prepend-icon="mdi-file-outline" :placeholder="t.tc('dialog.scan.step1.placeholder')"></v-text-field>
+								<v-text-field v-model="filename" prepend-icon="mdi-file-outline" :placeholder="t('dialog.scan.step1.placeholder')"></v-text-field>
 							</v-col>
 						</v-row>
 					</v-col>
@@ -38,14 +38,14 @@
 					<v-col cols="6">
 						<v-row dense>
 							<v-col class="step-title">
-								{{ t.tc('dialog.scan.step2.title') }}
+								{{ t('dialog.scan.step2.title') }}
 							</v-col>
 						</v-row>
 						<v-row>
 							<v-col class="step-description">
 								<v-row dense>
 									<v-col>
-										{{ t.tc('dialog.scan.step2.scanRange') }}
+										{{ t('dialog.scan.step2.scanRange') }}
 									</v-col>
 								</v-row>
 								<v-row dense>
@@ -57,7 +57,7 @@
 							<v-col>
 								<v-row dense>
 									<v-col>
-										{{ t.tc('dialog.scan.step2.stepSize') }}
+										{{ t('dialog.scan.step2.stepSize') }}
 									</v-col>
 								</v-row>
 								<v-row dense>
@@ -69,17 +69,17 @@
 							<v-col>
 								<v-row dense>
 									<v-col>
-										{{ t.tc('dialog.scan.step2.mode') }}
+										{{ t('dialog.scan.step2.mode') }}
 									</v-col>
 								</v-row>
 								<v-row dense>
 									<v-col>
 										<v-btn-toggle v-model="scanMode" mandatory>
 											<v-btn :value="0">
-												{{ t.tc('button.scandialog.linear') }}
+												{{ t('button.scandialog.linear') }}
 											</v-btn>
 											<v-btn :value="1">
-												{{ t.tc('button.scandialog.rotary') }}
+												{{ t('button.scandialog.rotary') }}
 											</v-btn>
 										</v-btn-toggle>
 									</v-col>
@@ -94,17 +94,17 @@
 					<v-col cols="6">
 						<v-row dense>
 							<v-col class="step-title">
-								{{ t.tc('dialog.scan.step3.title') }}
+								{{ t('dialog.scan.step3.title') }}
 							</v-col>
 						</v-row>
 						<v-row>
 							<v-col class="step-description">
-								{{ t.tc('dialog.scan.step3.description') }}
+								{{ t('dialog.scan.step3.description') }}
 								<v-btn v-if="!laserActive" color="blue darken-1" @click="toggleLaser" block>
-									<v-icon>mdi-flare</v-icon> {{ t.tc('button.scandialog.activateLaser') }}
+									<v-icon>mdi-flare</v-icon> {{ t('button.scandialog.activateLaser') }}
 								</v-btn>
 								<v-btn v-else @click="toggleLaser" block>
-									<v-icon>mdi-flare</v-icon> {{ t.tc('button.scandialog.deactivateLaser') }}
+									<v-icon>mdi-flare</v-icon> {{ t('button.scandialog.deactivateLaser') }}
 								</v-btn>
 							</v-col>
 						</v-row>
@@ -116,7 +116,7 @@
 					<v-col>
 						<v-row dense>
 							<v-col class="step-title">
-								{{ t.tc('dialog.scan.step4.title') }}
+								{{ t('dialog.scan.step4.title') }}
 							</v-col>
 						</v-row>
 						<v-row dense>
@@ -161,10 +161,10 @@
 			<v-card-actions>
 				<v-spacer></v-spacer>
 				<v-btn color="red darken-1" text @click="dismissed">
-					{{ t.tc('generic.cancel') }}
+					{{ t('generic.cancel') }}
 				</v-btn>
 				<v-btn color="blue darken-1" text @click="startScan" :disabled="filename == ''">
-					{{ t.tc('button.scandialog.startScan') }}
+					{{ t('button.scandialog.startScan') }}
 				</v-btn>
 				<v-spacer></v-spacer>
 			</v-card-actions>

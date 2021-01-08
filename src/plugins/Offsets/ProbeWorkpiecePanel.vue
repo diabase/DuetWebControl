@@ -12,13 +12,13 @@ table tbody tr:hover {
 <template>
 	<v-card>
 		<v-card-title class="pb-0">
-			<v-icon small class="mr-1">mdi-stethoscope</v-icon> {{ t.tc('panel.probeworkpiece.caption') }}
+			<v-icon small class="mr-1">mdi-stethoscope</v-icon> {{ t('panel.probeworkpiece.caption') }}
 		</v-card-title>
 
 		<v-card-text>
 			<v-row>
 				<v-col>
-					<p class="mb-1">{{ t.tc('panel.probeworkpiece.description') }}</p>
+					<p class="mb-1">{{ t('panel.probeworkpiece.description') }}</p>
 					<v-simple-table>
 						<tbody>
 							<tr>
@@ -65,14 +65,14 @@ table tbody tr:hover {
 					<v-row dense class="pt-8">
 						<v-col>
 							<code-btn :code="`M98 P${doubleQuote}tcalibrate.g${doubleQuote}`" no-wait block class="move-btn" :disabled="disable">
-								<v-icon>mdi-image-filter-center-focus</v-icon> {{ t.tc('button.probeWorkpiece.findCenterOfCavity') }}
+								<v-icon>mdi-image-filter-center-focus</v-icon> {{ t('button.probeWorkpiece.findCenterOfCavity') }}
 							</code-btn>
 						</v-col>
 					</v-row>
 					<v-row>
 						<v-col>
 							<code-btn :code="`M98 P${doubleQuote}measurez.g${doubleQuote}`" no-wait block class="move-btn" :disabled="disable">
-								<v-icon>mdi-ruler</v-icon> {{ t.tc('button.probeWorkpiece.measureZ') }}
+								<v-icon>mdi-ruler</v-icon> {{ t('button.probeWorkpiece.measureZ') }}
 							</code-btn>
 						</v-col>
 					</v-row>

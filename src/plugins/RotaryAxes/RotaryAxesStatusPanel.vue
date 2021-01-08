@@ -7,18 +7,18 @@
 <template>
 	<v-card>
 		<v-card-title class="pb-0">
-			<v-icon small class="mr-1">mdi-magnify</v-icon> {{ t.tc('panel.rotaryaxes.status.caption') }}
+			<v-icon small class="mr-1">mdi-magnify</v-icon> {{ t('panel.rotaryaxes.status.caption') }}
 		</v-card-title>
 
 		<v-card-text>
 			<v-simple-table>
 				<thead>
 					<tr>
-						<th class="text-center">{{ t.tc('panel.rotaryaxes.status.tableHeaders.xMin') }}</th>
-						<th class="text-center">{{ t.tc('panel.rotaryaxes.status.tableHeaders.xMax') }}</th>
-						<th class="text-center">{{ t.tc('panel.rotaryaxes.status.tableHeaders.yMin') }}</th>
-						<th class="text-center">{{ t.tc('panel.rotaryaxes.status.tableHeaders.yMax') }}</th>
-						<th class="text-center">{{ t.tc('panel.rotaryaxes.status.tableHeaders.thickness') }}</th>
+						<th class="text-center">{{ t('panel.rotaryaxes.status.tableHeaders.xMin') }}</th>
+						<th class="text-center">{{ t('panel.rotaryaxes.status.tableHeaders.xMax') }}</th>
+						<th class="text-center">{{ t('panel.rotaryaxes.status.tableHeaders.yMin') }}</th>
+						<th class="text-center">{{ t('panel.rotaryaxes.status.tableHeaders.yMax') }}</th>
+						<th class="text-center">{{ t('panel.rotaryaxes.status.tableHeaders.thickness') }}</th>
 					</tr>
 				</thead>
 				<tbody>

@@ -2,8 +2,8 @@
 	<v-row>
 		<v-col cols="12">
 			<v-tabs v-model="tab">
-				<v-tab :key="rotaryprinting">{{ t.tc('tabs.rotaryaxes.rotaryprinting') }}</v-tab>
-				<v-tab :key="rotaryaxescontrol">{{ t.tc('tabs.rotaryaxes.rotaryaxescontrol') }}</v-tab>
+				<v-tab :key="rotaryprinting">{{ t('tabs.rotaryaxes.rotaryprinting') }}</v-tab>
+				<v-tab :key="rotaryaxescontrol">{{ t('tabs.rotaryaxes.rotaryaxescontrol') }}</v-tab>
 			</v-tabs>
 			<v-tabs-items v-model="tab">
 				<v-tab-item :key="rotaryprinting">
@@ -18,7 +18,7 @@
 						<v-col cols="12">
 							<v-row>
 								<v-col>
-									<h2>{{ t.tc('panel.rotaryaxes.betaWarning') }}</h2>
+									<h2>{{ t('panel.rotaryaxes.betaWarning') }}</h2>
 								</v-col>
 							</v-row>
 						</v-col>

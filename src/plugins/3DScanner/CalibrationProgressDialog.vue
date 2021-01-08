@@ -3,7 +3,7 @@
 		<v-card>
 			<v-card-title>
 				<span class="headline">
-					{{ t.tc('dialog.calibrationprogress.title') }}
+					{{ t('dialog.calibrationprogress.title') }}
 				</span>
 			</v-card-title>
 
@@ -19,7 +19,7 @@
 				</v-row>
 				<v-row>
 					<v-col>
-						{{ t.tc('dialog.calibrationprogress.prompt') }}
+						{{ t('dialog.calibrationprogress.prompt') }}
 					</v-col>
 				</v-row>
 			</v-card-text>
@@ -27,7 +27,7 @@
 			<v-card-actions>
 				<v-spacer></v-spacer>
 				<code-btn :code="`M753`" color="red darken-1" text>
-					<v-icon>mdi-close</v-icon> {{ t.tc('generic.cancel') }}
+					<v-icon>mdi-close</v-icon> {{ t('generic.cancel') }}
 				</code-btn>
 			</v-card-actions>
 		</v-card>

@@ -8,11 +8,17 @@ import en from './i18n/en.js'
 const messages = {
 	en,
 }
-export const localT = new VueI18n({
+const localI18n = new VueI18n({
 	locale: 'en',
 	fallbackLocale: 'en',
 	messages,
 })
+export const localT = function (key) {
+    var values = [], len = arguments.length - 1;
+    while ( len-- > 0 ) values[ len ] = arguments[ len + 1 ];
+
+    return localI18n._t.apply(localI18n, [ key, localI18n.locale, localI18n._getMessages(), this ].concat( values ))
+};
 
 import RotaryAxes from './RotaryAxes.vue'
 import Rotary3DPrintingPanel from './Rotary3DPrintingPanel.vue'
@@ -28,7 +34,7 @@ registerRoute(RotaryAxes, {
 	Control: {
 		RotaryAxes: {
 			icon: 'mdi-axis-x-rotate-clockwise',
-			caption: localT.tc('menuCaption'),
+			caption: localT('menuCaption'),
 			path: '/RotaryAxes',
 		},
 	}
