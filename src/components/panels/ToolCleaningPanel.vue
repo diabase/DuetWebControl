@@ -6,7 +6,7 @@
 		<v-card-text>
 			<v-row>
 				<v-col v-for="tool in toolsWithExtruder" :key="tool.number">
-					<v-btn @click="cleaningClicked(tool.number)" no-wait lock small :disabled="uiFrozen">
+					<v-btn @click="cleaningClicked(tool.number)" no-wait lock :disabled="uiFrozen">
 						<v-icon small>mdi-broom</v-icon> {{ $t('button.toolCleaning.clean', [tool.number]) }}
 					</v-btn>
 				</v-col>
