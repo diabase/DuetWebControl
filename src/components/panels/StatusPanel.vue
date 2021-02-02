@@ -331,7 +331,7 @@ export default {
 	methods: {
 		displayAxisPosition(axis) {
 			const position = this.displayToolPosition ? axis.userPosition : axis.machinePosition;
-			return this.$displayZ(position, false);
+			return this.$display(position, 3);
 			// return (axis.letter === 'Z') ? this.$displayZ(position, false) : this.$display(position, 1);
 		},
 		isFilamentSensorPresent(extruderIndex) {
