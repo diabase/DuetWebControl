@@ -52,6 +52,7 @@ export default {
 			caption: 'Touch-off Plate',
 			plateInstalled: 'Touch-off Plate installed',
 			plateMissing: 'Touch-off Plate not installed',
+			probeReady: 'Probe ready',
 		},
 		wcs: {
 			caption: 'Workpiece Coordinate Offsets',
