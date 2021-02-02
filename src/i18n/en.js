@@ -91,6 +91,9 @@ export default {
 			jog: 'Jog',
 			jogTitle: 'Show Jog Dialog',
 		},
+		toolCleaning: {
+			clean: 'Clean Tool {0}',
+		},
 		upload: {
 			gcodes: {
 				caption: 'Upload G-Code File(s)',
@@ -155,6 +158,10 @@ export default {
 		configUpdated: {
 			title: 'Reset board?',
 			prompt: 'Would you like to restart your board to apply the updated configuration?'
+		},
+		confirmCleaning: {
+			title: "Cleaning Heats Heater",
+			prompt: "Cleaning tool {0} will drive its heater to extrusion temp. Continue?",
 		},
 		connect: {
 			title: 'Connect to Machine',
@@ -712,6 +719,9 @@ export default {
 			noStatus: 'No Status',
 			wcs: 'WCS',
 			compensation: 'Compensation in use',
+		},
+		toolCleaning: {
+			caption: "Clean Tools",
 		},
 		tools: {
 			caption: 'Tools',
