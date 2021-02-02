@@ -7,7 +7,9 @@ export default {
 			measureZ: 'Measure Z',
 		},
 		touchoff: {
+			runSpindleBackwards: 'Run Spindle backwards',
 			touchoff: 'Touch-off {0}',
+			turnOffTool: 'Turn off tool',
 		},
 		tooloffsets: {
 			setToCurrent: 'Set to current value',
