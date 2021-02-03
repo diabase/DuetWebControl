@@ -20,7 +20,7 @@
 			</v-row>
 			<v-row dense v-if="cncMode">
 				<v-col>
-					<code-btn :code="`M4 P${runningSpindleIndex} S700`" no-wait block>
+					<code-btn :code="`M98 P${doubleQuote}spindle_back.g${doubleQuote}`" no-wait block>
 						<v-icon>mdi-rotate-left</v-icon> {{ t('button.touchoff.runSpindleBackwards') }}
 					</code-btn>
 				</v-col>
@@ -77,8 +77,7 @@ export default {
 		},
 		probeReady() {
 			return this.state && this.state.currentTool == 10
-				&& this.sensors.endstops[2].type == "zProbeAsEndstop"
-				&& this.sensors.endstops[2].highEnd === false
+				&& this.sensors.endstops[2].type == "zProbeAsEndstop";
 		},
 	},
 	data() {
