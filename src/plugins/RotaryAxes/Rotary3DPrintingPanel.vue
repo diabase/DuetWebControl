@@ -60,6 +60,14 @@
 							<tr>
 								<td class="text-center">{{ t('panel.rotaryaxes.control.step5') }}</td>
 								<td colspan="2">
+									<code-btn :code="`M98 P${doubleQuote}bed_rotary.g${doubleQuote}`" no-wait block>
+										{{ t('button.rotaryaxes.control.levelRotaryPrintBed') }}
+									</code-btn>
+								</td>
+							</tr>
+							<tr>
+								<td class="text-center">{{ t('panel.rotaryaxes.control.step6') }}</td>
+								<td colspan="2">
 									<code-btn :code="`M98 P${doubleQuote}unrotary.g${doubleQuote}`" no-wait block>
 										{{ t('button.rotaryaxes.control.unrotary') }}
 									</code-btn>
