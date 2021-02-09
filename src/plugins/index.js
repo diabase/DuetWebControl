@@ -137,5 +137,14 @@ export default [
 			'./3DScanner/index.js'
 		)
 	}),
+	new DwcPlugin({
+		name: 'Tool Priming',
+		author: 'Diabase Engineering',
+		version,
+		loadDwcResources: () => import(
+			/* webpackChunkName: "ToolPriming" */
+			'./ToolPriming/index.js'
+		)
+	}),
 	// Add your own plugins here during development...
 ]
