@@ -20,16 +20,16 @@
 							<tr v-for="(tool, index) in fffTools" :key="index">
 								<td>{{ tool.name || t('panel.toolPriming.table.toolNumber', [tool.number]) }}</td>
 								<td>
-									<v-text-field type="number" suffix="mm" v-model.number="tool.retraction.primeExtrusionAmount" @change="save" :disabled="disabled"></v-text-field>
+									<v-text-field type="number" suffix="mm" v-model.number="tool.retraction.primeExtrusionAmount" @change="save" :disabled="uiFrozen"></v-text-field>
 								</td>
 								<td>
-									<v-text-field type="number" suffix="mm/s" v-model.number="tool.retraction.unretractSpeed" @change="save" :disabled="disabled"></v-text-field>
+									<v-text-field type="number" suffix="mm/s" v-model.number="tool.retraction.unretractSpeed" @change="save" :disabled="uiFrozen"></v-text-field>
 								</td>
 								<td>
-									<v-text-field type="number" suffix="mm" v-model.number="tool.retraction.length" @change="save" :disabled="disabled"></v-text-field>
+									<v-text-field type="number" suffix="mm" v-model.number="tool.retraction.length" @change="save" :disabled="uiFrozen"></v-text-field>
 								</td>
 								<td>
-									<v-text-field type="number" suffix="mm/s" v-model.number="tool.retraction.speed" @change="save" :disabled="disabled"></v-text-field>
+									<v-text-field type="number" suffix="mm/s" v-model.number="tool.retraction.speed" @change="save" :disabled="uiFrozen"></v-text-field>
 								</td>
 							</tr>
 						</tbody>
@@ -50,24 +50,23 @@ import { localT } from './index.js'
 
 export default {
 	computed: {
-		...mapGetters(['isConnected', 'uiFrozen']),
+		...mapGetters(['uiFrozen']),
 		...mapState('machine/model', ['directories', 'tools']),
+		fffTools() {
+			let filtered = _.cloneDeep(this.tools.filter(tool => tool && tool.extruders && tool.extruders.length >= 1));
+			filtered.forEach(tool => tool.retraction.primeExtrusionAmount = tool.retraction.length + tool.retraction.extraRestart);
+			return filtered;
+		},
 	},
 	data() {
 		return {
 			doubleQuote: '"',
 			filename: 'toolpriming.g',
-			fffTools: [],
 			t: localT,
 		}
 	},
 	methods: {
 		...mapActions('machine', ['sendCode', 'upload']),
-		updateFFFTools() {
-			let filtered = _.cloneDeep(this.tools.filter(tool => tool && tool.extruders && tool.extruders.length >= 1));
-			filtered.forEach(tool => tool.retraction.primeExtrusionAmount = tool.retraction.length + tool.retraction.extraRestart);
-			this.fffTools = filtered;
-		},
 		async save() {
 			this.busy = true;
 			try {
@@ -86,18 +85,10 @@ export default {
 			let m207Commands = '';
 			this.fffTools.map(tool => {
 				m207Commands +=
-					`M207 P${tool.number} S${tool.retraction.length} F${tool.retraction.speed} T${tool.retraction.unretractSpeed} R${tool.retraction.primeExtrusionAmount - tool.retraction.length}\n`
+					`M207 P${tool.number} S${tool.retraction.length} F${tool.retraction.speed*60} T${tool.retraction.unretractSpeed*60} R${tool.retraction.primeExtrusionAmount - tool.retraction.length}\n`
 			});
 			return m207Commands;
 		}
 	},
-	mounted() {
-		this.updateFFFTools()
-	},
-	watch: {
-		tools() {
-			this.updateFFFTools()
-		}
-	}
 }
 </script>
