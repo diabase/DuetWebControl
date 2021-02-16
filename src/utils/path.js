@@ -162,7 +162,7 @@ const pathObj = {
 	legacyDwcFactoryDefaults: '0:/sys/dwc2-defaults.json',
 	dwcPluginsFile: '0:/sys/dwc-plugins.json',
 
-	boardsFile: '0:/sys/boards.txt',
+	boardFile: '0:/sys/board.txt',
 	configFile: 'config.g',
 	configBackupFile: 'config.g.bak',
 	filamentsFile: 'filaments.csv',
