@@ -23,7 +23,6 @@ import SettingsNotificationsPanel from './SettingsNotificationsPanel.vue'
 import SettingsWebcamPanel from './SettingsWebcamPanel.vue'
 import SpeedFactorPanel from './SpeedFactorPanel.vue'
 import StatusPanel from './StatusPanel.vue'
-import ToolCleaningPanel from './ToolCleaningPanel.vue'
 import ToolsPanel from './ToolsPanel.vue'
 import TurretLockPanel from './TurretLockPanel.vue'
 import WebcamPanel from './WebcamPanel.vue'
@@ -50,7 +49,6 @@ Vue.component('settings-notifications-panel', SettingsNotificationsPanel)
 Vue.component('settings-webcam-panel', SettingsWebcamPanel)
 Vue.component('status-panel', StatusPanel)
 Vue.component('speed-factor-panel', SpeedFactorPanel)
-Vue.component('tool-cleaning-panel', ToolCleaningPanel)
 Vue.component('tools-panel', ToolsPanel)
 Vue.component('turret-lock-panel', TurretLockPanel)
 Vue.component('webcam-panel', WebcamPanel)

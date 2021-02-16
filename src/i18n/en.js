@@ -91,9 +91,6 @@ export default {
 			jog: 'Jog',
 			jogTitle: 'Show Jog Dialog',
 		},
-		toolCleaning: {
-			clean: 'Clean Tool {0}',
-		},
 		upload: {
 			gcodes: {
 				caption: 'Upload G-Code File(s)',
@@ -719,9 +716,6 @@ export default {
 			noStatus: 'No Status',
 			wcs: 'WCS',
 			compensation: 'Compensation in use',
-		},
-		toolCleaning: {
-			caption: "Clean Tools",
 		},
 		tools: {
 			caption: 'Tools',

@@ -21,8 +21,11 @@ export const localT = function (key) {
 import { registerRoute } from '../../routes'
 
 import ToolPriming from './ToolPriming.vue'
+import ToolPrimingControl from './ToolPrimingControl.vue'
+import ToolCleaningPanel from './ToolCleaningPanel.vue'
 
-Vue.component('tool-priming', ToolPriming);
+Vue.component('tool-priming-control', ToolPrimingControl);
+Vue.component('tool-cleaning-panel', ToolCleaningPanel);
 
 // Register a route via Control -> Height Map
 registerRoute(ToolPriming, {

@@ -40,6 +40,7 @@ export default {
 		probeworkpiece: {
 			caption: 'Probe Workpiece',
 			description: 'Start probing from (and move)',
+			probeReady: 'Probe ready',
 		},
 		tooloffsets: {
 			caption: 'Tool Offsets',
@@ -52,7 +53,6 @@ export default {
 			caption: 'Touch-off Plate',
 			plateInstalled: 'Touch-off Plate installed',
 			plateMissing: 'Touch-off Plate not installed',
-			probeReady: 'Probe ready',
 		},
 		wcs: {
 			caption: 'Workpiece Coordinate Offsets',

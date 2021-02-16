@@ -1,6 +1,11 @@
 export default {
 	language: 'English',
 	menuCaption: 'Tool Priming',
+	button: {
+		toolCleaning: {
+			clean: 'Clean Tool {0}',
+		},
+	},
 	notification: {
 		toolPriming: {
 			successTitle: 'Saved Tool Priming settings',
@@ -21,6 +26,9 @@ export default {
 			table: {
 				toolNumber: 'Tool {0}',
 			},
+		},
+		toolCleaning: {
+			caption: "Clean Tools",
 		},
 	},
 }

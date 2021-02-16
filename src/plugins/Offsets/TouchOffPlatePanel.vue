@@ -43,9 +43,6 @@
 		<v-alert v-else type="warning" class="mb-0">
 			{{ t('panel.touchoff.plateMissing') }}
 		</v-alert>
-		<v-alert v-if="probeReady" type="success" class="mb-0">
-			{{ t('panel.touchoff.probeReady') }}
-		</v-alert>
 	</v-card>
 </template>
 
@@ -74,10 +71,6 @@ export default {
 				}
 			}
 			return -1;
-		},
-		probeReady() {
-			return this.state && this.state.currentTool == 10
-				&& this.sensors.endstops[2].type == "zProbeAsEndstop";
 		},
 	},
 	data() {
