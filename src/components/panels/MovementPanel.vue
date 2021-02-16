@@ -67,7 +67,7 @@
 
 						<v-divider></v-divider>
 
-						<v-list-item style="color:red !important;" @click="sendCode('G29')">
+						<v-list-item :style="{color: (state.currentTool == 10 ? 'red !important' : '')}" @click="sendCode('G29')" :disabled="state.currentTool != 10">
 							<v-icon class="mr-1">mdi-grid</v-icon> {{ $t('panel.movement.runMesh') }}
 						</v-list-item>
 						<v-list-item @click="showMeshEditDialog = true">
@@ -161,7 +161,7 @@ import { KinematicsName } from '../../store/machine/modelEnums.js'
 export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
-		...mapState('machine/model', ['move', 'sensors']),
+		...mapState('machine/model', ['move', 'sensors', 'state']),
 		...mapState('machine/settings', ['moveFeedrate']),
 		...mapGetters('machine/settings', ['moveSteps', 'numMoveSteps']),
 		isCompensationEnabled() { return this.move.compensation.type.toLowerCase() !== 'none' },

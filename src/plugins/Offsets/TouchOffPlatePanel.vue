@@ -18,6 +18,18 @@
 					</code-btn>
 				</v-col>
 			</v-row>
+			<v-row dense v-if="cncMode">
+				<v-col>
+					<code-btn :code="`M98 P${doubleQuote}spindle_back.g${doubleQuote}`" no-wait block>
+						<v-icon>mdi-rotate-left</v-icon> {{ t('button.touchoff.runSpindleBackwards') }}
+					</code-btn>
+				</v-col>
+				<v-col>
+					<code-btn :code="`M5`" no-wait block>
+						<v-icon>mdi-stop</v-icon> {{ t('button.touchoff.turnOffTool') }}
+					</code-btn>
+				</v-col>
+			</v-row>
 			<v-row>
 				<v-col>
 					<img src="./touchplate.png"/>
@@ -38,15 +50,27 @@
 'use strict'
 
 import { mapGetters, mapState } from 'vuex'
+import { MachineMode } from '../../store/machine/modelEnums.js'
 import { localT } from './index.js'
 
 export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
-		...mapState('machine/model', ['sensors']),
+		...mapState('machine/model', ['sensors', 'spindles' , 'state']),
 		installed() {
 			return this.sensors.probes.length > this.touchplateProbeNumber
 				&& this.sensors.probes[this.touchplateProbeNumber].value[0] < this.sensors.probes[this.touchplateProbeNumber].threshold;
+		},
+		cncMode() {
+			return this.state && this.state.machineMode == MachineMode.cnc;
+		},
+		runningSpindleIndex() {
+			for (let i = 0; i < this.spindles.length; ++i) {
+				if (this.spindles[i].current > 0) {
+					return i;
+				}
+			}
+			return -1;
 		},
 	},
 	data() {

@@ -5,6 +5,7 @@ export default {
 		rotaryaxes: {
 			control: {
 				configure: 'Configure Rotary Printing',
+				levelRotaryPrintBed: 'Level Rotary Print Bed',
 				measureZAxis: 'Measure Z axis',
 				setXmin: 'Set X min',
 				setXmax: 'Set X max',

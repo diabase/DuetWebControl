@@ -1,0 +1,16 @@
+<template>
+	<v-row>
+		<v-col>
+			<v-row>
+				<v-col>
+					<tool-priming-control></tool-priming-control>
+				</v-col>
+			</v-row>
+			<v-row>
+				<v-col>
+					<tool-cleaning-panel></tool-cleaning-panel>
+				</v-col>
+			</v-row>
+		</v-col>
+	</v-row>
+</template>

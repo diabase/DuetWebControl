@@ -82,6 +82,9 @@ table tbody tr:hover {
 				</v-col>
 			</v-row>
 		</v-card-text>
+		<v-alert v-if="probeReady" type="success" class="mb-0">
+			{{ t('panel.probeworkpiece.probeReady') }}
+		</v-alert>
 	</v-card>
 </template>
 
@@ -95,12 +98,16 @@ export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
 		...mapState('machine', ['vendor']),
-		...mapState('machine/model', ['state']),
+		...mapState('machine/model', ['sensors', 'state']),
 		disable() {
 			if (this.vendor === 'diabase') {
 				return this.state.currentTool != 10;
 			}
 			return false;
+		},
+		probeReady() {
+			return this.state && this.state.currentTool == 10
+				&& this.sensors.endstops[2].type == "zProbeAsEndstop";
 		},
 	},
 	data() {

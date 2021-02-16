@@ -7,7 +7,9 @@ export default {
 			measureZ: 'Measure Z',
 		},
 		touchoff: {
+			runSpindleBackwards: 'Run Spindle backwards',
 			touchoff: 'Touch-off {0}',
+			turnOffTool: 'Turn off tool',
 		},
 		tooloffsets: {
 			setToCurrent: 'Set to current value',
@@ -38,6 +40,7 @@ export default {
 		probeworkpiece: {
 			caption: 'Probe Workpiece',
 			description: 'Start probing from (and move)',
+			probeReady: 'Probe ready',
 		},
 		tooloffsets: {
 			caption: 'Tool Offsets',

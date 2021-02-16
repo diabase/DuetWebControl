@@ -156,6 +156,10 @@ export default {
 			title: 'Reset board?',
 			prompt: 'Would you like to restart your board to apply the updated configuration?'
 		},
+		confirmCleaning: {
+			title: "Cleaning Heats Heater",
+			prompt: "Cleaning tool {0} will drive its heater to extrusion temp. Continue?",
+		},
 		connect: {
 			title: 'Connect to Machine',
 			prompt: 'Please enter the hostname and password of the machine that you would like to connect to:',
