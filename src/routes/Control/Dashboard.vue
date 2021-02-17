@@ -10,12 +10,6 @@
 			</v-row>
 
 			<v-row>
-				<v-col>
-					<tool-cleaning-panel></tool-cleaning-panel>
-				</v-col>
-			</v-row>
-
-			<v-row>
 				<v-col md="3" lg="3" xl="2" align-self="center">
 					<atx-panel v-if="atxPower !== null"></atx-panel>
 					<turret-lock-panel></turret-lock-panel>
