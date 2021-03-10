@@ -1,6 +1,36 @@
 Summary of important changes in recent versions
 ===============================================
 
+Verson 3.3-b2
+=============
+
+Compatible versions:
+- DuetSoftwareFramework 3.3-b1
+- RepRapFirmware 2 or newer (1.2x may work but untested)
+
+New features:
+- Added new wizard for plugin installation
+
+Bug fixes:
+- When the "Decompressing" notification was dismissed too soon, an error message was written to the console
+
+Version 3.3-b1
+==============
+
+Compatible versions:
+- DuetSoftwareFramework 3.3-b1
+- RepRapFirmware 2 or newer (1.2x may work but untested)
+
+Changed behaviour:
+- Code reply notifications are no longer shown on the Console page
+- Display menu has been moved to the System page and added new option for Firmware
+- M568 is used for inactive tools to set the spindle RPM, otherwise fallback to M3/M4
+- UI allows already loaded filaments be loaded into other extruders
+
+New features:
+- Added support for new heightmap format with variable axes
+- Object model explorer shows live values (configuration changes may need manual refresh though)
+
 Version 3.2.2
 =============
 

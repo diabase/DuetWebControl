@@ -218,11 +218,14 @@ export default class PollConnector extends BaseConnector {
 		this.scheduleUpdate();
 	}
 
-	plugins = []
+	plugins = {}
 	async loadPlugins() {
 		try {
-			this.plugins = await this.download({ filename: Path.dwcPluginsFile });
-			await this.dispatch('update', { plugins: this.plugins });
+			const plugins = await this.download({ filename: Path.dwcPluginsFile });
+			if (!(plugins instanceof Array)) {
+				this.plugins = plugins;
+				await this.dispatch('update', { plugins });
+			}
 		} catch (e) {
 			if (!(e instanceof FileNotFoundError)) {
 				throw e;
@@ -497,6 +500,8 @@ export default class PollConnector extends BaseConnector {
 					axes: tool.axisMap,
 					fans: bitmapToArray(tool.fans),
 					filamentExtruder: (tool.drives.length > 0) ? tool.drives[0] : -1,
+					spindle: tool.spindle,
+					spindleRpm: tool.spindleRpm,
 					offsets: tool.offsets
 				})) : []
 			});
@@ -674,7 +679,6 @@ export default class PollConnector extends BaseConnector {
 				spindles: response.spindles.map(spindle => ({
 					active: spindle.active,
 					current: spindle.current,
-					tool: spindle.tool
 				}))
 			});
 		}
@@ -1161,29 +1165,28 @@ export default class PollConnector extends BaseConnector {
 
 	async installPlugin({ zipFile, plugin }) {
 		// Verify the name
-		if (!plugin.name || plugin.name.trim() === '' || plugin.name.length > 64) {
-			throw new Error('Invalid plugin name');
+		if (!plugin.id || plugin.id.trim() === '' || plugin.id.length > 32) {
+			throw new Error('Invalid plugin identifier');
 		}
 
-		if (plugin.name.split('').some(c => !/[a-zA-Z0-9 .\-_]/.test(c))) {
-			throw new Error('Illegal plugin name');
+		if (plugin.id.split('').some(c => !/[a-zA-Z0-9 .\-_]/.test(c))) {
+			throw new Error('Illegal plugin identifier');
 		}
 
 		// Check if it requires a SBC
 		if (plugin.sbcRequired) {
-			throw new Error(`Plugin ${plugin.name} cannot be loaded because the current machine does not have an SBC attached`);
+			throw new Error(`Plugin ${plugin.id} cannot be loaded because the current machine does not have an SBC attached`);
 		}
 
-		// Uninstall the previous version if applicable
-		const pluginToUpgrade = this.plugins.find(item => item.name === plugin.name);
-		if (pluginToUpgrade) {
-			await this.uninstallPlugin(pluginToUpgrade);
+		// Uninstall the previous version if required
+		if (this.plugins[plugin.id]) {
+			await this.uninstallPlugin(plugin.id, true);
 		}
 
 		// Clear potential files
+		plugin.dsfFiles = [];
 		plugin.dwcFiles = [];
-		plugin.rrfFiles = [];
-		plugin.sbcFiles = [];
+		plugin.sdFiles = [];
 		plugin.pid = -1;
 
 		// Install the files
@@ -1193,16 +1196,17 @@ export default class PollConnector extends BaseConnector {
 			}
 
 			let targetFilename = null;
-			if (file.startsWith('rrf/')) {
+			if (file.startsWith('dwc/')) {
 				const filename = file.substring(4);
-				targetFilename = `0:/${filename}`;
-				plugin.rrfFiles.push(filename);
-			} else if (file.startsWith('www/')) {
-				const filename = file.substring(4);
-				targetFilename = Path.combine(this.webDirectory, plugin.name, filename);
+				targetFilename = Path.combine(this.webDirectory, filename);
 				plugin.dwcFiles.push(filename);
+			} else if (file.startsWith('sd/')) {
+				const filename = file.substring(3);
+				targetFilename = `0:/${filename}`;
+				plugin.sdFiles.push(filename);
 			} else {
 				console.warn(`Skipping file ${file}`);
+				continue;
 			}
 
 			if (targetFilename) {
@@ -1216,40 +1220,39 @@ export default class PollConnector extends BaseConnector {
 
 		// Update the plugins file
 		try {
-			this.plugins = await this.download({ filename: Path.dwcPluginsFile });
+			const plugins = await this.download({ filename: Path.dwcPluginsFile });
+			if (!(plugins instanceof Array)) {
+				this.plugins = plugins;
+			}
 		} catch (e) {
 			if (!(e instanceof FileNotFoundError)) {
 				console.warn(`Failed to load DWC plugins file: ${e}`);
 			}
 		}
-		this.plugins.push(plugin);
+		this.plugins[plugin.id] = plugin;
 		await this.upload({ filename: Path.dwcPluginsFile, content: JSON.stringify(this.plugins) });
 
 		// Install the plugin manifest
 		await this.commit('model/addPlugin', plugin);
 	}
 
-	async uninstallPlugin(plugin) {
+	async uninstallPlugin(plugin, forUpgrade = false) {
+		if (!forUpgrade) {
+			// Make sure uninstalling this plugin does not break any dependencies
+			for (let id in this.plugins) {
+				if (id !== plugin && this.plugins[id].dwcDependencies.indexOf(plugin) !== -1) {
+					throw new Error(`Cannot uninstall plugin because plugin ${id} depends on it`);
+				}
+			}
+		}
+
 		// Uninstall the plugin manifest
 		await this.commit('model/removePlugin', plugin);
 
-		// Delete files from 0:/
-		for (let i = 0; i < plugin.rrfFiles.length; i++) {
-			try {
-				await this.delete(`0:/${plugin.rrfFiles[i]}`);
-			} catch (e) {
-				if (e instanceof OperationFailedError) {
-					console.warn(e);
-				} else {
-					throw e;
-				}
-			}
-		}
-
-		// Delete web files
+		// Delete DWC files
 		for (let i = 0; i < plugin.dwcFiles.length; i++) {
 			try {
-				await this.delete(Path.combine(this.webDirectory, plugin.name, plugin.dwcFiles[i]));
+				await this.delete(Path.combine(this.webDirectory, plugin.dwcFiles[i]));
 			} catch (e) {
 				if (e instanceof OperationFailedError) {
 					console.warn(e);
@@ -1259,25 +1262,31 @@ export default class PollConnector extends BaseConnector {
 			}
 		}
 
-		try {
-			await this.delete(Path.combine(this.webDirectory, plugin.name));
-		} catch (e) {
-			if (e instanceof OperationFailedError) {
-				console.warn(e);
-			} else {
-				throw e;
+		// Delete SD files
+		for (let i = 0; i < plugin.sdFiles.length; i++) {
+			try {
+				await this.delete(`0:/${plugin.sdFiles[i]}`);
+			} catch (e) {
+				if (e instanceof OperationFailedError) {
+					console.warn(e);
+				} else {
+					throw e;
+				}
 			}
 		}
 
 		// Update the plugins file
 		try {
-			this.plugins = await this.download({ filename: Path.dwcPluginsFile });
+			const plugins = await this.download({ filename: Path.dwcPluginsFile });
+			if (!(plugins instanceof Array)) {
+				this.plugins = plugins;
+			}
 		} catch (e) {
 			if (!(e instanceof FileNotFoundError)) {
 				console.warn(`Failed to load DWC plugins file: ${e}`);
 			}
 		}
-		this.plugins = this.plugins.filter(item => item.name !== plugin.name);
+		delete this.plugins[plugin.id];
 		await this.upload({ filename: Path.dwcPluginsFile, content: JSON.stringify(this.plugins) });
 	}
 }
