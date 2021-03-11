@@ -78,9 +78,12 @@ table.extra tr > td:first-child {
 							<tr v-for="(toolHeater, toolHeaterIndex) in getToolHeaters(tool)" :key="`tool-${toolIndex}-${toolHeaterIndex}`" :class="{ [selectedToolClass] : (tool.number === state.currentTool) }">
 								<!-- Tool Name -->
 								<th v-if="toolHeaterIndex === 0" :rowspan="Math.max(1, tool.heaters.length)" class="pl-2" :class="{ 'pt-2 pb-2' : !tool.heaters.length && !toolHeater }">
-									<a href="javascript:void(0)" @click="toolClick(tool)">
+									<a v-if="!isPrinting" href="javascript:void(0)" @click="toolClick(tool)">
 										{{ tool.name || $t('panel.tools.tool', [tool.number]) }}
 									</a>
+									<span v-else>
+										{{ tool.name || $t('panel.tools.tool', [tool.number]) }}
+									</span>
 									<br>
 									<span class="font-weight-regular caption">
 										T{{ tool.number }}
@@ -151,9 +154,12 @@ table.extra tr > td:first-child {
 									<!-- Heater Name -->
 									<th>
 										<template v-if="toolHeater">
-											<a href="javascript:void(0)" @click="toolHeaterClick(tool, toolHeater)" :class="getHeaterColor(tool.heaters[toolHeaterIndex])">
+											<a v-if="!isPrinting" href="javascript:void(0)" @click="toolHeaterClick(tool, toolHeater)" :class="getHeaterColor(tool.heaters[toolHeaterIndex])">
 												{{ getHeaterName(toolHeater, tool.heaters[toolHeaterIndex]) }}
 											</a>
+											<span v-else :class="getHeaterColor(tool.heaters[toolHeaterIndex])">
+												{{ getHeaterName(toolHeater, tool.heaters[toolHeaterIndex]) }}
+											</span>
 											<template v-if="toolHeater.state !== null">
 												<br>
 												<span class="font-weight-regular caption">
@@ -205,16 +211,22 @@ table.extra tr > td:first-child {
 								<tr :key="`bed-${bedIndex}-0`">
 									<!-- Bed name -->
 									<th class="pl-2">
-										<a href="javascript:void(0)" @click="bedHeaterClick(bedHeater, bedIndex)">
+										<a v-if="!isPrinting" href="javascript:void(0)" @click="bedHeaterClick(bedHeater, bedIndex)">
 											{{ $t('panel.tools.bed', [hasOneBed ? '' : bedIndex]) }}
 										</a>
+										<span v-else>
+											{{ $t('panel.tools.bed', [hasOneBed ? '' : bedIndex]) }}
+										</span>
 									</th>
 
 									<!-- Heater name -->
 									<th>
-										<a href="javascript:void(0)" @click="bedHeaterClick(bedHeater, bedIndex)" :class="getHeaterColor(heat.bedHeaters[bedIndex])">
+										<a v-if="!isPrinting" href="javascript:void(0)" @click="bedHeaterClick(bedHeater, bedIndex)" :class="getHeaterColor(heat.bedHeaters[bedIndex])">
 											{{ getHeaterName(bedHeater, heat.bedHeaters[bedIndex]) }}
 										</a>
+										<span v-else :class="getHeaterColor(heat.bedHeaters[bedIndex])">
+											{{ getHeaterName(bedHeater, heat.bedHeaters[bedIndex]) }}
+										</span>
 										<template v-if="bedHeater.state !== null">
 											<br>
 											<span class="font-weight-regular caption">
@@ -255,16 +267,22 @@ table.extra tr > td:first-child {
 								<tr :key="`chamber-${chamberIndex}-0`">
 									<!-- Chamber name -->
 									<th class="pl-2">
-										<a href="javascript:void(0)" @click="chamberHeaterClick(chamberHeater, chamberIndex)">
+										<a v-if="!isPrinting" href="javascript:void(0)" @click="chamberHeaterClick(chamberHeater, chamberIndex)">
 											{{ $t('panel.tools.chamber', [hasOneChamber ? '' : chamberIndex]) }}
 										</a>
+										<span v-else>
+											{{ $t('panel.tools.chamber', [hasOneChamber ? '' : chamberIndex]) }}
+										</span>
 									</th>
 
 									<!-- Heater name -->
 									<th>
-										<a href="javascript:void(0)" @click="chamberHeaterClick(chamberHeater, chamberIndex)" :class="getHeaterColor(heat.chamberHeaters[chamberIndex])">
+										<a v-if="!isPrinting" href="javascript:void(0)" @click="chamberHeaterClick(chamberHeater, chamberIndex)" :class="getHeaterColor(heat.chamberHeaters[chamberIndex])">
 											{{ getHeaterName(chamberHeater, heat.chamberHeaters[chamberIndex]) }}
 										</a>
+										<span v-else :class="getHeaterColor(heat.chamberHeaters[chamberIndex])">
+											{{ getHeaterName(chamberHeater, heat.chamberHeaters[chamberIndex]) }}
+										</span>
 										<template v-if="chamberHeater.state !== null">
 											<br>
 											<span class="font-weight-regular caption">
@@ -338,6 +356,7 @@ import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import { AnalogSensorType, HeaterState, SpindleState } from '../../store/machine/modelEnums.js'
 import { getHeaterColor, getExtraColor } from '../../utils/colors.js'
 import { DisconnectedError } from '../../utils/errors.js'
+import { StatusType } from '../../store/machine/modelEnums.js'
 
 export default {
 	computed: {
@@ -402,6 +421,9 @@ export default {
 		},
 		hasOneChamber() {
 			return this.chamberHeaters.filter(chamber => chamber).length === 1;
+		},
+		isPrinting(){
+			return this.state.status == StatusType.processing;
 		}
 	},
 	data() {
