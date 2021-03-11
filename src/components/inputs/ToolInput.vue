@@ -136,8 +136,8 @@ export default {
 							// Set all temps
 							let code = '';
 							if (this.controlTools) {
-								this.tools.filter(tool => tool !== null).forEach(function(tool) {
-									if (tool.heaters.length) {
+								this.tools.forEach(function(tool) {
+									if (tool && tool.heaters.length) {
 										const temps = tool.heaters.map(() => this.inputValue, this).join(':');
 										code += `G10 P${tool.number} ${this.active ? 'S' : 'R'}${temps}\n`;
 									}
