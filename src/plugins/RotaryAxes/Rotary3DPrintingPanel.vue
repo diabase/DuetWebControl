@@ -39,14 +39,18 @@
 							<tr>
 								<td class="text-center">{{ t('panel.rotaryaxes.control.step3') }}</td>
 								<td>
-									<code-btn :code="`M208 X${ocb}move.axes[0].userPosition${ccb} S1`" no-wait block>
-										{{ t('button.rotaryaxes.control.setXmin') }}
+									<span>{{ t('button.rotaryaxes.control.setXmin') }}:&nbsp;</span>
+									<code-btn class="mr-1" :code="`M208 X${ocb}move.axes[0].userPosition${ccb} S1`" :title="`${ t('button.rotaryaxes.control.setToCurrent') }`" no-wait lock small>
+										<v-icon small>mdi-home-import-outline</v-icon>
 									</code-btn>
+									<span class="wcs-value" @click="showSetXDialog(true)">{{ $display(move.axes[0].min, 3, 'mm') }}</span>
 								</td>
 								<td>
-									<code-btn :code="`M208 X${ocb}move.axes[0].userPosition${ccb} S0`" no-wait block>
-										{{ t('button.rotaryaxes.control.setXmax') }}
+									<span>{{ t('button.rotaryaxes.control.setXmax') }}:&nbsp;</span>
+									<code-btn class="mr-1" :code="`M208 X${ocb}move.axes[0].userPosition${ccb} S0`" :title="`${ t('button.rotaryaxes.control.setToCurrent') }`" no-wait lock small>
+										<v-icon small>mdi-home-import-outline</v-icon>
 									</code-btn>
+									<span class="wcs-value" @click="showSetXDialog(false)">{{ $display(move.axes[0].max, 3, 'mm') }}</span>
 								</td>
 							</tr>
 							<tr>
@@ -78,13 +82,14 @@
 				</v-col>
 			</v-row>
 		</v-card-text>
+		<input-dialog :shown.sync="setXDialog.shown" :title="setXDialog.title" :prompt="setXDialog.prompt" :preset="setXDialog.preset" is-numeric-value @confirmed="setXDialogConfirmed"></input-dialog>
 	</v-card>
 </template>
 
 <script>
 'use strict'
 
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 import { localT } from './index.js'
 
 export default {
@@ -101,7 +106,42 @@ export default {
 			ocb: '{',
 			ccb: '}',
 			t: localT,
+			setXDialog: {
+				shown: false,
+				title: '',
+				prompt: '',
+				preset: 0,
+				min: false,
+			},
 		}
 	},
+	methods: {
+		...mapActions('machine', ['sendCode']),
+		showSetXDialog(min) {
+			if (this.uiFrozen) {
+				return;
+			}
+			this.setXDialog.title = this.t('dialog.setX.' + (min ? 'min' : 'max') + 'Title');
+			this.setXDialog.prompt = this.t('dialog.setX.' + (min ? 'min' : 'max') + 'Prompt');
+			this.setXDialog.preset = this.move.axes[0][min === true ? 'min' : 'max']
+			this.setXDialog.min = min;
+			this.setXDialog.shown = true;
+		},
+		async setXDialogConfirmed(value) {
+			this.busy = true;
+			try {
+				await this.sendCode({ code: `M208 X${value} S${this.setXDialog.min ? '1' : '0'}`, log: false });
+			} catch (e) {
+				// already handled
+			}
+			this.busy = false;
+		},
+	},
+	watch: {
+		isConnected() {
+			// Hide dialogs when the connection is interrupted
+			this.setXDialog.shown = false;
+		}
+	}
 }
 </script>

@@ -7,6 +7,7 @@ export default {
 				configure: 'Configure Rotary Printing',
 				levelRotaryPrintBed: 'Level Rotary Print Bed',
 				measureZAxis: 'Measure Z axis',
+				setToCurrent: 'Set to current',
 				setXmin: 'Set X min',
 				setXmax: 'Set X max',
 				setYmin: 'Set Y min',
@@ -19,6 +20,14 @@ export default {
 			},
 			home: 'Rotary',
 		},
+	},
+	dialog: {
+		setX: {
+			minTitle: 'Set X Min',
+			minPrompt: 'Set X minimum to',
+			maxTitle: 'Set X Max',
+			maxPrompt: 'Set X maximum to',
+		}
 	},
 	panel: {
 		rotaryaxes: {
