@@ -106,8 +106,7 @@ export default {
 			return false;
 		},
 		probeReady() {
-			return this.state && this.state.currentTool == 10
-				&& this.sensors.endstops[2].type == "zProbeAsEndstop";
+			return this.state && this.state.currentTool == 10;
 		},
 	},
 	data() {
