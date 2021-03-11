@@ -115,6 +115,7 @@ export default [
 		)
 	}),
 	new DwcPlugin({
+		id: 'DiabaseOffsets',
 		name: 'Offsets Control',
 		author: 'Diabase Engineering',
 		version,
@@ -124,6 +125,7 @@ export default [
 		)
 	}),
 	new DwcPlugin({
+		id: 'DiabaseRotaryAxes',
 		name: 'Rotary Axes',
 		author: 'Diabase Engineering',
 		version,
@@ -133,6 +135,7 @@ export default [
 		)
 	}),
 	new DwcPlugin({
+		id: 'Diabase3DScanner',
 		name: '3D Scanner',
 		author: 'Diabase Engineering',
 		version,
@@ -142,6 +145,7 @@ export default [
 		)
 	}),
 	new DwcPlugin({
+		id: 'DiabaseToolPriming',
 		name: 'Tool Priming',
 		author: 'Diabase Engineering',
 		version,
