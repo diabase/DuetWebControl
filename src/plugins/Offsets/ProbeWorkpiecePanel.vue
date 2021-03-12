@@ -68,6 +68,9 @@ table tbody tr:hover {
 								<v-icon>mdi-image-filter-center-focus</v-icon> {{ t('button.probeWorkpiece.findCenterOfCavity') }}
 							</code-btn>
 						</v-col>
+						<v-col>
+							<v-text-field type="number" suffix="mm" @change="setDiameter($event)" min="0" max="300" :disabled="disable"></v-text-field>
+						</v-col>
 					</v-row>
 					<v-row>
 						<v-col>
@@ -129,7 +132,21 @@ export default {
 				return "mdi-arrow-collapse-right"
 			}
 			return "mdi-arrow-collapse-left"
-		}
+		},
+		async setDiameter(diameter) {
+			const value = parseFloat(diameter);
+			if (!this.isNumber(value)) {
+				this.$makeNotification('warning', this.$t('error.enterValidNumber'));
+				return;
+			}
+			this.busy = true;
+			try {
+				await this.sendCode(`set global.diameterProbeHole = ${value}`);
+			} catch (e) {
+				// already handled
+			}
+			this.busy = false;
+		},
 	},
 }
 </script>
