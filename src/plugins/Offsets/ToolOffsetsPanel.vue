@@ -24,15 +24,15 @@
 							<tr v-for="tool in toolsWithoutProbe" :key="tool.number">
 								<td class="text-center">{{ tool.name || "Tool " + tool.number }}</td>
 								<td class="text-center" v-for="(axis, index) in relevantAxes" :key="index">
-									<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, tool)" :title="`${ t('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen">
+									<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, tool)" :title="`${ t('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen || tool.number != currentTool">
 										<v-icon small>mdi-home-import-outline</v-icon>
 									</v-btn>
 									<div style="display: inline-block; white-space:nowrap;">
-									<v-btn @click="toolOffsetAdjust(axis.name, index, tool, -1)" no-wait lock small :disabled="uiFrozen">
+									<v-btn @click="toolOffsetAdjust(axis.name, index, tool, -1)" no-wait lock small :disabled="uiFrozen || tool.number != currentTool">
 										<v-icon small>{{ axis.iconMinus }}</v-icon> {{ axis.textMinus }}
 									</v-btn>
 									<span class="mx-2 tooloffset-value text-right" @click="showSetToolOffsetDialog(axis.name, index, tool)">{{ $display((tool.offsets[index] && tool.offsets[index] || 0), axis.name === 'Z' ? 3 : 2, 'mm') }}</span>
-									<v-btn @click="toolOffsetAdjust(axis.name, index, tool)" no-wait lock small :disabled="uiFrozen">
+									<v-btn @click="toolOffsetAdjust(axis.name, index, tool)" no-wait lock small :disabled="uiFrozen || tool.number != currentTool">
 										<v-icon small>{{ axis.iconPlus }}</v-icon> {{ axis.textPlus }}
 									</v-btn>
 									</div>
@@ -74,7 +74,7 @@ import { localT } from './index.js'
 export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
-		...mapState('machine/model', ['tools', 'move']),
+		...mapState('machine/model', ['tools', 'move', 'state']),
 		...mapState('machine/settings', {
 			pluginSettings: state => state.plugins.Offsets
 		}),
@@ -88,7 +88,10 @@ export default {
 		},
 		toolsWithoutProbe() {
 			return this.tools.filter(t => t != null && t.number != 10);
-		}
+		},
+		currentTool() {
+			return this.state.currentTool;
+		},
 	},
 	data() {
 		return {
@@ -172,7 +175,7 @@ export default {
 			this.amount = value;
 		},
 		showSetToolOffsetDialog(axisLetter, axisIndex, tool) {
-			if (this.uiFrozen) {
+			if (this.uiFrozen || tool.number != this.currentTool) {
 				return;
 			}
 			const toolName = tool.name || "Tool " + tool.number;
