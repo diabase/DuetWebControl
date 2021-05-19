@@ -251,7 +251,7 @@ export default {
 			rrf: 'RepRapFirmware',
 			prerequisites: 'Prerequisites',
 			version: 'Version {0}',
-			noPluginSupport: 'Third-Party Plugins not allowed',
+			noPluginSupport: 'Machine-Specific Plugins not allowed',
 			rootSupport: 'Support for Super-User Plugins',
 			invalidManifest: 'Invalid plugin manifest',
 			permissions: 'Required Permissions',
@@ -369,6 +369,7 @@ export default {
 			offline: 'offline'
 		},
 		status: {
+			disconnected: 'Disconnected',
 			starting: 'Starting',
 			updating: 'Updating',
 			off: 'Off',
@@ -836,6 +837,32 @@ export default {
 		superUser: 'Run as root user (potentially dangerous)'
 	},
 	plugins: {
+		accelerometer: {
+			name: 'Accelerometer',
+			listTitle: 'CSV Files',
+			none: 'No Files',
+			chartCaption: 'Acceleration Samples',
+			noData: 'No Samples Loaded',
+			analysis: 'Frequency Analysis',
+			samplingRate: 'Sampling Rate (in Hz)',
+			start: 'Start',
+			end: 'End',
+			wideBand: 'Wide-band analysis',
+			analyze: 'Analyze',
+			back: 'Back',
+			overflowPrompt: {
+				title: 'Overflows detected',
+				prompt: 'This CSV file has reported overflows. Are you sure you wish to continue?'
+			},
+			loadError: 'Failed to load CSV file',
+			parseError: 'Failed to parse CSV file',
+			frequency: 'Frequency (in Hz)',
+			amplitudes: 'Amplitudes',
+			samples: 'Samples',
+			accelerations: 'Accelerations (in g)',
+			sampleTooltip: 'Sample #{0}',
+			frequencyTooltip: '{0} ± {1} Hz'
+		},
 		autoUpdate: {
 			menuCaption: 'Update'
 		},
@@ -955,7 +982,7 @@ export default {
 		},
 		plugins: {
 			generalCaption: 'Built-in Plugins',
-			machineCaption: 'Third-party Plugins',
+			machineCaption: 'Machine-Specific Plugins',
 			headers: {
 				name: 'Name',
 				author: 'Author',

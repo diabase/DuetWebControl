@@ -36,7 +36,11 @@ export default {
 	computed: {
 		...mapState(['isLocal']),
 		...mapState('machine/model', ['boards', 'directories', 'network', 'state']),
+		...mapGetters('machine', ['connector']),
 		...mapGetters(['isConnected', 'uiFrozen']),
+		connectorType() {
+			return this.connector ? this.connector.type : null;
+		},
 		caption() {
 			if (this.extracting) {
 				return this.$t('generic.extracting');
@@ -57,7 +61,7 @@ export default {
 				case 'filaments': return '.zip';
 				case 'firmware': return '.zip,.bin,.uf2';
 				case 'menu': return '*';
-				case 'system': return '.zip,.bin,.uf2,.json,.g,.csv';
+				case 'system': return '.zip,.bin,.uf2,.json,.g,.csv,.xml' + (this.connectorType === 'rest' ? ',.deb' : '');
 				case 'web': return '.zip,.csv,.json,.htm,.html,.ico,.xml,.css,.map,.js,.ttf,.eot,.svg,.woff,.woff2,.jpeg,.jpg,.png,.gz';
 			}
 			return undefined;
@@ -95,6 +99,7 @@ export default {
 				firmwareBoards: [],
 				wifiServer: false,
 				wifiServerSpiffs: false,
+				panelDue: false,
 
 				codeSent: false
 			},
@@ -111,7 +116,7 @@ export default {
 		uploadPrint: Boolean
 	},
 	methods: {
-		...mapActions('machine', ['sendCode', 'upload']),
+		...mapActions('machine', ['sendCode', 'upload', 'installSystemPackage']),
 		chooseFile() {
 			if (!this.isBusy) {
 				this.$refs.fileInput.click();
@@ -249,6 +254,7 @@ export default {
 			this.updates.firmwareBoards = [];
 			this.updates.wifiServer = false;
 			this.updates.wifiServerSpiffs = false;
+			this.updates.panelDue = false;
 
 			for (let i = 0; i < files.length; i++) {
 				let content = files[i], filename = Path.combine(this.destinationDirectory, content.name);
@@ -258,6 +264,17 @@ export default {
 					} else if (this.isWebFile(content.name)) {
 						filename = Path.combine(this.directories.web, content.name);
 						this.updates.webInterface |= /index.html(\.gz)?/i.test(content.name);
+					} else if (this.connectorType === 'rest' && /\.deb$/.test(content.name)) {
+						// TODO improve this
+						try {
+							await this.installSystemPackage({
+								filename: content.name,
+								blob: content
+							});
+							alert(`Installation of ${content.name} succesful`);
+						} catch (e) {
+							alert(`Installation of ${content.name} failed: ${e}`);
+						}
 					} else {
 						const firmwareFileName = this.getFirmwareName(content.name);
 						const bootloaderFileName = this.getBinaryName('bootloaderFileName', content.name);
@@ -279,15 +296,23 @@ export default {
 							} else if (/DuetWebControl(.*)\.bin/i.test(content.name)) {
 								filename = Path.combine(this.directories.firmware, 'DuetWebControl.bin');
 								this.updates.wifiServerSpiffs = true;
+							} else if (content.name.endsWith('.bin') || content.name.endsWith('.uf2')) {
+								filename = Path.combine(this.directories.firmware, content.name);
+								if (content.name === 'PanelDueFirmware.bin') {
+									this.updates.panelDue = true;
+								}
 							}
 						} else if (content.name.endsWith('.bin') || content.name.endsWith('.uf2')) {
 							filename = Path.combine(this.directories.firmware, content.name);
+							if (content.name === 'PanelDueFirmware.bin') {
+								this.updates.panelDue = true;
+							}
 						}
 					}
 				}
 				content.filename = filename;
 			}
-			const askForUpdate = (this.updates.firmwareBoards.length > 0) || this.updates.wifiServer || this.updates.wifiServerSpiffs;
+			const askForUpdate = (this.updates.firmwareBoards.length > 0) || this.updates.wifiServer || this.updates.wifiServerSpiffs || this.updates.panelDue;
 
 			// Start uploading
 			this.uploading = true;
@@ -322,7 +347,6 @@ export default {
 				location.reload(true);
 			}
 
-			// FIXME For some reason the $t function throws an exception when this button is floating
 			if (zipName) {
 				const secondsPassed = Math.round((new Date() - startTime) / 1000);
 				this.$makeNotification('success', this.$t('notification.upload.success', [zipName, this.$displayTime(secondsPassed)]));
@@ -365,6 +389,10 @@ export default {
 			if (this.updates.wifiServerSpiffs) {
 				modules.push('2');
 			}
+			// module 3 means put wifi server into bootloader mode, not supported here
+			if (this.updates.panelDue) {
+				modules.push('4');
+			}
 
 			if (modules.length > 0) {
 				this.updates.codeSent = true;
@@ -378,8 +406,8 @@ export default {
 				}
 			}
 
-			// Ask for a firmware reset if expansion boards have been updated
-			this.confirmReset = this.updates.firmwareBoards.findIndex(board => board > 0) !== -1;
+			// Ask for a firmware reset if expansion boards but not the main board have been updated
+			this.confirmReset = (modules.indexOf(0) === -1) && (this.updates.firmwareBoards.findIndex(board => board > 0) !== -1);
 		},
 		async reset() {
 			this.confirmReset = false;

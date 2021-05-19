@@ -168,6 +168,8 @@ const pathObj = {
 	filamentsFile: 'filaments.csv',
 	heightmapFile: 'heightmap.csv',
 
+	accelerometer: '0:/sys/accelerometer',
+
 	combine,
 	equals,
 	extractDirectory,

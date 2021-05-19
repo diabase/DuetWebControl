@@ -65,15 +65,16 @@ export function injectComponent(name, component) {
 }
 
 export default [
-	/*new DwcPlugin({
-		name: 'Auto Update',
+	new DwcPlugin({
+		id: 'Accelerometer',
+		name: 'Accelerometer',
 		author: 'Duet3D Ltd',
 		version,
 		loadDwcResources: () => import(
-			/ webpackChunkName: "AutoUpdate" /
-			'./AutoUpdate/index.js'
+			/* webpackChunkName: "Accelerometer" */
+			'./Accelerometer/index.js'
 		)
-	}),*/
+	}),
 	new DwcPlugin({
 		id: 'HeightMap',
 		name: 'Height Map',

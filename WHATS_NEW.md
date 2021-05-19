@@ -1,6 +1,73 @@
 Summary of important changes in recent versions
 ===============================================
 
+Version 3.3
+===========
+
+Upgrade notes:
+- Saved G-codes from the inputs are no longer saved on the Duet to avoid excessive SD card wear
+- This will be the last DWC version that remains compatible with old-style status responses
+
+Compatible versions:
+- DuetSoftwareFramework 3.3
+- RepRapFirmware 2 or newer (1.2x may work but untested)
+
+Changed behaviour:
+- Changed caption of Third-Party Plugins to Machine-Specific Plugins
+
+Bug fixes:
+- Overflow confirmation of Accelerometer plugin did not display translated message
+- Fixed selection problem on the Accelerometer page
+- Fixed issue where global variables could be hidden on the OM browser after a reconnect
+
+Version 3.3-rc2
+==============
+
+Compatible versions:
+- DuetSoftwareFramework 3.3-rc2
+- RepRapFirmware 2 or newer (1.2x may work but untested)
+
+New features:
+- .deb packages can be installed if support for package management and root plugins is enabled in DSF
+
+Bug fixes:
+- Global variables were not cleared on disconnect
+- Added new `Disconnected` state to indicate when DWC is not connected to RRF
+
+Version 3.3-rc1
+==============
+
+Compatible versions:
+- DuetSoftwareFramework 3.3-rc1
+- RepRapFirmware 2 or newer (1.2x may work but untested)
+
+Changed behaviour:
+- DWC does not ask for a firmware reset if the mainboard was updated as well
+
+Bug fixes:
+- Arrow icon next to the code input was misleading
+- Status panel stopped updating if Z-probes contained gaps in the OM
+- Global variables were not properly updated in the DWC object model
+
+Version 3.3-b3
+==============
+
+Compatible versions:
+- DuetSoftwareFramework 3.3-b3
+- RepRapFirmware 2 or newer (1.2x may work but untested)
+
+New features:
+- Added new accelerometer plugin with frequency analysis
+- Object model browser reads DSF API docs for property descriptions
+- When PanelDueFirmware.bin is uploaded, DWC asks for update via M997
+- Updated syntax highlighting for new G-code meta keywords
+- Added global namespace to the object model
+
+Bug fixes:
+- In standalone mode no upload retries were attempted on upload errors
+- Update prompts were not shown when files were uploaded via floating buttons
+- Excessively long tool lists are queried using multiple requests (standalone mode)
+
 Verson 3.3-b2
 =============
 
