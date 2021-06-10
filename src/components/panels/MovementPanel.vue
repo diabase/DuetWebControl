@@ -185,6 +185,7 @@ export default {
 			return this.sensors
 				&& this.sensors.endstops
 				&& this.sensors.endstops.length > 4
+				&& this.sensors.endstops[4] !== null 
 				&& !this.sensors.endstops[4].triggered;
 		},
 		isPrinting(){
