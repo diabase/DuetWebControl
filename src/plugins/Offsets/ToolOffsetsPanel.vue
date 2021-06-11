@@ -70,11 +70,12 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 import { setPluginData, PluginDataType } from '../../store'
 import { localT } from './index.js'
+import { combine } from '../../utils/path'
 
 export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
-		...mapState('machine/model', ['tools', 'move', 'state']),
+		...mapState('machine/model', ['tools', 'move', 'state','directories']),
 		...mapState('machine/settings', {
 			pluginSettings: state => state.plugins.Offsets
 		}),
@@ -146,6 +147,7 @@ export default {
 			this.busy = true;
 			try {
 				await this.sendCode(`G10 L1 P${tool.number} ${axisLetter}${newAmount}\nM500 P10`);
+				await this.runTCmax()
 			} catch (e) {
 				// handled before we get here
 			}
@@ -159,6 +161,7 @@ export default {
 				this.busy = true;
 				try {
 					await this.sendCode(`G10 L1 P${tool.number} ${axisLetter}${userPosition}\nM500 P10`);
+					await this.runTCmax()
 				} catch (e) {
 					// handled before we get here
 				}
@@ -195,6 +198,10 @@ export default {
 			}
 			this.busy = false;
 		},
+		async runTCmax(){
+				var tc_max_path = combine(this.directories.system,'TC_max.g');
+				await this.sendCode({code: `M98 P"${tc_max_path}"`, log:false, showSuccess: false});
+		}
 	},
 	mounted() {
 		this.amount = this.toolOffsetAmounts[this.toolOffsetAmounts.length - 1];
