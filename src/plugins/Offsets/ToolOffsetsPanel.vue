@@ -7,7 +7,8 @@
 <template>
 	<v-card>
 		<v-card-title class="pb-0">
-			<v-icon small class="mr-1">mdi-tools</v-icon> {{ t('panel.tooloffsets.caption') }}
+			<v-icon class="mr-1" small>mdi-tools</v-icon>
+			{{ t('panel.tooloffsets.caption') }}
 		</v-card-title>
 
 		<v-card-text>
@@ -17,24 +18,26 @@
 						<thead>
 							<tr>
 								<th class="text-center">{{ t('panel.tooloffsets.tableHeaders.name') }}</th>
-								<th class="text-center" v-for="axis in relevantAxes" :key="axis.name">{{ axis.name }}</th>
+								<th :key="axis.name" class="text-center" v-for="axis in relevantAxes">{{ axis.name }}</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="tool in toolsWithoutProbe" :key="tool.number">
+							<tr :key="tool.number" v-for="tool in toolsWithoutProbe">
 								<td class="text-center">{{ tool.name || "Tool " + tool.number }}</td>
-								<td class="text-center" v-for="(axis, index) in relevantAxes" :key="index">
-									<v-btn class="mr-1" @click="toolOffsetSet(axis.name, index, tool)" :title="`${ t('button.tooloffsets.setToCurrent') }`" no-wait lock small :disabled="uiFrozen || tool.number != currentTool">
+								<td :key="index" class="text-center" v-for="(axis, index) in relevantAxes">
+									<v-btn :disabled="uiFrozen || tool.number != currentTool" :title="`${ t('button.tooloffsets.setToCurrent') }`" @click="toolOffsetSet(axis.name, index, tool)" class="mr-1" lock no-wait small>
 										<v-icon small>mdi-home-import-outline</v-icon>
 									</v-btn>
 									<div style="display: inline-block; white-space:nowrap;">
-									<v-btn @click="toolOffsetAdjust(axis.name, index, tool, -1)" no-wait lock small :disabled="uiFrozen || tool.number != currentTool">
-										<v-icon small>{{ axis.iconMinus }}</v-icon> {{ axis.textMinus }}
-									</v-btn>
-									<span class="mx-2 tooloffset-value text-right" @click="showSetToolOffsetDialog(axis.name, index, tool)">{{ $display((tool.offsets[index] && tool.offsets[index] || 0), axis.name === 'Z' ? 3 : 2, 'mm') }}</span>
-									<v-btn @click="toolOffsetAdjust(axis.name, index, tool)" no-wait lock small :disabled="uiFrozen || tool.number != currentTool">
-										<v-icon small>{{ axis.iconPlus }}</v-icon> {{ axis.textPlus }}
-									</v-btn>
+										<v-btn :disabled="uiFrozen || tool.number != currentTool" @click="toolOffsetAdjust(axis.name, index, tool, -1)" lock no-wait small>
+											<v-icon small>{{ axis.iconMinus }}</v-icon>
+											{{ axis.textMinus }}
+										</v-btn>
+										<span @click="showSetToolOffsetDialog(axis.name, index, tool)" class="mx-2 tooloffset-value text-right">{{ $display((tool.offsets[index] && tool.offsets[index] || 0), axis.name === 'Z' ? 3 : 2, 'mm') }}</span>
+										<v-btn :disabled="uiFrozen || tool.number != currentTool" @click="toolOffsetAdjust(axis.name, index, tool)" lock no-wait small>
+											<v-icon small>{{ axis.iconPlus }}</v-icon>
+											{{ axis.textPlus }}
+										</v-btn>
 									</div>
 								</td>
 							</tr>
@@ -42,53 +45,51 @@
 					</v-simple-table>
 				</v-col>
 				<v-col :cols="3">
-					<img src="./tooloffset.png"/>
+					<img src="./tooloffset.png" />
 				</v-col>
 			</v-row>
 			<v-row align="center" class="pb-1">
 				<v-col cols="4">
-					<p class="mb-1">
-					{{ t('panel.tooloffsets.amount', ['mm']) }}
-					</p>
-					<v-btn-toggle v-model="amount" mandatory class="d-flex">
-						<v-btn v-for="(savedAmount, index) in toolOffsetAmounts" :key="index" :value="savedAmount" :disabled="uiFrozen" @contextmenu.prevent="editAmount(index)" class="flex-grow-1">
-							{{ savedAmount }}
-						</v-btn>
+					<p class="mb-1">{{ t('panel.tooloffsets.amount', ['mm']) }}</p>
+					<v-btn-toggle class="d-flex" mandatory v-model="amount">
+						<v-btn :disabled="uiFrozen" :key="index" :value="savedAmount" @contextmenu.prevent="editAmount(index)" class="flex-grow-1" v-for="(savedAmount, index) in toolOffsetAmounts">{{ savedAmount }}</v-btn>
 					</v-btn-toggle>
 				</v-col>
 			</v-row>
 		</v-card-text>
 
-		<input-dialog :shown.sync="setToolOffsetDialog.shown" :title="setToolOffsetDialog.title" :prompt="setToolOffsetDialog.prompt" :preset="setToolOffsetDialog.preset" is-numeric-value @confirmed="setToolOffsetDialogConfirmed"></input-dialog>
-		<input-dialog :shown.sync="editAmountDialog.shown" :title="t('dialog.editToolOffsetAmount.title')" :prompt="t('dialog.editToolOffsetAmount.prompt')" :preset="editAmountDialog.preset" is-numeric-value @confirmed="setAmount"></input-dialog>
+		<input-dialog :preset="setToolOffsetDialog.preset" :prompt="setToolOffsetDialog.prompt" :shown.sync="setToolOffsetDialog.shown" :title="setToolOffsetDialog.title" @confirmed="setToolOffsetDialogConfirmed" is-numeric-value></input-dialog>
+		<input-dialog :preset="editAmountDialog.preset" :prompt="t('dialog.editToolOffsetAmount.prompt')" :shown.sync="editAmountDialog.shown" :title="t('dialog.editToolOffsetAmount.title')" @confirmed="setAmount" is-numeric-value></input-dialog>
 	</v-card>
 </template>
 
 <script>
-'use strict'
+'use strict';
 
-import { mapState, mapGetters, mapActions } from 'vuex'
-import { setPluginData, PluginDataType } from '../../store'
-import { localT } from './index.js'
-import { combine } from '../../utils/path'
+import {mapState, mapGetters, mapActions} from 'vuex';
+import {setPluginData, PluginDataType} from '../../store';
+import {localT} from './index.js';
+import {combine} from '../../utils/path';
 
 export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
-		...mapState('machine/model', ['tools', 'move', 'state','directories']),
+		...mapState('machine/model', ['tools', 'move', 'state', 'directories']),
 		...mapState('machine/settings', {
-			pluginSettings: state => state.plugins.Offsets
+			pluginSettings: (state) => state.plugins.Offsets,
 		}),
 		toolOffsetAmounts: {
-			get() { return this.pluginSettings.toolOffsetAmounts; },
-			set({ index, value }) {
+			get() {
+				return this.pluginSettings.toolOffsetAmounts;
+			},
+			set({index, value}) {
 				let toolOffsetAmounts = this.pluginSettings.toolOffsetAmounts;
 				toolOffsetAmounts[index] = value;
 				setPluginData('Offsets', PluginDataType.machineSetting, 'toolOffsetAmounts', toolOffsetAmounts);
 			},
 		},
 		toolsWithoutProbe() {
-			return this.tools.filter(t => t != null && t.number != 10);
+			return this.tools.filter((t) => t != null && t.number != 10);
 		},
 		currentTool() {
 			return this.state.currentTool;
@@ -100,29 +101,29 @@ export default {
 			editAmountDialog: {
 				shown: false,
 				index: 0,
-				preset: 0
+				preset: 0,
 			},
 			relevantAxes: [
 				{
-					name: "X",
-					iconMinus: "mdi-arrow-left-bold",
-					iconPlus: "mdi-arrow-right-bold",
-					textMinus: "Left",
-					textPlus: "Right",
+					name: 'X',
+					iconMinus: 'mdi-arrow-left-bold',
+					iconPlus: 'mdi-arrow-right-bold',
+					textMinus: 'Left',
+					textPlus: 'Right',
 				},
 				{
-					name: "Y",
-					iconMinus: "mdi-arrow-down-bold",
-					iconPlus: "mdi-arrow-up-bold",
-					textMinus: "Front",
-					textPlus: "Back",
+					name: 'Y',
+					iconMinus: 'mdi-arrow-down-bold',
+					iconPlus: 'mdi-arrow-up-bold',
+					textMinus: 'Front',
+					textPlus: 'Back',
 				},
 				{
-					name: "Z",
-					iconMinus: "mdi-arrow-down-bold",
-					iconPlus: "mdi-arrow-up-bold",
-					textMinus: "Down",
-					textPlus: "Up",
+					name: 'Z',
+					iconMinus: 'mdi-arrow-down-bold',
+					iconPlus: 'mdi-arrow-up-bold',
+					textMinus: 'Down',
+					textPlus: 'Up',
 				},
 			],
 			setToolOffsetDialog: {
@@ -134,7 +135,7 @@ export default {
 				preset: 0,
 			},
 			t: localT,
-		}
+		};
 	},
 	methods: {
 		...mapActions('machine', ['sendCode']),
@@ -147,21 +148,21 @@ export default {
 			this.busy = true;
 			try {
 				await this.sendCode(`G10 L1 P${tool.number} ${axisLetter}${newAmount}\nM500 P10`);
-				await this.runTCmax()
+				await this.runTCmax();
 			} catch (e) {
 				// handled before we get here
 			}
 			this.busy = false;
 		},
 		async toolOffsetSet(axisLetter, axisIndex, tool) {
-			let axes = this.move.axes.filter(axis => axis.letter == axisLetter);
+			let axes = this.move.axes.filter((axis) => axis.letter == axisLetter);
 			if (axes.length > 0) {
 				let axis = axes[0];
 				let userPosition = -1 * axis.userPosition;
 				this.busy = true;
 				try {
 					await this.sendCode(`G10 L1 P${tool.number} ${axisLetter}${userPosition}\nM500 P10`);
-					await this.runTCmax()
+					await this.runTCmax();
 				} catch (e) {
 					// handled before we get here
 				}
@@ -174,16 +175,16 @@ export default {
 			this.editAmountDialog.shown = true;
 		},
 		setAmount(value) {
-			this.toolOffsetAmounts = { index: this.editAmountDialog.index, value };
+			this.toolOffsetAmounts = {index: this.editAmountDialog.index, value};
 			this.amount = value;
 		},
 		showSetToolOffsetDialog(axisLetter, axisIndex, tool) {
 			if (this.uiFrozen || tool.number != this.currentTool) {
 				return;
 			}
-			const toolName = tool.name || "Tool " + tool.number;
-			this.setToolOffsetDialog.title = this.t('dialog.setToolOffset.title', [ toolName ]);
-			this.setToolOffsetDialog.prompt = this.t('dialog.setToolOffset.prompt', [ axisLetter, toolName ]);
+			const toolName = tool.name || 'Tool ' + tool.number;
+			this.setToolOffsetDialog.title = this.t('dialog.setToolOffset.title', [toolName]);
+			this.setToolOffsetDialog.prompt = this.t('dialog.setToolOffset.prompt', [axisLetter, toolName]);
 			this.setToolOffsetDialog.axisLetter = axisLetter;
 			this.setToolOffsetDialog.toolNumber = tool.number;
 			this.setToolOffsetDialog.preset = tool.offsets[axisIndex];
@@ -192,16 +193,17 @@ export default {
 		async setToolOffsetDialogConfirmed(value) {
 			this.busy = true;
 			try {
-				await this.sendCode({ code: `G10 L1 P${this.setToolOffsetDialog.toolNumber} ${this.setToolOffsetDialog.axisLetter}${value}\nM500 P10`, log: false });
+				await this.sendCode({code: `G10 L1 P${this.setToolOffsetDialog.toolNumber} ${this.setToolOffsetDialog.axisLetter}${value}\nM500 P10`, log: false});
+				await this.runTCmax();
 			} catch (e) {
 				// already handled
 			}
 			this.busy = false;
 		},
-		async runTCmax(){
-				var tc_max_path = combine(this.directories.system,'TC_max.g');
-				await this.sendCode({code: `M98 P"${tc_max_path}"`, log:false, showSuccess: false});
-		}
+		async runTCmax() {
+			var tc_max_path = combine(this.directories.system, 'TC_max.g');
+			await this.sendCode({code: `M98 P"${tc_max_path}"`, log: true, showSuccess: false});
+		},
 	},
 	mounted() {
 		this.amount = this.toolOffsetAmounts[this.toolOffsetAmounts.length - 1];
@@ -214,6 +216,6 @@ export default {
 			// Hide dialogs when the connection is interrupted
 			this.setToolOffsetDialog.shown = false;
 		},
-	}
-}
+	},
+};
 </script>
