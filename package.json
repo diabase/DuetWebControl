@@ -1,7 +1,7 @@
 {
   "name": "duetwebcontrol-HSeries",
-  "version": "3.3.1-rc2",
-  "pkgVersion": "3.3-rc2",
+  "version": "3.3.2",
+  "pkgVersion": "3.3",
   "repository": "github:diabase/DuetWebControl-HSeries",
   "homepage": "https://forum.duet3d.com/category/27/duet-web-control",
   "license": "GPL-3.0",

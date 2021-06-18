@@ -69,7 +69,7 @@ table tbody tr:hover {
 							</code-btn>
 						</v-col>
 						<v-col>
-							<v-text-field type="number" suffix="mm" @change="setDiameter($event)" min="0" max="300" :disabled="disable"></v-text-field>
+							<v-text-field :value="diameterProbeHole" type="number" suffix="mm" @change="setDiameter($event)" min="0" max="300" :disabled="disable"></v-text-field>
 						</v-col>
 					</v-row>
 					<v-row>
@@ -101,7 +101,7 @@ export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
 		...mapState('machine', ['vendor']),
-		...mapState('machine/model', ['sensors', 'state']),
+		...mapState('machine/model', ['sensors', 'state', 'global']),
 		disable() {
 			if (this.vendor === 'diabase') {
 				return this.state.currentTool != 10;
@@ -111,6 +111,13 @@ export default {
 		probeReady() {
 			return this.state && this.state.currentTool == 10;
 		},
+		diameterProbeHole(){
+			
+			if(this.global.diameterProbeHole){
+				return this.global.diameterProbeHole 
+			}
+			return 0;
+		}
 	},
 	data() {
 		return {
@@ -141,7 +148,12 @@ export default {
 			}
 			this.busy = true;
 			try {
-				await this.sendCode(`set global.diameterProbeHole = ${value}`);
+				if(this.global.diameterProbeHole === null || this.global.diameterProbeHole === undefined){
+					await this.sendCode(`global diameterProbeHole = ${value}`);
+				}
+				else{
+					await this.sendCode(`set global.diameterProbeHole = ${value}`);
+				}
 			} catch (e) {
 				// already handled
 			}
