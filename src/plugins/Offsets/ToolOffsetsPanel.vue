@@ -148,7 +148,7 @@ export default {
 			this.busy = true;
 			try {
 				await this.sendCode(`G10 L1 P${tool.number} ${axisLetter}${newAmount}\nM500 P10`);
-				await this.runTCmax();
+				await this.runMaxOffset();
 			} catch (e) {
 				// handled before we get here
 			}
@@ -162,7 +162,7 @@ export default {
 				this.busy = true;
 				try {
 					await this.sendCode(`G10 L1 P${tool.number} ${axisLetter}${userPosition}\nM500 P10`);
-					await this.runTCmax();
+					await this.runMaxOffset();
 				} catch (e) {
 					// handled before we get here
 				}
@@ -194,14 +194,14 @@ export default {
 			this.busy = true;
 			try {
 				await this.sendCode({code: `G10 L1 P${this.setToolOffsetDialog.toolNumber} ${this.setToolOffsetDialog.axisLetter}${value}\nM500 P10`, log: false});
-				await this.runTCmax();
+				await this.runMaxOffset();
 			} catch (e) {
 				// already handled
 			}
 			this.busy = false;
 		},
-		async runTCmax() {
-			var tc_max_path = combine(this.directories.system, 'TC_max.g');
+		async runMaxOffset() {
+			var tc_max_path = combine(this.directories.system, 'maxoffset.g');
 			await this.sendCode({code: `M98 P"${tc_max_path}"`, log: true, showSuccess: false});
 		},
 	},

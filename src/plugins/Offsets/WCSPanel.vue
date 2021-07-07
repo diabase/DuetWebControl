@@ -32,7 +32,7 @@
 							</code-btn>
 						</td>
 						<td class="text-right" v-for="axis in relevantAxes" :key="axis">
-							<code-btn class="mr-1" :code="`G10 L20 P${w} ${axis}0`" :title="`${ t('button.wcs.setToCurrent') }`" no-wait lock small>
+							<code-btn class="mr-1" :code="`G10 L20 P${w} ${axis}0\nM500`" :title="`${ t('button.wcs.setToCurrent') }`" no-wait lock small>
 								<v-icon small>mdi-home-import-outline</v-icon>
 							</code-btn>
 							<span class="wcs-value" @click="showSetWCSOffsetDialog(axis, w)">{{ $display(workplaceOffsets[axis][w-1], (axis === "Z" ? 3 : 2), 'mm') }}</span>
