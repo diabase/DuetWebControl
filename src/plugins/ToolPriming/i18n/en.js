@@ -22,7 +22,7 @@ export default {
 				extrusionFeedrate: 'Extrusion Feedrate',
 				afterPrimeRetractionAmount: 'After Prime Retraction Amount',
 				retractionFeedrate: 'Retraction Feedrate',
-				additionalPrimingAmount: 'Additional Priming Amount'
+				additionalRetractionAmount: 'Additional Retraction Amount'
 			},
 			table: {
 				toolNumber: 'Tool {0}',

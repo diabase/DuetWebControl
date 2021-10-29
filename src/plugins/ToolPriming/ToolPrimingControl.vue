@@ -15,7 +15,7 @@
 								<th>{{ t('panel.toolPriming.tableHeaders.extrusionFeedrate') }}</th>
 								<th>{{ t('panel.toolPriming.tableHeaders.afterPrimeRetractionAmount') }}</th>
 								<th>{{ t('panel.toolPriming.tableHeaders.retractionFeedrate') }}</th>
-								<th>{{ t('panel.toolPriming.tableHeaders.additionalPrimingAmount')}}</th>
+								<th>{{ t('panel.toolPriming.tableHeaders.additionalRetractionAmount')}}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -34,7 +34,7 @@
 									<v-text-field :disabled="uiFrozen" @change="save" suffix="mm/s" type="number" v-model.number="tool.retraction.speed"></v-text-field>
 								</td>
 								<td>
-									<v-text-field @change="save" suffix="mm" type="number" v-model.number="tool.retraction.additionalPrimingAmount"></v-text-field>
+									<v-text-field @change="save" suffix="mm" type="number" v-model.number="tool.retraction.additionalRetractionAmount"></v-text-field>
 								</td>
 							</tr>
 						</tbody>
@@ -62,7 +62,7 @@ export default {
 			filtered.forEach((tool) => {
 				tool.retraction.primeExtrusionAmount = tool.retraction.length + tool.retraction.extraRestart;
 				let toolAdditionalPriming = this.global[`t${tool.number}primeextra`] ?? 0;
-				tool.retraction.additionalPrimingAmount = toolAdditionalPriming;
+				tool.retraction.additionalRetractionAmount = toolAdditionalPriming;
 			});
 
 			return filtered;
@@ -96,9 +96,9 @@ export default {
 			let m207Commands = '';
 			this.fffTools.map((tool) => {
 				m207Commands += `if !{exists(global.t${tool.number}primeextra)}\n`;
-				m207Commands += `\tglobal t${tool.number}primeextra = ${tool.retraction.additionalPrimingAmount};\n`;
+				m207Commands += `\tglobal t${tool.number}primeextra = ${tool.retraction.additionalRetractionAmount};\n`;
 				m207Commands += 'else\n';
-				m207Commands += `\tset global.t${tool.number}primeextra = ${tool.retraction.additionalPrimingAmount};\n`;
+				m207Commands += `\tset global.t${tool.number}primeextra = ${tool.retraction.additionalRetractionAmount};\n`;
 				m207Commands += `M207 P${tool.number} S${tool.retraction.length} F${tool.retraction.speed * 60} T${tool.retraction.unretractSpeed * 60} R${tool.retraction.primeExtrusionAmount - tool.retraction.length}\n`;
 			});
 			return m207Commands;
