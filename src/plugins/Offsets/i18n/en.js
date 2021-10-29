@@ -55,9 +55,9 @@ export default {
 			plateMissing: 'Touch-off Plate not installed',
 		},
 		wcs: {
-			caption: 'Workpiece Coordinate Offsets',
+			caption: 'Work Coordinate System Offsets',
 			tableHeaders: {
-				wcs: 'Workpiece',
+				wcs: 'WCS',
 				changeTo: 'Change to',
 				reset: 'Reset',
 			},
