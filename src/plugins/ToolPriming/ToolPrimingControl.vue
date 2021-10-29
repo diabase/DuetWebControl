@@ -61,8 +61,8 @@ export default {
 			let filtered = _.cloneDeep(this.tools.filter((tool) => tool && tool.extruders && tool.extruders.length >= 1));
 			filtered.forEach((tool) => {
 				tool.retraction.primeExtrusionAmount = tool.retraction.length + tool.retraction.extraRestart;
-				let toolAdditionalPriming = this.global[`t${tool.number}primeextra`] ?? 0;
-				tool.retraction.additionalRetractionAmount = toolAdditionalPriming;
+				let toolAdditionalRetraction = this.global[`t${tool.number}AdditionalRetraction`] ?? 0;
+				tool.retraction.additionalRetractionAmount = toolAdditionalRetraction;
 			});
 
 			return filtered;
@@ -95,10 +95,10 @@ export default {
 		getSettings() {
 			let m207Commands = '';
 			this.fffTools.map((tool) => {
-				m207Commands += `if !{exists(global.t${tool.number}primeextra)}\n`;
-				m207Commands += `\tglobal t${tool.number}primeextra = ${tool.retraction.additionalRetractionAmount};\n`;
+				m207Commands += `if !{exists(global.t${tool.number}AdditionalRetraction)}\n`;
+				m207Commands += `\tglobal t${tool.number}AdditionalRetraction = ${tool.retraction.additionalRetractionAmount};\n`;
 				m207Commands += 'else\n';
-				m207Commands += `\tset global.t${tool.number}primeextra = ${tool.retraction.additionalRetractionAmount};\n`;
+				m207Commands += `\tset global.t${tool.number}AdditionalRetraction = ${tool.retraction.additionalRetractionAmount};\n`;
 				m207Commands += `M207 P${tool.number} S${tool.retraction.length} F${tool.retraction.speed * 60} T${tool.retraction.unretractSpeed * 60} R${tool.retraction.primeExtrusionAmount - tool.retraction.length}\n`;
 			});
 			return m207Commands;
