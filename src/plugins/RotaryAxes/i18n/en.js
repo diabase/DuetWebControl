@@ -4,7 +4,6 @@ export default {
 	button: {
 		rotaryaxes: {
 			control: {
-				configure: 'Configure Rotary Printing',
 				levelRotaryPrintBed: 'Level Rotary Print Bed',
 				measureZAxis: 'Measure Z axis',
 				setToCurrent: 'Set to current',
@@ -16,7 +15,6 @@ export default {
 				setStockThickness: 'Set stock thickness',
 				setYoffset: 'Set Y offset',
 				autoLevel: 'Auto-level bed for printing',
-				unrotary: 'Reset to normal mode',
 			},
 			home: 'Rotary',
 		},
