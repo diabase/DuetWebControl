@@ -56,7 +56,7 @@
 							<tr>
 								<td class="text-center">{{ t('panel.rotaryaxes.control.step4') }}</td>
 								<td colspan="2">
-									<code-btn :code="`M98 P${doubleQuote}homerotary-y.g${doubleQuote}`" no-wait block class="move-btn">
+									<code-btn :code="`M98 P${doubleQuote}homea.g${doubleQuote}`" no-wait block class="move-btn">
 										{{ $t('button.home.caption', [t('button.rotaryaxes.home')]) }}
 									</code-btn>
 								</td>
