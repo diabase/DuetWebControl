@@ -29,15 +29,7 @@
 										<v-icon small>mdi-home-import-outline</v-icon>
 									</v-btn>
 									<div style="display: inline-block; white-space:nowrap;">
-										<v-btn :disabled="uiFrozen || tool.number != currentTool" @click="toolOffsetAdjust(axis.name, index, tool, -1)" lock no-wait small>
-											<v-icon small>{{ axis.iconMinus }}</v-icon>
-											{{ axis.textMinus }}
-										</v-btn>
 										<span @click="showSetToolOffsetDialog(axis.name, index, tool)" class="mx-2 tooloffset-value text-right">{{ $display((tool.offsets[index] && tool.offsets[index] || 0), axis.name === 'Z' ? 3 : 2, 'mm') }}</span>
-										<v-btn :disabled="uiFrozen || tool.number != currentTool" @click="toolOffsetAdjust(axis.name, index, tool)" lock no-wait small>
-											<v-icon small>{{ axis.iconPlus }}</v-icon>
-											{{ axis.textPlus }}
-										</v-btn>
 									</div>
 								</td>
 							</tr>
@@ -46,14 +38,6 @@
 				</v-col>
 				<v-col :cols="3">
 					<img src="./tooloffset.png" />
-				</v-col>
-			</v-row>
-			<v-row align="center" class="pb-1">
-				<v-col cols="4">
-					<p class="mb-1">{{ t('panel.tooloffsets.amount', ['mm']) }}</p>
-					<v-btn-toggle class="d-flex" mandatory v-model="amount">
-						<v-btn :disabled="uiFrozen" :key="index" :value="savedAmount" @contextmenu.prevent="editAmount(index)" class="flex-grow-1" v-for="(savedAmount, index) in toolOffsetAmounts">{{ savedAmount }}</v-btn>
-					</v-btn-toggle>
 				</v-col>
 			</v-row>
 		</v-card-text>
