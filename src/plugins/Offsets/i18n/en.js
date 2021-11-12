@@ -41,6 +41,7 @@ export default {
 			caption: 'Probe Workpiece',
 			description: 'Start probing from (and move)',
 			probeReady: 'Probe ready',
+			diameterProbeHole: 'Enter rough cavity diameter to set probe travel distance'
 		},
 		tooloffsets: {
 			caption: 'Tool Offsets',

@@ -62,20 +62,19 @@ table tbody tr:hover {
 							</tr>
 						</tbody>
 					</v-simple-table>
-					<v-row dense class="pt-8">
-						<v-col>
-							<code-btn :code="`M98 P${doubleQuote}tcalibrate.g${doubleQuote}`" no-wait block class="move-btn" :disabled="disable">
-								<v-icon>mdi-image-filter-center-focus</v-icon> {{ t('button.probeWorkpiece.findCenterOfCavity') }}
-							</code-btn>
-						</v-col>
-						<v-col>
-							<v-text-field :value="diameterProbeHole" type="number" suffix="mm" @change="setDiameter($event)" min="0" max="300" :disabled="disable"></v-text-field>
-						</v-col>
-					</v-row>
 					<v-row>
 						<v-col>
 							<code-btn :code="`M98 P${doubleQuote}measurez.g${doubleQuote}`" no-wait block class="move-btn" :disabled="disable">
 								<v-icon>mdi-ruler</v-icon> {{ t('button.probeWorkpiece.measureZ') }}
+							</code-btn>
+						</v-col>
+					</v-row>
+					<v-row dense class="pt-8">
+						<v-col>
+							<p class="mb-1">{{ t('panel.probeworkpiece.diameterProbeHole') }}</p>
+							<v-text-field :value="diameterProbeHole" type="number" suffix="mm" @change="setDiameter($event)" min="0" max="300" :disabled="disable"></v-text-field>
+							<code-btn :code="`M98 P${doubleQuote}tcalibrate.g${doubleQuote}`" no-wait block class="move-btn" :disabled="disable">
+								<v-icon>mdi-image-filter-center-focus</v-icon> {{ t('button.probeWorkpiece.findCenterOfCavity') }}
 							</code-btn>
 						</v-col>
 					</v-row>
