@@ -62,8 +62,8 @@ export default {
 			disconnecting: 'Disconnecting...'
 		},
 		emergencyStop: {
-			caption: 'Emergency Stop',
-			title: 'Enforce an immediate software reset (M112+M999)'
+			caption: 'RESET',
+			title: 'Enforce an immediate software reset (estop.g, M112, and M999)'
 		},
 		home: {
 			caption: 'Home {0}',

@@ -86,7 +86,7 @@
     <div ref="primarycontainer" class="primary-container mt-2" v-resize="resize">
         <div :class="{ 'full-screen': fullscreen }" class="viewer-box">
             <div class="emergency-button-placement" v-show="fullscreen">
-                <code-btn :code="'M112\nM999'" :log="false" color="red" :title="$t('button.emergencyStop.title')"><v-icon>mdi-flash</v-icon></code-btn>
+                <code-btn :code="'M98 P${doubleQuote}estop.g${doubleQuote}\nM112\nM999'" :log="false" color="red" :title="$t('button.emergencyStop.title')"><v-icon>mdi-flash</v-icon></code-btn>
             </div>
             <canvas ref="viewerCanvas" class="babylon-canvas" :title="hoverLabel"></canvas>
             <div class="button-container" :class="{ 'button-container-drawer': drawer }">
