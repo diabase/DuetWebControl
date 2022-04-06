@@ -66,9 +66,6 @@ export default {
 			this.sendCode(`M221 D${extruder} S${value}`);
 		},
 		getAssociatedTool(extruder) {
-			if (extruder == this.displayedExtruders.length -1) {
-				return extruder + ' (Assist)';
-			}
 			let tools = this.tools.filter(tool => tool && tool.extruders.indexOf(extruder) > -1).map(tool => tool.name || "Tool " + tool.number);
 			return extruder + ((tools.length) ? " (" + tools.join(", ") + ")" : "") ;
 		},
