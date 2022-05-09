@@ -33,8 +33,7 @@
 		<v-card-text class="d-flex flex-column pb-0">
 			<div v-for="fan in visibleFans" :key="fan" class="d-flex flex-column pt-2">
 				{{ (fan === -1) ? $t('panel.fans.toolFan') : (fans[fan].name ? fans[fan].name : $t('panel.fans.fan', [fan])) }}
-				<slider v-if="fan === -1 || !fans[fan] || fans[fan].min < 1.0" :value="getFanValue(fan)" @input="setFanValue(fan, $event)" :disabled="uiFrozen"></slider>
-				<v-switch v-else @change="setFanValue(fan, $event)" :disabled="uiFrozen" :label="`${$t('panel.fans.fanOn')}`"></v-switch>
+				<percentage-input :value="getFanValue(fan)" @input="setFanValue(fan, $event)" :disabled="uiFrozen"></percentage-input>
 			</div>
 		</v-card-text>
 

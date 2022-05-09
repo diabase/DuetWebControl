@@ -1,6 +1,9 @@
 .DS_Store
 node_modules
+/.vs
+/bin
 /dist
+/obj
 
 # local env files
 .env.local
@@ -16,8 +19,7 @@ yarn-error.log*
 .vscode
 *.suo
 *.ntvs*
-*.njsproj
-*.sln
 *.sw*
 Session.vim
 /.vs
+*.user

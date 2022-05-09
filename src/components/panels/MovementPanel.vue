@@ -14,7 +14,7 @@
 <template>
 	<v-card>
 		<v-card-title>
-			<code-btn v-show="visibleAxes.length" color="primary" :disabled="uiFrozen || isPrinting" small code="G28" :title="$t('button.home.titleAll')" class="ml-0 hidden-sm-and-down">
+			<code-btn v-show="visibleAxes.length" color="primary" small code="G28" :disabled="!canHome" :title="$t('button.home.titleAll')" class="ml-0 hidden-sm-and-down">
 				{{ $t('button.home.captionAll') }}
 			</code-btn>
 
@@ -24,9 +24,9 @@
 
 			<v-spacer></v-spacer>
 
-			<v-menu offset-y left :disabled="uiFrozen">
+			<v-menu offset-y left>
 				<template #activator="{ on }">
-					<v-btn v-show="visibleAxes.length" color="primary" small class="mx-0" :disabled="uiFrozen" :elevation="1" v-on="on">
+					<v-btn v-show="visibleAxes.length" color="primary" small class="mx-0" :elevation="1" v-on="on">
 						{{ $t('panel.movement.compensation') }} <v-icon>mdi-menu-down</v-icon>
 					</v-btn>
 				</template>
@@ -36,14 +36,14 @@
 						<template v-show="move.compensation">
 							<v-list-item>
 								<v-spacer></v-spacer>
-								{{ $t('panel.movement.compensationInUse', [move.compensation.type]) }}
+								{{ $t('panel.movement.compensationInUse', [$t(`panel.movement.compensationType.${move.compensation.type}`)]) }}
 								<v-spacer></v-spacer>
 							</v-list-item>
 
 							<v-divider></v-divider>
 						</template>
 
-						<v-list-item style="color:red !important;" @click="sendCode('G32')" :disabled="uiFrozen || isPrinting">
+						<v-list-item :disabled="!canHome" @click="sendCode('G32')">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t(isDelta ? 'panel.movement.runDelta' : 'panel.movement.runBed') }}
 						</v-list-item>
 						<v-list-item style="color:red !important;" @click="sendCode(commands.bedFlat)" :disabled="uiFrozen || isPrinting">
@@ -67,13 +67,13 @@
 
 						<v-divider></v-divider>
 
-						<v-list-item :style="{color: (state.currentTool == 10 ? 'red !important' : '')}" @click="sendCode('G29')" :disabled="state.currentTool != 10 || isPrinting">
+						<v-list-item :disabled="!canHome" @click="sendCode('G29')">
 							<v-icon class="mr-1">mdi-grid</v-icon> {{ $t('panel.movement.runMesh') }}
 						</v-list-item>
-						<v-list-item @click="showMeshEditDialog = true">
+						<v-list-item :disabled="uiFrozen" @click="showMeshEditDialog = true">
 							<v-icon class="mr-1">mdi-pencil</v-icon> {{ $t('panel.movement.editMesh') }}
 						</v-list-item>
-						<v-list-item @click="sendCode('G29 S1')">
+						<v-list-item :disabled="uiFrozen" @click="sendCode('G29 S1')">
 							<v-icon class="mr-1">mdi-content-save</v-icon> {{ $t('panel.movement.loadMesh') }}
 						</v-list-item>
 						<v-list-item :disabled="!isCompensationEnabled" @click="sendCode('G29 S2')">
@@ -84,18 +84,17 @@
 			</v-menu>
 		</v-card-title>
 
-		<v-card-text v-show="visibleAxes.length">
+		<v-card-text v-show="visibleAxes.length !== 0">
 			<!-- Mobile home buttons -->
 			<v-row class="hidden-md-and-up py-2" no-gutters>
 				<v-col>
-					<code-btn color="primary" code="G28" :disabled="uiFrozen || isPrinting" :title="$t('button.home.titleAll')" block tile>
+					<code-btn color="primary" code="G28" :disabled="!canHome" :title="$t('button.home.titleAll')" block tile>
 						{{ $t('button.home.captionAll') }}
 					</code-btn>
 				</v-col>
 				<template v-if="!isDelta">
 					<v-col v-for="(axis, axisIndex) in visibleAxes" :key="axisIndex">
-						<code-btn :color="axis.homed ? 'primary' : 'warning'" :disabled="uiFrozen || isPrinting" :title="$t('button.home.title', [axis.letter])" :code="`G28 ${axis.letter}`" block tile>
-
+						<code-btn :color="axis.homed ? 'primary' : 'warning'" :disabled="!canHome" :title="$t('button.home.title', [axis.letter])" :code="getHomeCode(axis)" block tile>
 							{{ $t('button.home.caption', [axis.letter]) }}
 						</code-btn>
 					</v-col>
@@ -105,8 +104,7 @@
 			<v-row v-for="(axis, axisIndex) in visibleAxes" :key="axisIndex" dense>
 				<!-- Regular home buttons -->
 				<v-col v-if="!isDelta" cols="auto" class="flex-shrink-1 hidden-sm-and-down">
-					<code-btn :color="axis.homed ? 'primary' : 'warning'" :disabled="uiFrozen || isPrinting" :title="$t('button.home.title', [axis.letter])" :code="`G28 ${axis.letter}`" class="ml-0">
-
+					<code-btn :color="axis.homed ? 'primary' : 'warning'" :disabled="!canHome" :title="$t('button.home.title', [axis.letter])" :code="getHomeCode(axis)" class="ml-0">
 						{{ $t('button.home.caption', [axis.letter]) }}
 					</code-btn>
 				</v-col>
@@ -114,8 +112,8 @@
 				<!-- Decreasing movements -->
 				<v-col>
 					<v-row no-gutters>
-						<v-col v-for="index in numMoveSteps" :key="-index"  :class="getMoveCellClass(index - 1)">
-							<code-btn :code="`M120\nG91\nG1 ${axis.letter}${-moveSteps(axis.letter)[index - 1]} F${moveFeedrate}\nG90\nM121`" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, index - 1)" block tile class="move-btn move-warn" :disabled="uiFrozen || (axis.letter == 'U' && turretLocked) || isPrinting">
+						<v-col v-for="index in numMoveSteps" :key="index"  :class="getMoveCellClass(index - 1)">
+							<code-btn :code="getMoveCode(axis, index - 1, true)" :disabled="!canMove(axis)" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, index - 1)" block tile class="move-btn">
 								<v-icon>mdi-chevron-left</v-icon> {{ axis.letter + showSign(-moveSteps(axis.letter)[index - 1]) }}
 							</code-btn>
 						</v-col>
@@ -126,7 +124,7 @@
 				<v-col>
 					<v-row no-gutters>
 						<v-col v-for="index in numMoveSteps" :key="index" :class="getMoveCellClass(numMoveSteps - index)">
-							<code-btn :code="`M120\nG91\nG1 ${axis.letter}${moveSteps(axis.letter)[numMoveSteps - index]} F${moveFeedrate}\nG90\nM121`" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, numMoveSteps - index)" block tile class="move-btn move-warn" :disabled="uiFrozen || (axis.letter == 'U' && turretLocked) || isPrinting">
+							<code-btn :code="getMoveCode(axis, numMoveSteps - index, false)" :disabled="!canMove(axis)" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, numMoveSteps - index)" block tile class="move-btn">
 								{{ axis.letter + showSign(moveSteps(axis.letter)[numMoveSteps - index]) }} <v-icon>mdi-chevron-right</v-icon>
 							</code-btn>
 						</v-col>
@@ -156,13 +154,12 @@
 
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
-import { KinematicsName } from '../../store/machine/modelEnums.js'
-import { StatusType } from '../../store/machine/modelEnums.js'
+import { KinematicsName, StatusType } from '@/store/machine/modelEnums'
 
 export default {
 	computed: {
 		...mapGetters(['isConnected', 'uiFrozen']),
-		...mapState('machine/model', ['move', 'sensors', 'state']),
+		...mapState('machine/model', ['move', 'state']),
 		...mapState('machine/settings', ['moveFeedrate']),
 		...mapGetters('machine/settings', ['moveSteps', 'numMoveSteps']),
 		isCompensationEnabled() { return this.move.compensation.type.toLowerCase() !== 'none' },
@@ -172,25 +169,17 @@ export default {
 				!(axis.letter == 'V' || axis.letter == 'W'));
 		},
 		isDelta() {
-			return ((this.move.kinematics.name === KinematicsName.delta) ||
-					(this.move.kinematics.name === KinematicsName.rotaryDelta));
+			return (this.move.kinematics.name === KinematicsName.delta ||
+					this.move.kinematics.name === KinematicsName.rotaryDelta);
 		},
-		unhomedAxes() {
-			return this.move.axes.filter(axis =>
-				axis.visible &&
-				!(axis.letter == 'V' || axis.letter == 'W') &&
-				!axis.homed);
+		canHome() {
+			return !this.uiFrozen && (
+				this.state.status !== StatusType.pausing &&
+				this.state.status !== StatusType.processing &&
+				this.state.status !== StatusType.resuming
+			);
 		},
-		turretLocked() {
-			return this.sensors
-				&& this.sensors.endstops
-				&& this.sensors.endstops.length > 4
-				&& this.sensors.endstops[4] !== null 
-				&& !this.sensors.endstops[4].triggered;
-		},
-		isPrinting(){
-			return this.state.status == StatusType.processing;
-		}
+		unhomedAxes() { return this.move.axes.filter(axis => axis.visible && !axis.homed); }
 	},
 	data() {
 		return {
@@ -213,6 +202,12 @@ export default {
 	methods: {
 		...mapActions('machine', ['sendCode']),
 		...mapMutations('machine/settings', ['setMoveStep']),
+		canMove(axis) {
+			return (axis.homed || !this.move.noMovesBeforeHoming) && this.canHome;
+		},
+		getHomeCode(axis) {
+			return `G28 ${/[a-z]/.test(axis.letter) ? '\'' : ''}${axis.letter.toUpperCase()}`;
+		},
 		getMoveCellClass(index) {
 			let classes = '';
 			if (index === 0 || index === 5) {
@@ -222,6 +217,9 @@ export default {
 				classes += 'hidden-md-and-down';
 			}
 			return classes;
+		},
+		getMoveCode(axis, index, decrementing) {
+			return `M120\nG91\nG1 ${/[a-z]/.test(axis.letter) ? '\'' : ''}${axis.letter.toUpperCase()}${decrementing ? '-' : ''}${this.moveSteps(axis.letter)[index]} F${this.moveFeedrate}\nM121`;
 		},
 		showSign: (value) => (value > 0) ? `+${value}` : value,
 		showMoveStepDialog(axis, index) {

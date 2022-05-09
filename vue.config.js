@@ -4,6 +4,7 @@ const ZipPlugin = require('zip-webpack-plugin')
 
 module.exports = {
 	configureWebpack: {
+		devtool: 'source-map',
 		externals: {
 			moment: 'moment'
 		},
@@ -23,15 +24,17 @@ module.exports = {
 			new CompressionPlugin({
 				minRatio: Infinity
 			}),
-			new ZipPlugin({
-				filename: 'DuetWebControl-SD.zip',
-				include: [/\.gz$/, /\.woff$/, /\.woff2$/],
-				exclude: [/DummyPlugin/, 'robots.txt']
-			}),
-			new ZipPlugin({
-				filename: 'DuetWebControl-SBC.zip',
-				exclude: [/\.gz$/, /\.zip$/, /DummyPlugin/]
-			})
+			...((process.env.NOZIP) ? [] : [
+				new ZipPlugin({
+					filename: 'DuetWebControl-SD.zip',
+					include: [/\.gz$/, /\.woff$/, /\.woff2$/],
+					exclude: [/DummyPlugin/, 'robots.txt']
+				}),
+				new ZipPlugin({
+					filename: 'DuetWebControl-SBC.zip',
+					exclude: [/\.gz$/, /\.zip$/, /DummyPlugin/]
+				})
+			])
 		] : []
 	},
 	chainWebpack: config => {

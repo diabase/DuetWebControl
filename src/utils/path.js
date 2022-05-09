@@ -169,6 +169,7 @@ const pathObj = {
 	heightmapFile: 'heightmap.csv',
 
 	accelerometer: '0:/sys/accelerometer',
+	closedLoop: '0:/sys/closed-loop',
 
 	combine,
 	equals,

@@ -2,8 +2,8 @@
 
 // eslint-disable-next-line no-unused-vars
 import { version } from '../../package.json'
-import store from '../store'
-import { Plugin } from '../store/machine/modelItems.js'
+import store from '@/store'
+import { Plugin } from '@/store/machine/modelItems.js'
 
 // This class is meant only built-in DWC plugins and for dev purposes.
 // Use a standard PluginManifest instance if you want to redistribute your own third-party plugin!
@@ -155,5 +155,6 @@ export default [
 			'./ToolPriming/index.js'
 		)
 	}),
+	// #DWC_PLUGIN# <- this marker is used by the plugin build script, leave it here
 	// Add your own plugins here during development...
 ]

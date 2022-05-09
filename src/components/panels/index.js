@@ -27,6 +27,13 @@ import ToolsPanel from './ToolsPanel.vue'
 import TurretLockPanel from './TurretLockPanel.vue'
 import WebcamPanel from './WebcamPanel.vue'
 import ZBabystepPanel from './ZBabystepPanel.vue'
+import FFFContainerPanel from './FFFContainerPanel.vue'
+import FFFDashboardPanel from './FFFDashboardPanel.vue'
+import CNCAxesPosition from './CNCAxesPosition.vue'
+import CNCContainerPanel from './CNCContainerPanel.vue'
+import CNCMovementPanel from './CNCMovementPanel.vue'
+import CNCDashboardPanel from './CNCDashboardPanel.vue'
+import SpindleSpeedPanel from './SpindleSpeedPanel'
 
 Vue.component('atx-panel', ATXPanel)
 Vue.component('extrude-panel', ExtrudePanel)
@@ -53,3 +60,10 @@ Vue.component('tools-panel', ToolsPanel)
 Vue.component('turret-lock-panel', TurretLockPanel)
 Vue.component('webcam-panel', WebcamPanel)
 Vue.component('z-babystep-panel', ZBabystepPanel)
+Vue.component('cnc-axes-position', CNCAxesPosition)
+Vue.component('fff-container-panel', FFFContainerPanel)
+Vue.component('fff-dashboard-panel', FFFDashboardPanel)
+Vue.component('cnc-container-panel', CNCContainerPanel)
+Vue.component('cnc-movement-panel', CNCMovementPanel)
+Vue.component('cnc-dashboard-panel', CNCDashboardPanel)
+Vue.component('spindle-speed-panel', SpindleSpeedPanel)

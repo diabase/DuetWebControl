@@ -2,13 +2,10 @@
 #title:not(:hover) {
 	color: inherit;
 }
-#title {
-	margin-right: 20px;
-}
 
 .empty-table-fix td {
-	padding-left: 0px !important;
-	padding-right: 0px !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 }
 
 .global-control.theme--light {
@@ -25,12 +22,12 @@
 }
 
 input[type='number'] {
-    -moz-appearance: textfield;
+	-moz-appearance: textfield;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
+	-webkit-appearance: none;
 }
 
 a:not(:hover) {
@@ -49,37 +46,47 @@ textarea {
 	color: #FFF !important;
 }
 
-.v-card__title {
-	font-size: 1rem;
+.v-speed-dial--fixed {
+	z-index: 5;
+}
+
+.v-btn {
+	text-transform: unset !important;
 }
 </style>
 
 <template>
 	<v-app>
-		<v-navigation-drawer v-model="drawer" clipped fixed app width="300">
-			<div class="pa-2 hidden-sm-and-up">
-				<connect-btn v-if="isLocal" class="mb-3" block></connect-btn>
-				<emergency-btn block></emergency-btn>
+		<v-navigation-drawer v-if="!showBottomNavigation" v-model="drawer" clipped fixed app :width="$vuetify.breakpoint.smAndDown ? 275 : 256" :expand-on-hover="iconMenu" :mini-variant="iconMenu">
+			<div class="mb-3 hidden-sm-and-up">
+				<div class="ma-2">
+					<connect-btn v-if="showConnectButton" class="mb-2" block/>
+				</div>
+				<upload-btn target="start" :elevation="1" class="ma-2" block/>
 			</div>
 
-			<v-list class="pt-0" :expand="$vuetify.breakpoint.mdAndUp">
+			<v-list class="pt-0" :dense="!$vuetify.breakpoint.smAndDown" :expand="!$vuetify.breakpoint.smAndDown">
 				<v-list-group v-for="(category, index) in categories" :key="index" :prepend-icon="category.icon" no-action :value="isExpanded(category)">
 					<template #activator>
-						<v-list-item-title class="mr-0">{{ category.translated ? category.caption : $t(category.caption) }}</v-list-item-title>
+						<v-list-item-title class="mr-0">
+							{{ category.translated ? category.caption : $t(category.caption) }}
+						</v-list-item-title>
 					</template>
 
 					<v-list-item v-for="(page, pageIndex) in getPages(category)" :key="`${index}-${pageIndex}`" v-ripple :to="page.path" @click.prevent="">
 						<v-list-item-icon>
-							<v-icon>{{ page.icon }}</v-icon>
+							<v-icon v-text="page.icon"></v-icon>
 						</v-list-item-icon>
-						<v-list-item-title>{{ page.translated ? page.caption : $t(page.caption) }}</v-list-item-title>
+						<v-list-item-title>
+							{{ page.translated ? page.caption : $t(page.caption) }}
+						</v-list-item-title>
 					</v-list-item>
 				</v-list-group>
 			</v-list>
 		</v-navigation-drawer>
 
 		<v-app-bar ref="appToolbar" app clipped-left>
-			<v-app-bar-nav-icon @click.stop="drawer = !drawer">
+			<v-app-bar-nav-icon v-show="!showBottomNavigation" @click.stop="drawer = !drawer">
 				<v-icon>mdi-menu</v-icon>
 			</v-app-bar-nav-icon>
 			<v-toolbar-title>
@@ -96,11 +103,11 @@ textarea {
 			<v-spacer></v-spacer>
 			<connect-btn v-if="isLocal" class="hidden-xs-only"></connect-btn>
 
-			<v-spacer></v-spacer>
+			<v-spacer/>
 
-			<code-input class="mx-3 hidden-sm-and-down"></code-input>
+			<code-input class="mx-3 hidden-sm-and-down"/>
 
-			<v-spacer></v-spacer>
+			<v-spacer/>
 
 			<code-btn class="mr-1" :code="`M291 P${doubleQuote}Jog${doubleQuote} S2 X1 Y1 Z1 U1 V1 W1 A1 B1 C1`" :title="`${ $t('button.titlebar.jogTitle') }`" no-wait lock>
 				<v-icon small>mdi-arrow-all</v-icon> {{ $t('button.titlebar.jog') }}
@@ -114,58 +121,63 @@ textarea {
 		</v-app-bar>
 
 		<v-main id="content">
-			<v-scroll-y-transition>
-				<v-container v-show="!hideGlobalContainer || $vuetify.breakpoint.mdAndUp" id="global-container" fluid>
-					<v-row>
-						<v-col cols="12" sm="6" md="4" lg="4" xl="4">
-							<status-panel></status-panel>
-						</v-col>
+			<v-container class="hidden-sm-and-down" id="global-container" fluid>
+				<fff-container-panel v-if="isFFForUnset"/>
+				<cnc-container-panel v-else/>
+			</v-container>
 
-						<v-col cols="12" sm="6" md="5" lg="5" xl="4">
-							<tools-panel></tools-panel>
-						</v-col>
-
-						<v-col v-if="$vuetify.breakpoint.mdAndUp" :class="{ 'd-flex': hasTemperaturesToDisplay }" md="3" lg="3" xl="4">
-							<temperature-chart></temperature-chart>
-						</v-col>
-					</v-row>
-				</v-container>
-			</v-scroll-y-transition>
-
-			<v-divider v-show="!hideGlobalContainer || $vuetify.breakpoint.mdAndUp"></v-divider>
+			<v-divider class="hidden-sm-and-down"/>
 
 			<v-container fluid>
 				<keep-alive>
-					<router-view></router-view>
+					<router-view/>
 				</keep-alive>
 			</v-container>
 		</v-main>
 
-		<connect-dialog></connect-dialog>
-		<connection-dialog></connection-dialog>
-		<file-transfer-dialog></file-transfer-dialog>
-		<messagebox-dialog></messagebox-dialog>
-		<plugin-install-dialog></plugin-install-dialog>
+		<notification-display/>
 
-		<component v-for="component in injectedComponentNames" :is="component" :key="component"></component>
+		<v-bottom-navigation v-if="showBottomNavigation" app>
+			<v-menu v-for="(category, index) in categories" :key="index" top offset-y>
+				<template #activator="{ on }">
+					<v-btn v-on="on">
+						{{ category.translated ? category.caption : $t(category.caption) }}
+						<v-icon v-text="category.icon" class="mb-1"/>
+					</v-btn>
+				</template>
+
+				<v-list-item v-for="(page, pageIndex) in getPages(category)" :key="`${index}-${pageIndex}`" :to="page.path" @click.prevent="" class="global-control">
+					<v-icon v-text="page.icon" class="mr-2"/>
+					{{ page.translated ? page.caption : $t(page.caption) }}
+				</v-list-item>
+			</v-menu>
+		</v-bottom-navigation>
+
+		<connect-dialog/>
+		<connection-dialog/>
+		<file-transfer-dialog/>
+		<messagebox-dialog/>
+		<plugin-install-dialog/>
+
+		<component v-for="component in injectedComponentNames" :is="component" :key="component"/>
 	</v-app>
 </template>
 
 <script>
 'use strict'
 
+import Vue from 'vue'
 import Piecon from 'piecon'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import { Menu, Routes } from './routes'
-import { isPrinting } from './store/machine/modelEnums.js'
+import { isPrinting, StatusType } from './store/machine/modelEnums.js'
+import { MachineMode } from './store/machine/modelEnums.js';
+import { DashboardMode } from './store/settings.js'
 
 export default {
 	computed: {
 		...mapState({
-			isLocal: state => state.isLocal,
-			globalShowConnectDialog: state => state.showConnectDialog,
-
 			boards: state => state.machine.model.boards,
 			menuDirectory: state => state.machine.model.directories.menu,
 			name: state => state.machine.model.network.name,
@@ -173,13 +185,19 @@ export default {
 
 			darkTheme: state => state.settings.darkTheme,
 			webcam: state => state.settings.webcam,
+			machineMode: state => state.machine.model.state.machineMode,
+			bottomNavigation: state => state.settings.bottomNavigation,
+			iconMenu: state => state.settings.iconMenu,
 
 			injectedComponents: state => state.uiInjection.injectedComponents
 		}),
+		...mapState('settings',['dashboardMode']),
 		...mapGetters('machine', ['hasTemperaturesToDisplay']),
 		...mapGetters('machine/model', ['jobProgress']),
 		categories() {
-			return Object.keys(Menu).map(key => Menu[key]).filter(item => item.condition || item.pages.some(page => page.condition));
+			return Object.keys(Menu)
+				.map(key => Menu[key])
+				.filter(item => item.condition || item.pages.some(page => page.condition));
 		},
 		currentPageCondition() {
 			const currentRoute = this.$route;
@@ -190,17 +208,21 @@ export default {
 					if (curPath.endsWith(route.path))
 						flag = (curPath.substring(0, curPath.length-route.path.length) + route.path === curPath && route.condition)
 				}
-				if (!flag && route.children != undefined)
+				if (!flag && route.children !== undefined) {
 					flag = route.children.some(child => checkRoute(child, true));
+				}
 				return flag;
 			};
 			return Routes.some(route => checkRoute(route));
 		},
-		toggleGlobalContainerColor() {
-			if (this.hideGlobalContainer) {
-				return this.darkTheme ? 'red darken-5' : 'red lighten-4';
+		isFFForUnset() {
+			if (this.dashboardMode === DashboardMode.default) {
+				return !this.machineMode || this.machineMode === MachineMode.fff;
 			}
-			return this.darkTheme ? 'green darken-5' : 'green lighten-4';
+			return this.dashboardMode === DashboardMode.fff;
+		},
+		showBottomNavigation() {
+			return this.$vuetify.breakpoint.mobile && !this.$vuetify.breakpoint.xsOnly && this.bottomNavigation;
 		}
 	},
 	data() {
@@ -215,30 +237,34 @@ export default {
 	methods: {
 		...mapActions(['connect', 'disconnectAll']),
 		...mapActions('settings', ['load']),
-		getPages(category) {
-			return category.pages.filter(page => page.condition);
-		},
 		isExpanded(category) {
-			if (this.$vuetify.breakpoint.xsOnly) {
+			if (this.$vuetify.breakpoint.smAndDown) {
 				const route = this.$route;
 				return category.pages.some(page => page.path === route.path);
 			}
 			return true;
 		},
+		getPages(category) {
+			return category.pages.filter(page => page.condition);
+		},
 		updateTitle() {
-			const jobProgress = this.jobProgress;
-			const title = ((jobProgress > 0 && isPrinting(this.status)) ? `(${(jobProgress * 100).toFixed(1)}%) ` : '') + this.name;
-			if (document.title !== title) {
-				document.title = title;
+			if (this.status === StatusType.disconnected) {
+				document.title = `(${this.name})`;
+			} else {
+				const jobProgress = this.jobProgress;
+				const title = ((jobProgress > 0 && isPrinting(this.status)) ? `(${(jobProgress * 100).toFixed(1)}%) ` : '') + this.name;
+				if (document.title !== title) {
+					document.title = title;
+				}
 			}
-		}
+		},
 	},
 	mounted() {
 		// Attempt to disconnect from every machine when the page is being unloaded
 		window.addEventListener('unload', this.disconnectAll);
 
 		// Connect if running on a board
-		if (!this.isLocal) {
+		if (process.env.NODE_ENV === 'production') {
 			this.connect();
 		}
 
@@ -246,6 +272,7 @@ export default {
 		this.load();
 
 		// Validate navigation
+		Vue.prototype.$vuetify = this.$vuetify;
 		this.$router.beforeEach((to, from, next) => {
 			if (Routes.some(route => route.path === to.path && !route.condition)) {
 				next('/');
@@ -272,6 +299,10 @@ export default {
 			this.$vuetify.theme.dark = to;
 		},
 		status(to, from) {
+			if (to === StatusType.disconnected || from === StatusType.disconnected) {
+				this.updateTitle();
+			}
+
 			const printing = isPrinting(to);
 			if (printing !== isPrinting(from)) {
 				if (printing) {

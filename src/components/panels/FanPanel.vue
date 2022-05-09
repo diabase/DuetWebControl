@@ -9,7 +9,7 @@
 </style>
 
 <template>
-	<v-card v-show="canControlFans">
+	<v-card>
 		<v-card-title class="pb-0">
 			<v-icon small class="mr-1">mdi-fan</v-icon> {{ $t('panel.fan.caption') }}
 		</v-card-title>
@@ -35,8 +35,7 @@
 				</v-col>
 
 				<v-col cols="12" sm="auto" order="0" order-sm="1" class="flex-sm-grow-1">
-					<slider v-if="!fans[fan] || fans[fan].min < 1.0" v-model="fanValue" :disabled="uiFrozen"></slider>
-					<v-switch v-else class="pt-6" v-model="fanValue" :disabled="uiFrozen" :label="`${$t('panel.fans.fanOn')}`"></v-switch>
+					<percentage-input v-model="fanValue" :disabled="uiFrozen"></percentage-input>
 				</v-col>
 			</v-row>
 		</v-card-text>
@@ -53,9 +52,6 @@ export default {
 		...mapState('machine/model', ['fans']),
 		...mapGetters(['uiFrozen']),
 		...mapGetters('machine/model', ['currentTool']),
-		canControlFans() {
-			return !this.uiFrozen && ((this.currentTool && this.currentTool.fans.length > 0) || (this.fans.some(fan => fan && !fan.thermostatic.control)));
-		},
 		fanValue: {
 			get() {
 				// Even though RRF allows multiple fans to be assigned to a tool,

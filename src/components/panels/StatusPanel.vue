@@ -79,7 +79,7 @@ table tbody tr:hover {
 
 			<!-- Extruders -->
 			<template v-if="move.extruders.length">
-				<v-divider v-show="move.axes.length" class="my-2"></v-divider>
+				<v-divider v-show="visibleAxes.length" class="my-2"></v-divider>
 
 				<v-row align-content="center" no-gutters class="flex-nowrap">
 					<v-col tag="strong" class="category-header">
@@ -192,7 +192,7 @@ table tbody tr:hover {
 
 					<v-col>
 						<v-row align-content="center" justify="center" no-gutters>
-							<v-col v-if="boards.length && boards[0].vIn.current > 0" class="d-flex flex-column align-center">
+							<v-col v-if="boards.length && boards[0].vIn && boards[0].vIn.current > 0" class="d-flex flex-column align-center">
 								<strong>
 									{{ $t('panel.status.vIn') }}
 								</strong>
@@ -207,7 +207,7 @@ table tbody tr:hover {
 								</v-tooltip>
 							</v-col>
 
-							<v-col v-if="boards.length && boards[0].v12.current > 0" class="d-flex flex-column align-center">
+							<v-col v-if="boards.length && boards[0].v12 && boards[0].v12.current > 0" class="d-flex flex-column align-center">
 								<strong>
 									{{ $t('panel.status.v12') }}
 								</strong>
@@ -222,7 +222,7 @@ table tbody tr:hover {
 								</v-tooltip>
 							</v-col>
 
-							<v-col v-if="boards.length && boards[0].mcuTemp.current > -273" class="d-flex flex-column align-center">
+							<v-col v-if="boards.length && boards[0].mcuTemp && boards[0].mcuTemp.current > -273" class="d-flex flex-column align-center">
 								<strong class="text-no-wrap">
 									{{ $t('panel.status.mcuTemp') }}
 								</strong>
@@ -284,10 +284,11 @@ table tbody tr:hover {
 import { mapState, mapGetters } from 'vuex'
 
 import { ProbeType, isPrinting } from '../../store/machine/modelEnums.js'
+import { UnitOfMeasure } from '../../store/settings.js'
 
 export default {
 	computed: {
-		...mapState('settings', ['darkTheme']),
+		...mapState('settings', ['darkTheme', 'displayUnits', 'decimalPlaces']),
 		...mapState('machine', ['wcsNames', 'vendor']),
 		...mapState('machine/model', {
 			boards: state => state.boards,
@@ -313,9 +314,9 @@ export default {
 			return this.sensors.probes.filter(probe => probe !== null && probe.type !== ProbeType.none);
 		},
 		sensorsPresent() {
-			return ((this.boards.length && this.boards[0].vIn.current > 0) ||
-					(this.boards.length && this.boards[0].v12.current > 0) ||
-					(this.boards.length && this.boards[0].mcuTemp.current > -273) ||
+			return ((this.boards.length && this.boards[0].vIn && this.boards[0].vIn.current > 0) ||
+					(this.boards.length && this.boards[0].v12 && this.boards[0].v12.current > 0) ||
+					(this.boards.length && this.boards[0].mcuTemp && this.boards[0].mcuTemp.current > -273) ||
 					(this.fanRPM.length !== 0) ||
 					(this.probesPresent));
 		},
@@ -336,7 +337,18 @@ export default {
 			const position = this.displayToolPosition ? axis.userPosition : axis.machinePosition;
 			return this.$display(position, 3);
 			// return (axis.letter === 'Z') ? this.$displayZ(position, false) : this.$display(position, 1);
-		},
+        },
+        displayAxisPosition(axis) {
+            const position = (this.displayToolPosition ? axis.userPosition : axis.machinePosition) /
+							((this.displayUnits === UnitOfMeasure.imperial) ? 25.4 : 1);
+			return axis.letter === 'Z' ? this.$displayZ(position, false) : this.$display(position, this.decimalPlaces);
+        },
+		displaySpeed(speed) {
+			if(this.displayUnits === UnitOfMeasure.imperial) {
+				return this.$display(speed*60/25.4, 1, this.$t('panel.settingsAppearance.unitInchSpeed'));	// to ipm
+			}
+			return this.$display(speed, 1,  this.$t('panel.settingsAppearance.unitMmSpeed'));
+		
 		isFilamentSensorPresent(extruderIndex) {
 			return (extruderIndex < this.sensors.filamentMonitors.length) &&
 					this.sensors.filamentMonitors[extruderIndex] &&

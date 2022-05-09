@@ -40,10 +40,10 @@ import Chart from 'chart.js'
 import dateFnsLocale from 'date-fns/locale/en-US'
 import { mapState, mapGetters } from 'vuex'
 
-import i18n from '../../i18n'
-import { defaultMachine } from '../../store/machine'
-import Events from '../../utils/events.js'
-import { getRealHeaterColor } from '../../utils/colors.js'
+import i18n from '@/i18n'
+import { defaultMachine } from '@/store/machine'
+import Events from '@/utils/events.js'
+import { getRealHeaterColor } from '@/utils/colors.js'
 
 const sampleInterval = 1000			// ms
 const defaultMaxTemperature = 300	// degC
@@ -136,10 +136,8 @@ export default {
 			this.chart.update();
 		},
 		applyDarkTheme(active) {
-			const legendColor = active ? '#FFF' : 'rgba(0,0,0,0.87)';
-			this.chart.config.options.legend.labels.fontColor = legendColor;
-
 			const ticksColor = active ? '#FFF' : '#666';
+			this.chart.config.options.legend.labels.fontColor = ticksColor;
 			this.chart.config.options.scales.xAxes[0].ticks.major.fontColor = ticksColor;
 			this.chart.config.options.scales.xAxes[0].ticks.minor.fontColor = ticksColor;
 			this.chart.config.options.scales.yAxes[0].ticks.major.fontColor = ticksColor;
@@ -182,18 +180,15 @@ export default {
 							}
 						},
 						gridLines: {
-							color: 'rgba(0,0,0,0.2)',
 							display: true
 						},
 						ticks: {
 							min: new Date() - maxSampleTime,
 							max: new Date(),
 							minor: {
-								fontColor: 'rgba(0,0,0,0.87)',
 								fontFamily: 'Roboto,sans-serif'
 							},
 							major: {
-								fontColor: 'rgba(0,0,0,0.87)',
 								fontFamily: 'Roboto,sans-serif'
 							}
 						},
@@ -209,17 +204,13 @@ export default {
 				yAxes: [
 					{
 						gridLines: {
-							color: 'rgba(0,0,0,0.2)',
-							zeroLineColor: 'rgba(0,0,0,0.2)',
 							display: true
 						},
 						ticks: {
 							minor: {
-								fontColor: '#666',
 								fontFamily: 'Roboto,sans-serif'
 							},
 							major: {
-								fontColor: '#666',
 								fontFamily: 'Roboto,sans-serif'
 							},
 							min: 0,

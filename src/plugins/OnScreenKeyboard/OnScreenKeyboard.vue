@@ -45,7 +45,6 @@ export default {
 	computed: mapState('settings', ['darkTheme']),
 	data() {
 		return {
-			originalMargin: null,
 			input: null,
 			keyboard: null
 		}
@@ -61,21 +60,23 @@ export default {
 	},
 	methods: {
 		inputFocused(e) {
-			if (e.target != this.input && (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)) {
+			if (e.target !== this.input && (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)) {
 				this.input = e.target;
 				this.$nextTick(function() {
 					// Create a new keyboard instance
-					this.keyboard = new Keyboard({
-						mergeDisplay: true,
-						display: {
-							'{enter}': 'enter'
-						},
-						onChange: this.updateValue,
-						onKeyPress: this.onKeyPress,
-						newLineOnEnter: e.target instanceof HTMLTextAreaElement,
-						tabCharOnTab: e.target instanceof HTMLTextAreaElement,
-						theme: this.darkTheme ? 'hg-theme-default dark' : 'hg-theme-default'
-					});
+					if (!this.keyboard) {
+						this.keyboard = new Keyboard({
+							mergeDisplay: true,
+							display: {
+								'{enter}': 'enter'
+							},
+							onChange: this.updateValue,
+							onKeyPress: this.onKeyPress,
+							newLineOnEnter: e.target instanceof HTMLTextAreaElement,
+							tabCharOnTab: e.target instanceof HTMLTextAreaElement,
+							theme: this.darkTheme ? 'hg-theme-default dark' : 'hg-theme-default'
+						});
+					}
 					this.keyboard.setInput(e.target.value);
 
 					if (e.target.type === 'number') {
@@ -91,9 +92,6 @@ export default {
 							}
 						});
 						this.keyboard.setInput('');
-					} else if (e.target.type == 'textarea') {
-						this.originalMargin = e.target.style.marginBottom;
-						e.target.style.marginBottom = `${this.$refs.keyboard.offsetHeight}px`;
 					}
 
 					// Add some space at the bottom so the keyboard does not cover inputs 
@@ -109,13 +107,10 @@ export default {
 			}
 		},
 		hide() {
-			if (this.keyboard !== null) {
-				window.oskOpen = false;
-				document.body.style.marginBottom = '0px';
-				this.input.style.marginBottom = this.originalMargin;
-				this.input = this.originalMargin = null;
-				this.keyboard = null;
-			}
+			this.input = null;
+			this.keyboard = null;
+			document.body.style.marginBottom = '0px';
+			window.oskOpen = false;
 		},
 		onInput(e) {
 			this.keyboard.setInput(e.target.value);
