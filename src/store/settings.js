@@ -30,7 +30,7 @@ export default {
 		darkTheme: false,
 		useBinaryPrefix: true,
 		disableAutoComplete: false,
-        dashboardMode: DashboardMode.default,
+        dashboardMode: DashboardMode.fff, //DashboardMode.default,
         bottomNavigation: true,
         numericInputs: false,
 		iconMenu: false,

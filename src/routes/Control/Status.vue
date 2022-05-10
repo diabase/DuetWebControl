@@ -1,7 +1,7 @@
 <template>
 	<div class="mb-3">
-		<fff-container-panel v-if="isFFForUnset"></fff-container-panel>
-		<cnc-container-panel v-else></cnc-container-panel>
+		<fff-container-panel></fff-container-panel>
+		<!--cnc-container-panel v-else></cnc-container-panel-->
 	</div>
 </template>
 

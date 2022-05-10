@@ -122,8 +122,8 @@ textarea {
 
 		<v-main id="content">
 			<v-container class="hidden-sm-and-down" id="global-container" fluid>
-				<fff-container-panel v-if="isFFForUnset"/>
-				<cnc-container-panel v-else/>
+				<fff-container-panel/>
+				<!--cnc-container-panel v-else/-->
 			</v-container>
 
 			<v-divider class="hidden-sm-and-down"/>

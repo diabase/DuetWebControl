@@ -17,12 +17,12 @@
 				</template>
 				{{ $t('panel.settingsAppearance.disableAutoCompleteTitle') }}
 			</v-tooltip>
-			<v-select :items="dashboardModes" :label="$t('panel.settingsAppearance.dashboardModeTitle')" class="mt-3" hide-details item-text="value" item-value="value" v-model="dashboardMode"></v-select>
+			<!--v-select :items="dashboardModes" :label="$t('panel.settingsAppearance.dashboardModeTitle')" class="mt-3" hide-details item-text="value" item-value="value" v-model="dashboardMode"></v-select-->
 			<v-switch :label="$t('panel.settingsAppearance.bottomNavigation')" hide-details v-model="bottomNavigation"></v-switch>
 			<v-switch :label="$t('panel.settingsAppearance.numericInputs')" hide-details v-model="numericInputs"></v-switch>
 			<v-switch :label="$t('panel.settingsAppearance.iconMenu')" hide-details v-model="iconMenu"></v-switch>
-			<v-select :items="[0, 1, 2, 3, 4]" v-model.number="decimalPlaces" :label="$t('panel.settingsAppearance.decimalPlaces')" hide-details class="mt-3"></v-select>
-			<v-select :items="unitsOfMeasure" v-model="displayUnits" :label="$t('panel.settingsAppearance.displayUnitsTitle')" class="mt-3" hide-details item-text="value" item-value="value"></v-select>
+			<!--v-select :items="[0, 1, 2, 3, 4]" v-model.number="decimalPlaces" :label="$t('panel.settingsAppearance.decimalPlaces')" hide-details class="mt-3"></v-select-->
+			<!--v-select :items="unitsOfMeasure" v-model="displayUnits" :label="$t('panel.settingsAppearance.displayUnitsTitle')" class="mt-3" hide-details item-text="value" item-value="value"></v-select-->
 		</v-card-text>
 	</v-card>
 </template>
