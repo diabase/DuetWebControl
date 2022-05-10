@@ -338,17 +338,17 @@ export default {
 			return this.$display(position, 3);
 			// return (axis.letter === 'Z') ? this.$displayZ(position, false) : this.$display(position, 1);
         },
-        displayAxisPosition(axis) {
-            const position = (this.displayToolPosition ? axis.userPosition : axis.machinePosition) /
-							((this.displayUnits === UnitOfMeasure.imperial) ? 25.4 : 1);
-			return axis.letter === 'Z' ? this.$displayZ(position, false) : this.$display(position, this.decimalPlaces);
-        },
+        // displayAxisPosition(axis) {
+        //     const position = (this.displayToolPosition ? axis.userPosition : axis.machinePosition) /
+		// 					((this.displayUnits === UnitOfMeasure.imperial) ? 25.4 : 1);
+		// 	return axis.letter === 'Z' ? this.$displayZ(position, false) : this.$display(position, this.decimalPlaces);
+        // },
 		displaySpeed(speed) {
 			if(this.displayUnits === UnitOfMeasure.imperial) {
 				return this.$display(speed*60/25.4, 1, this.$t('panel.settingsAppearance.unitInchSpeed'));	// to ipm
 			}
 			return this.$display(speed, 1,  this.$t('panel.settingsAppearance.unitMmSpeed'));
-		
+		},
 		isFilamentSensorPresent(extruderIndex) {
 			return (extruderIndex < this.sensors.filamentMonitors.length) &&
 					this.sensors.filamentMonitors[extruderIndex] &&

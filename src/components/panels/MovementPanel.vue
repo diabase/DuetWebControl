@@ -9,6 +9,10 @@
 .move-warn {
 	color: red !important;
 }
+
+.compensation-color {
+	color: red !important; 
+ }
 </style>
 
 <template>
@@ -43,22 +47,22 @@
 							<v-divider></v-divider>
 						</template>
 
-						<v-list-item :disabled="!canHome" @click="sendCode('G32')">
+						<v-list-item class="compensation-color" :disabled="!canHome" @click="sendCode('G32')">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t(isDelta ? 'panel.movement.runDelta' : 'panel.movement.runBed') }}
 						</v-list-item>
-						<v-list-item style="color:red !important;" @click="sendCode(commands.bedFlat)" :disabled="uiFrozen || isPrinting">
+						<v-list-item  class="compensation-color" @click="sendCode(commands.bedFlat)" :disabled="uiFrozen || isPrinting">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBedFlat') }}
 						</v-list-item>
-						<v-list-item style="color:red !important;" @click="sendCode(commands.bedDovetail)" :disabled="uiFrozen || isPrinting">
+						<v-list-item  class="compensation-color" @click="sendCode(commands.bedDovetail)" :disabled="uiFrozen || isPrinting">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBedDovetail') }}
 						</v-list-item>
-						<v-list-item style="color:red !important;" @click="sendCode(commands.bed4)" :disabled="uiFrozen || isPrinting">
+						<v-list-item  class="compensation-color" @click="sendCode(commands.bed4)" :disabled="uiFrozen || isPrinting">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBed4') }}
 						</v-list-item>
-						<v-list-item style="color:red !important;" @click="sendCode(commands.bed5)" :disabled="uiFrozen || isPrinting">
+						<v-list-item  class="compensation-color" @click="sendCode(commands.bed5)" :disabled="uiFrozen || isPrinting">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBed5') }}
 						</v-list-item>
-						<v-list-item style="color:red !important;" @click="sendCode(commands.bedRotary)" :disabled="uiFrozen || isPrinting">
+						<v-list-item  class="compensation-color" @click="sendCode(commands.bedRotary)" :disabled="uiFrozen || isPrinting">
 							<v-icon class="mr-1">mdi-format-vertical-align-center</v-icon> {{ $t('panel.movement.runBedRotary') }}
 						</v-list-item>
 						<v-list-item :disabled="!move.compensation.type || move.compensation.type.indexOf('Point') === -1" @click="sendCode('M561')">
@@ -67,7 +71,7 @@
 
 						<v-divider></v-divider>
 
-						<v-list-item :disabled="!canHome" @click="sendCode('G29')">
+						<v-list-item :style="{color: (state.currentTool == 10 ? 'red !important' : '')}" @click="sendCode('G29')" :disabled="state.currentTool != 10 || isPrinting">
 							<v-icon class="mr-1">mdi-grid</v-icon> {{ $t('panel.movement.runMesh') }}
 						</v-list-item>
 						<v-list-item :disabled="uiFrozen" @click="showMeshEditDialog = true">
@@ -113,7 +117,7 @@
 				<v-col>
 					<v-row no-gutters>
 						<v-col v-for="index in numMoveSteps" :key="index"  :class="getMoveCellClass(index - 1)">
-							<code-btn :code="getMoveCode(axis, index - 1, true)" :disabled="!canMove(axis)" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, index - 1)" block tile class="move-btn">
+							<code-btn :code="getMoveCode(axis, index - 1, true)" :disabled="!canMove(axis)" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, index - 1)" block tile class="move-btn move-warn">
 								<v-icon>mdi-chevron-left</v-icon> {{ axis.letter + showSign(-moveSteps(axis.letter)[index - 1]) }}
 							</code-btn>
 						</v-col>
@@ -124,7 +128,7 @@
 				<v-col>
 					<v-row no-gutters>
 						<v-col v-for="index in numMoveSteps" :key="index" :class="getMoveCellClass(numMoveSteps - index)">
-							<code-btn :code="getMoveCode(axis, numMoveSteps - index, false)" :disabled="!canMove(axis)" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, numMoveSteps - index)" block tile class="move-btn">
+							<code-btn :code="getMoveCode(axis, numMoveSteps - index, false)" :disabled="!canMove(axis)" no-wait @contextmenu.prevent="showMoveStepDialog(axis.letter, numMoveSteps - index)" block tile class="move-btn move-warn">
 								{{ axis.letter + showSign(moveSteps(axis.letter)[numMoveSteps - index]) }} <v-icon>mdi-chevron-right</v-icon>
 							</code-btn>
 						</v-col>
@@ -154,7 +158,7 @@
 
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 
-import { KinematicsName, StatusType } from '@/store/machine/modelEnums'
+import { isPrinting, KinematicsName, StatusType } from '@/store/machine/modelEnums'
 
 export default {
 	computed: {
@@ -179,7 +183,10 @@ export default {
 				this.state.status !== StatusType.resuming
 			);
 		},
-		unhomedAxes() { return this.move.axes.filter(axis => axis.visible && !axis.homed); }
+		unhomedAxes() { return this.move.axes.filter(axis => axis.visible && !axis.homed); },
+		isPrinting() {
+			return isPrinting(this.state.status);
+		}
 	},
 	data() {
 		return {
@@ -191,6 +198,7 @@ export default {
 				preset: 0
 			},
 			commands: {
+
 				bedFlat: 'M98 P"bed_flat.g"',
 				bedDovetail: 'M98 P"bed_dovetail.g"',
 				bed4: 'M98 P"bed_4.g"',

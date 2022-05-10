@@ -800,6 +800,7 @@ export default {
             machinePosition: 'Machine Position',
             extruders: 'Extruder Drives',
             extruderDrive: 'Drive {0}',
+			speedFactor: 'Speed Factor',
             speeds: 'Speeds',
             requestedSpeed: 'Requested Speed',
             topSpeed: 'Top Speed',
@@ -810,7 +811,9 @@ export default {
             v12: 'V12',
             fanRPM: 'Fan RPM',
             probe: 'Z-Probe|Z-Probes',
-            noStatus: 'No Status'
+            noStatus: 'No Status',
+			wcs: 'WCS',
+			compensation: 'Compensation in use',
         },
         tools: {
             caption: 'Tools',
@@ -841,6 +844,11 @@ export default {
             },
             noTools: 'No Tools'
         },
+		turretLock: {
+			caption: 'Turret Lock',
+			on: 'Lock',
+			off: 'Unlock',
+		},
         webcam: {
             caption: 'Webcam Surveillance',
             alt: '(webcam image)'

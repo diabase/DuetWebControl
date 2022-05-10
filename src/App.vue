@@ -101,7 +101,7 @@ textarea {
 				</a>
 			</v-toolbar-title>
 			<v-spacer></v-spacer>
-			<connect-btn v-if="isLocal" class="hidden-xs-only"></connect-btn>
+			<connect-btn v-if="showConnectButton" class="hidden-xs-only"></connect-btn>
 
 			<v-spacer/>
 
@@ -171,8 +171,7 @@ import Piecon from 'piecon'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import { Menu, Routes } from './routes'
-import { isPrinting, StatusType } from './store/machine/modelEnums.js'
-import { MachineMode } from './store/machine/modelEnums.js';
+import { isPrinting, StatusType, MachineMode } from './store/machine/modelEnums.js'
 import { DashboardMode } from './store/settings.js'
 
 export default {
@@ -223,7 +222,13 @@ export default {
 		},
 		showBottomNavigation() {
 			return this.$vuetify.breakpoint.mobile && !this.$vuetify.breakpoint.xsOnly && this.bottomNavigation;
-		}
+		},
+		toggleGlobalContainerColor() {
+			if (this.hideGlobalContainer) {
+				return this.darkTheme ? 'red darken-5' : 'red lighten-4';
+			}
+			return this.darkTheme ? 'green darken-5' : 'green lighten-4';
+		}		
 	},
 	data() {
 		return {
@@ -231,7 +236,8 @@ export default {
 			hideGlobalContainer: false,
 			wasXs: this.$vuetify.breakpoint.xsOnly,
 			doubleQuote: '"',
-			injectedComponentNames: []
+			injectedComponentNames: [],
+			showConnectButton: process.env.NODE_ENV === 'development'
 		}
 	},
 	methods: {

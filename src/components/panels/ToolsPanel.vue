@@ -362,6 +362,7 @@ import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import { AnalogSensorType, HeaterState, SpindleState } from '@/store/machine/modelEnums'
 import { getHeaterColor, getExtraColor } from '@/utils/colors'
 import { DisconnectedError } from '@/utils/errors'
+import { StatusType } from '@/store/machine/modelEnums.js'
 
 export default {
 	computed: {
