@@ -136,16 +136,6 @@ export default [
 		)
 	}),
 	new DwcPlugin({
-		id: 'Diabase3DScanner',
-		name: '3D Scanner',
-		author: 'Diabase Engineering',
-		version,
-		loadDwcResources: () => import(
-			/* webpackChunkName: "3DScanner" */
-			'./3DScanner/index.js'
-		)
-	}),
-	new DwcPlugin({
 		id: 'DiabaseToolPriming',
 		name: 'Tool Priming',
 		author: 'Diabase Engineering',
