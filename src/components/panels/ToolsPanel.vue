@@ -468,25 +468,46 @@ export default {
 		},
 		async turnEverythingOff() {
 			let code = '';
-			this.visibleTools.forEach(function(tool) {
+			let codeCount = 0;
+			this.visibleTools.forEach(async function(tool) {
 				if (tool && tool.heaters.length) {
 					code += `M568 P${tool.number} A0\n`;
+					codeCount++;
+				}
+				if(codeCount > 5) {
+					await this.sendCode(code);
+					codeCount = 0;
+					code = '';
 				}
 			});
-			this.heat.bedHeaters.forEach(function(bedHeater, index) {
+			this.heat.bedHeaters.forEach(async function(bedHeater, index) {
 				if (bedHeater >= -1 && bedHeater < this.heat.heaters.length) {
 					code += `M140 P${index} S-273.15\n`;
+					codeCount++;
+				}
+				if(codeCount > 5){
+					await this.sendCode(code);
+					codeCount = 0;
+					code = '';
 				}
 			}, this);
-			this.heat.chamberHeaters.forEach(function(chamberHeater, index) {
+			this.heat.chamberHeaters.forEach(async function(chamberHeater, index) {
 				if (chamberHeater >= -1 && chamberHeater < this.heat.heaters.length) {
 					code += `M141 P${index} S-273.15\n`;
+					codeCount++;
+				}
+				if(codeCount > 5){
+					await this.sendCode(code);
+					codeCount = 0;
+					code = '';
 				}
 			}, this);
 
 			this.turningEverythingOff = true;
 			try {
-				await this.sendCode(code);
+				if(this.code !== ''){
+					await this.sendCode(code);
+				}
 			} catch (e) {
 				if (!(e instanceof DisconnectedError)) {
 					this.$log('error', this.$t('error.turnOffEverythingFailed'), e.message);
